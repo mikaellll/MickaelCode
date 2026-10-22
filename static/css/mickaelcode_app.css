@@ -5,23 +5,23 @@
 
 :root {
     --bg-primary: #000000;
-    --bg-secondary: #0a0e14;
-    --bg-card: rgba(16, 22, 30, 0.85);
-    --bg-card-hover: rgba(22, 30, 42, 0.95);
-    --border-color: rgba(0, 255, 255, 0.18);
-    --border-glow: rgba(0, 255, 255, 0.45);
+    --bg-secondary: #000000;
+    --bg-card: rgba(10, 10, 10, 0.94);
+    --bg-card-hover: rgba(16, 16, 16, 0.98);
+    --border-color: rgba(0, 255, 255, 0.22);
+    --border-glow: rgba(0, 255, 255, 0.55);
     --accent-cyan: #00FFFF;
     --accent-coral: #ff6347;
     --text-primary: #FFFFFF;
     --text-muted: #a0a0a0;
-    --text-dim: #65737e;
+    --text-dim: #777777;
     --font-heading: 'Righteous', 'Roboto', sans-serif;
-    --font-body: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-body: 'Lato', sans-serif;
     --shadow-cyan: 0 0 20px rgba(0, 255, 255, 0.2);
     --shadow-coral: 0 0 20px rgba(255, 99, 71, 0.25);
-    --radius-sm: 6px;
-    --radius-md: 12px;
-    --radius-lg: 20px;
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
 }
 
 /* Global Reset & Base */
@@ -250,35 +250,13 @@ a:hover {
     width: 100%;
 }
 
-/* Social Floating Links */
+/* Social Floating Links (using graphic charter #follow instead) */
 .floating-social {
-    position: fixed;
-    right: 20px;
-    top: 45%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    z-index: 99;
+    display: none !important;
 }
-.floating-social a {
-    color: var(--text-muted);
-    font-size: 22px;
-    transition: all 0.25s;
-    background: rgba(16, 22, 30, 0.7);
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--border-color);
-}
-.floating-social a:hover {
-    color: var(--accent-cyan);
-    border-color: var(--accent-cyan);
-    box-shadow: var(--shadow-cyan);
-    transform: scale(1.1);
+
+#develop, #web, #dev, #fullstack, #square1, #square2 {
+    pointer-events: none;
 }
 
 /* Flash Messages */

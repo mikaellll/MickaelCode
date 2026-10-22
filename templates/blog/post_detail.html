@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}{{ post.meta_title|default:post.title }} | Blog MickaelCode{% endblock %}
+{% block title %}{{ post.meta_title|default:post.title }} | Blog Mickael{% endblock %}
 {% block meta_description %}{{ post.meta_description|default:post.excerpt|truncatewords:28 }}{% endblock %}
 
 {% block structured_data %}
@@ -27,19 +27,21 @@
 {% endblock %}
 
 {% block content %}
-<div class="content-narrow" style="padding-top:40px; padding-bottom:70px;">
+<div class="content-narrow" style="padding-top:20px; padding-bottom:70px;">
 
-    <div style="margin-bottom:20px;">
-        <a href="{% url 'blog:post_list' %}" style="color:var(--text-muted); font-size:14px;"><i class="fa fa-arrow-left"></i> Tous les articles</a>
+    <div style="margin-bottom:24px;">
+        <a href="{% url 'blog:post_list' %}" style="color:var(--accent-cyan); font-size:13px; font-family:'Righteous', cursive; letter-spacing:0.5px; text-decoration:none;">
+            <i class="fa fa-arrow-left"></i> TOUS LES ARTICLES
+        </a>
     </div>
 
-    <article class="glass-card" style="padding:48px 36px; margin-bottom:40px;">
-        <header style="margin-bottom:32px;">
+    <article class="glass-card" style="padding:44px 34px; margin-bottom:40px;">
+        <header style="margin-bottom:30px;">
             {% if post.category %}
                 <span class="badge badge-cyan" style="margin-bottom:14px;">{{ post.category.name }}</span>
             {% endif %}
 
-            <h1 style="font-size: clamp(30px, 5vw, 44px); line-height:1.25; margin-bottom:16px;">
+            <h1 style="font-size: clamp(26px, 4vw, 40px); line-height:1.25; margin-bottom:16px; font-family:'Righteous', cursive; color:#ffffff;">
                 {{ post.title }}
             </h1>
 
@@ -52,12 +54,12 @@
         </header>
 
         {% if post.cover_image %}
-        <div style="border-radius:var(--radius-sm); overflow:hidden; margin-bottom:36px; border:1px solid var(--border-color); background:#0a0e14;">
+        <div style="border-radius:4px; overflow:hidden; margin-bottom:32px; border:1px solid var(--border-color); background:#050505;">
             <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" style="width:100%; height:auto; display:block;">
         </div>
         {% endif %}
 
-        <div style="font-size:18px; font-weight:400; color:#cbd5e1; line-height:1.7; margin-bottom:32px; border-left:3px solid var(--accent-coral); padding-left:18px;">
+        <div style="font-size:17px; font-weight:400; color:#cbd5e1; line-height:1.7; margin-bottom:32px; border-left:3px solid var(--accent-coral); padding-left:18px; font-style:italic;">
             {{ post.excerpt }}
         </div>
 
@@ -77,22 +79,22 @@
     </article>
 
     <!-- Author Bio Box -->
-    <div class="glass-card" style="padding:28px; margin-bottom:40px; display:flex; gap:20px; align-items:center;">
-        <img src="{% static 'img/profil_portfolio.png' %}" alt="Mickael" style="width:75px; height:75px; border-radius:50%; object-fit:cover; border:2px solid var(--accent-cyan); flex-shrink:0;">
+    <div class="glass-card" style="padding:28px; margin-bottom:36px; display:flex; gap:20px; align-items:center;">
+        <img src="{% static 'img/profil_portfolio.png' %}" alt="Mickael" style="width:70px; height:70px; border-radius:50%; object-fit:cover; border:2px solid var(--accent-cyan); flex-shrink:0;">
         <div>
-            <h4 style="font-size:18px; margin-bottom:6px; color:#ffffff;">Rédigé par Mickael</h4>
+            <h4 style="font-size:18px; margin-bottom:6px; color:#ffffff; font-family:'Righteous', cursive;">Rédigé par Mickael</h4>
             <p style="color:var(--text-muted); font-size:14px; line-height:1.6; margin-bottom:0;">
-                Développeur web senior & formateur Django / Python à Marseille. Je partage régulièrement mes analyses de code, architectures et retours de production.
+                Développeur web full-stack & formateur Django / Python à Marseille. Je partage régulièrement mes retours de production, architectures logicielles et astuces de code.
             </p>
         </div>
     </div>
 
     <!-- Next & Previous Navigation -->
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:50px;">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:40px;">
         {% if prev_post %}
         <a href="{{ prev_post.get_absolute_url }}" class="glass-card" style="display:block; padding:18px; text-decoration:none;">
-            <div style="font-size:12px; color:var(--text-dim); margin-bottom:4px;">&larr; Article précédent</div>
-            <div style="font-size:15px; color:#ffffff; font-weight:700;">{{ prev_post.title }}</div>
+            <div style="font-size:12px; color:var(--accent-cyan); font-family:'Righteous', cursive; margin-bottom:4px;">&larr; Article précédent</div>
+            <div style="font-size:14px; color:#ffffff; font-weight:700;">{{ prev_post.title }}</div>
         </a>
         {% else %}
         <div></div>
@@ -100,8 +102,8 @@
 
         {% if next_post %}
         <a href="{{ next_post.get_absolute_url }}" class="glass-card" style="display:block; padding:18px; text-decoration:none; text-align:right;">
-            <div style="font-size:12px; color:var(--text-dim); margin-bottom:4px;">Article suivant &rarr;</div>
-            <div style="font-size:15px; color:#ffffff; font-weight:700;">{{ next_post.title }}</div>
+            <div style="font-size:12px; color:var(--accent-cyan); font-family:'Righteous', cursive; margin-bottom:4px;">Article suivant &rarr;</div>
+            <div style="font-size:14px; color:#ffffff; font-weight:700;">{{ next_post.title }}</div>
         </a>
         {% endif %}
     </div>
@@ -109,11 +111,11 @@
     <!-- Related Articles -->
     {% if related_posts %}
     <div>
-        <h3 style="margin-bottom:20px; font-size:22px;">Articles similaires dans cette catégorie</h3>
+        <h3 style="margin-bottom:18px; font-size:20px; font-family:'Righteous', cursive; color:#ffffff;">Articles similaires</h3>
         <div class="grid-3">
             {% for rel in related_posts %}
             <article class="glass-card" style="padding:20px;">
-                <h4 style="font-size:16px; margin-bottom:8px;"><a href="{{ rel.get_absolute_url }}">{{ rel.title }}</a></h4>
+                <h4 style="font-size:15px; margin-bottom:8px; font-family:'Righteous', cursive;"><a href="{{ rel.get_absolute_url }}" style="color:#ffffff;">{{ rel.title }}</a></h4>
                 <div style="font-size:12px; color:var(--text-dim);"><i class="fa fa-clock-o"></i> {{ rel.reading_time_minutes }} min</div>
             </article>
             {% endfor %}

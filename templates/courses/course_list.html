@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Catalogue des Formations Django & Web | MickaelCode{% endblock %}
+{% block title %}Catalogue des Formations Django & Web | Mickael{% endblock %}
 {% block meta_description %}Formations vidéo pratiques pour devenir développeur full-stack Python/Django autonome. Projets complets, architectures robustes, paiement sécurisé.{% endblock %}
 
 {% block content %}
-<div class="content-container" style="padding-top:40px; padding-bottom:70px;">
+<div class="content-container" style="padding-top:20px; padding-bottom:70px;">
     <div class="section-header">
         <div class="section-subtitle">E-learning & Cursus</div>
         <h1 class="section-title">Catalogue des Formations</h1>
@@ -42,7 +42,7 @@
         {% for course in courses %}
         <article class="glass-card" style="display:flex; flex-direction:column; justify-content:space-between;">
             <div>
-                <div class="card-media">
+                <div class="card-media" style="border-radius:4px; overflow:hidden; margin-bottom:16px;">
                     <a href="{{ course.get_absolute_url }}">
                         {% if course.cover_image %}
                             <img src="{{ course.cover_image.url }}" alt="{{ course.title }}">
@@ -58,11 +58,11 @@
                     <span><i class="fa fa-clock-o"></i> ~{{ course.total_duration_minutes }} min</span>
                 </div>
 
-                <h2 style="font-size:21px; margin-bottom:10px; line-height:1.3;">
-                    <a href="{{ course.get_absolute_url }}">{{ course.title }}</a>
+                <h2 style="font-size:20px; margin-bottom:10px; line-height:1.3; font-family:'Righteous', cursive;">
+                    <a href="{{ course.get_absolute_url }}" style="color:#ffffff;">{{ course.title }}</a>
                 </h2>
 
-                <p style="color:var(--text-muted); font-size:14px; margin-bottom:16px;">
+                <p style="color:var(--text-muted); font-size:14px; margin-bottom:16px; line-height:1.6;">
                     {{ course.short_description|truncatewords:24 }}
                 </p>
             </div>
@@ -79,7 +79,7 @@
         {% empty %}
         <div class="glass-card" style="grid-column: 1 / -1; text-align:center; padding:60px;">
             <i class="fa fa-graduation-cap" style="font-size:48px; color:var(--text-dim); margin-bottom:16px;"></i>
-            <h3>Aucune formation trouvée</h3>
+            <h3 style="font-family:'Righteous', cursive; color:#ffffff;">Aucune formation trouvée</h3>
             <p style="color:var(--text-muted); font-size:15px; margin-top:8px;">Aucun cours ne correspond actuellement à vos critères de recherche.</p>
         </div>
         {% endfor %}

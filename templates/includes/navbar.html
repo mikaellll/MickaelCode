@@ -1,48 +1,27 @@
 {% load static %}
-<header class="mc-header">
-    <div class="mc-nav-container">
-        <a href="{% url 'core:home' %}" class="mc-brand" id="brand-logo">
-            Mickael<span class="dot">Code</span><span class="ext">.com</span>
-        </a>
-
-        <nav id="main-navigation" aria-label="Navigation principale">
-            <ul class="mc-menu">
-                <li><a href="{% url 'core:home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}" id="nav-home">Home</a></li>
-                <li><a href="{% url 'core:about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}" id="nav-about">About</a></li>
-                <li><a href="{% url 'core:work' %}" class="{% if request.resolver_match.url_name == 'work' or request.resolver_match.url_name == 'project_detail' %}active{% endif %}" id="nav-work">Work</a></li>
-                <li><a href="{% url 'core:skills' %}" class="{% if request.resolver_match.url_name == 'skills' %}active{% endif %}" id="nav-skills">Skill</a></li>
-                <li><a href="{% url 'blog:post_list' %}" class="{% if 'blog' in request.resolver_match.namespaces %}active{% endif %}" id="nav-blog">Blog</a></li>
-                <li><a href="{% url 'courses:course_list' %}" class="{% if 'courses' in request.resolver_match.namespaces %}active{% endif %}" id="nav-courses">Formations</a></li>
-                <li><a href="{% url 'core:contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}" id="nav-contact">Contact</a></li>
-
-                {% if user.is_authenticated %}
-                <li>
-                    <a href="{% url 'dashboard:overview' %}" class="btn btn-outline btn-sm {% if 'dashboard' in request.resolver_match.namespaces %}active{% endif %}" id="nav-dashboard">
-                        <i class="fa fa-graduation-cap" aria-hidden="true"></i> Espace Apprenant
-                        {% if UNREAD_NOTIFICATIONS_COUNT > 0 %}
-                            <span class="badge badge-coral" style="font-size: 10px; margin-left: 4px;">{{ UNREAD_NOTIFICATIONS_COUNT }}</span>
-                        {% endif %}
-                    </a>
-                </li>
-                <li>
-                    <form method="post" action="{% url 'accounts:logout' %}" style="display:inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-sm" style="background:none; border:none; color:var(--text-muted); cursor:pointer; text-transform:uppercase; font-size:13px;" id="nav-logout">
-                            <i class="fa fa-sign-out" aria-hidden="true"></i> Quitter
-                        </button>
-                    </form>
-                </li>
-                {% else %}
-                <li><a href="{% url 'accounts:login' %}" id="nav-login">SIGN IN</a></li>
-                <li><a href="{% url 'accounts:signup' %}" class="btn btn-cyan btn-sm" id="nav-signup">SIGN UP</a></li>
-                {% endif %}
-            </ul>
-        </nav>
-
-        <div class="burger" id="mobile-burger-btn" aria-label="Ouvrir le menu">
-            <div class="line1"></div>
-            <div class="line2"></div>
-            <div class="line3"></div>
-        </div>
+<div class="navbar" id="site-navbar">
+    <div id="nav">
+        <ul class="links">
+            <li><a href="{% url 'core:home' %}" class="{% if request.resolver_match.url_name == 'home' %}nvg{% endif %}">HOME</a></li>
+            <li><a href="{% url 'core:about' %}" class="{% if request.resolver_match.url_name == 'about' %}nvg{% endif %}">ABOUT</a></li>
+            <li><a href="{% url 'core:work' %}" class="{% if request.resolver_match.url_name == 'work' or request.resolver_match.url_name == 'project_detail' %}nvg{% endif %}">WORK</a></li>
+            <li><a href="{% url 'core:skills' %}" class="{% if request.resolver_match.url_name == 'skills' %}nvg{% endif %}">SKILL</a></li>
+            <li><a href="{% url 'blog:post_list' %}" class="{% if 'blog' in request.resolver_match.namespaces %}nvg{% endif %}">BLOG</a></li>
+            <li><a href="{% url 'courses:course_list' %}" class="{% if 'courses' in request.resolver_match.namespaces %}nvg{% endif %}">FORMATIONS</a></li>
+            <li><a href="{% url 'core:contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}nvg{% endif %}">CONTACT</a></li>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'dashboard:overview' %}" class="{% if 'dashboard' in request.resolver_match.namespaces %}nvg{% endif %}">DASHBOARD</a></li>
+            <li><a href="{% url 'accounts:logout' %}">LOGOUT</a></li>
+            {% else %}
+            <li><a href="{% url 'accounts:login' %}" class="{% if request.resolver_match.url_name == 'login' %}nvg{% endif %}">SIGN IN</a></li>
+            <li><a href="{% url 'accounts:signup' %}" class="{% if request.resolver_match.url_name == 'signup' %}nvg{% endif %}">SIGN UP</a></li>
+            {% endif %}
+        </ul>
     </div>
-</header>
+</div>
+
+<div class="burger" id="burger-menu-btn" aria-label="Menu">
+    <div class="line1"></div>
+    <div class="line2"></div>
+    <div class="line3"></div>
+</div>

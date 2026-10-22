@@ -1,27 +1,27 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}{{ course.meta_title|default:course.title }} | Formation MickaelCode{% endblock %}
+{% block title %}{{ course.meta_title|default:course.title }} | Formation Mickael{% endblock %}
 {% block meta_description %}{{ course.meta_description|default:course.short_description|truncatewords:28 }}{% endblock %}
 
 {% block content %}
-<div class="content-container" style="padding-top:40px; padding-bottom:70px;">
+<div class="content-container" style="padding-top:20px; padding-bottom:70px;">
 
     <!-- Course Header Hero -->
-    <div class="glass-card" style="padding:48px 36px; margin-bottom:40px;">
+    <div class="glass-card" style="padding:44px 34px; margin-bottom:40px;">
         <div class="grid-2" style="align-items:center;">
             <div>
-                <div style="display:flex; gap:10px; margin-bottom:14px;">
+                <div style="display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap;">
                     <span class="badge badge-coral">{{ course.get_level_display }}</span>
                     <span class="badge badge-cyan">{{ course.total_lessons_count }} leçons</span>
-                    <span class="badge" style="background:rgba(255,255,255,0.08); color:#cbd5e1;">~{{ course.total_duration_minutes }} minutes</span>
+                    <span class="badge" style="background:rgba(255,255,255,0.08); color:#cbd5e1; font-family:'Righteous', cursive;">~{{ course.total_duration_minutes }} minutes</span>
                 </div>
 
-                <h1 style="font-size: clamp(30px, 4.5vw, 44px); line-height:1.2; margin-bottom:18px;">
+                <h1 style="font-size: clamp(28px, 4vw, 42px); line-height:1.2; margin-bottom:18px; font-family:'Righteous', cursive; color:#ffffff;">
                     {{ course.title }}
                 </h1>
 
-                <p style="color:#cbd5e1; font-size:17px; line-height:1.7; margin-bottom:28px;">
+                <p style="color:#cbd5e1; font-size:16px; line-height:1.7; margin-bottom:28px;">
                     {{ course.short_description }}
                 </p>
 
@@ -52,7 +52,7 @@
                 </div>
             </div>
 
-            <div class="card-media" style="margin-bottom:0; max-height:360px;">
+            <div class="card-media" style="margin-bottom:0; max-height:360px; border-radius:4px; overflow:hidden; border:1px solid var(--border-color);">
                 {% if course.cover_image %}
                     <img src="{{ course.cover_image.url }}" alt="{{ course.title }}">
                 {% else %}
@@ -63,14 +63,14 @@
     </div>
 
     <!-- Objectives & Description -->
-    <div class="grid-2" style="margin-bottom:48px; align-items:start;">
+    <div class="grid-2" style="margin-bottom:40px; align-items:start;">
         <div class="glass-card" style="padding:32px;">
-            <h3 style="color:var(--accent-cyan); margin-bottom:20px; font-size:22px;">
+            <h3 style="color:var(--accent-cyan); margin-bottom:20px; font-size:20px; font-family:'Righteous', cursive;">
                 <i class="fa fa-check-square-o"></i> Ce que vous allez maîtriser
             </h3>
             <ul style="list-style:none; padding-left:0;">
                 {% for obj in course.objectives_list %}
-                <li style="display:flex; gap:12px; align-items:flex-start; margin-bottom:14px; font-size:15px; color:#e2e8f0;">
+                <li style="display:flex; gap:12px; align-items:flex-start; margin-bottom:14px; font-size:14px; color:#e2e8f0; line-height:1.6;">
                     <i class="fa fa-check" style="color:var(--accent-cyan); margin-top:4px;"></i>
                     <span>{{ obj }}</span>
                 </li>
@@ -81,14 +81,14 @@
 
             {% if course.prerequisites %}
             <div style="margin-top:24px; border-top:1px solid rgba(255,255,255,0.08); padding-top:16px;">
-                <h4 style="color:#ffffff; font-size:16px; margin-bottom:8px;"><i class="fa fa-info-circle"></i> Prérequis</h4>
-                <p style="color:var(--text-muted); font-size:14px; margin-bottom:0;">{{ course.prerequisites }}</p>
+                <h4 style="color:#ffffff; font-size:15px; margin-bottom:8px; font-family:'Righteous', cursive;"><i class="fa fa-info-circle"></i> Prérequis</h4>
+                <p style="color:var(--text-muted); font-size:13px; margin-bottom:0; line-height:1.6;">{{ course.prerequisites }}</p>
             </div>
             {% endif %}
         </div>
 
         <div class="glass-card" style="padding:32px;">
-            <h3 style="color:#ffffff; margin-bottom:16px; font-size:22px;">Description détaillée</h3>
+            <h3 style="color:#ffffff; margin-bottom:16px; font-size:20px; font-family:'Righteous', cursive;">Description détaillée</h3>
             <div class="markdown-body" style="font-size:15px;">
                 {{ course.render_description|safe }}
             </div>
@@ -99,32 +99,32 @@
     <div class="glass-card" style="padding:36px;">
         <div style="margin-bottom:28px;">
             <div class="section-subtitle">Programme pédagogique</div>
-            <h2 style="font-size:28px; margin-bottom:6px;">Syllabus complet du cursus</h2>
-            <p style="color:var(--text-muted); font-size:15px;">Parcourez les modules et testez les leçons gratuites en libre accès.</p>
+            <h2 style="font-size:26px; margin-bottom:6px; font-family:'Righteous', cursive; color:#ffffff;">Syllabus complet du cursus</h2>
+            <p style="color:var(--text-muted); font-size:14px;">Parcourez les modules et testez les leçons gratuites en libre accès.</p>
         </div>
 
-        <div style="display:flex; flex-direction:column; gap:24px;">
+        <div style="display:flex; flex-direction:column; gap:20px;">
             {% for module in modules %}
-            <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); border-radius:var(--radius-sm); padding:24px;">
+            <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(0,255,255,0.12); border-radius:4px; padding:22px;">
                 <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:12px; flex-wrap:wrap;">
-                    <h3 style="font-size:18px; color:var(--accent-cyan);">
+                    <h3 style="font-size:17px; color:var(--accent-cyan); font-family:'Righteous', cursive;">
                         Module {{ module.order }} : {{ module.title }}
                     </h3>
                     <span style="font-size:12px; color:var(--text-dim);">{{ module.published_lessons.count }} leçons</span>
                 </div>
 
                 {% if module.description %}
-                    <p style="color:var(--text-muted); font-size:14px; margin-bottom:16px;">{{ module.description }}</p>
+                    <p style="color:var(--text-muted); font-size:13px; margin-bottom:14px; line-height:1.6;">{{ module.description }}</p>
                 {% endif %}
 
                 <div style="display:flex; flex-direction:column; gap:8px;">
                     {% for lesson in module.published_lessons %}
-                    <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:rgba(0,0,0,0.4); border-radius:4px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:rgba(0,0,0,0.5); border-radius:4px; border:1px solid rgba(255,255,255,0.04);">
                         <div style="display:flex; align-items:center; gap:12px;">
                             {% if lesson.is_free_preview %}
                                 <i class="fa fa-play-circle" style="color:var(--accent-cyan);"></i>
                             {% elif is_enrolled %}
-                                <i class="fa fa-unlock-alt" style="color:#10b981;"></i>
+                                <i class="fa fa-unlock-alt" style="color:#00FFFF;"></i>
                             {% else %}
                                 <i class="fa fa-lock" style="color:var(--text-dim);"></i>
                             {% endif %}

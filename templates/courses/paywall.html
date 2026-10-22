@@ -1,24 +1,24 @@
 {% extends "base.html" %}
 
-{% block title %}Accès Verrouillé | {{ course.title }} - MickaelCode{% endblock %}
+{% block title %}Accès Verrouillé | {{ course.title }} - Mickael{% endblock %}
 {% block robots %}noindex, nofollow{% endblock %}
 
 {% block content %}
-<div class="content-narrow" style="padding: 80px 20px; text-align: center;">
-    <div class="glass-card" style="padding: 60px 40px;">
-        <div style="width:80px; height:80px; border-radius:50%; background:rgba(255, 99, 71, 0.15); border:2px solid var(--accent-coral); display:flex; align-items:center; justify-content:center; margin:0 auto 24px; color:var(--accent-coral); font-size:36px;">
+<div class="content-narrow" style="padding: 60px 20px; text-align: center;">
+    <div class="glass-card" style="padding: 50px 36px;">
+        <div style="width:76px; height:76px; border-radius:50%; background:rgba(255, 99, 71, 0.15); border:2px solid var(--accent-coral); display:flex; align-items:center; justify-content:center; margin:0 auto 24px; color:var(--accent-coral); font-size:32px;">
             <i class="fa fa-lock"></i>
         </div>
 
-        <h1 style="font-size:30px; margin-bottom:14px;">Cette leçon est réservée aux inscrits</h1>
+        <h1 style="font-size:26px; margin-bottom:14px; font-family:'Righteous', cursive; color:#ffffff;">Cette leçon est réservée aux inscrits</h1>
 
-        <p style="color:#cbd5e1; font-size:16px; max-width:540px; margin:0 auto 24px;">
+        <p style="color:#cbd5e1; font-size:15px; max-width:540px; margin:0 auto 24px; line-height:1.6;">
             La leçon <strong>« {{ lesson.title }} »</strong> fait partie du cursus complet <strong>« {{ course.title }} »</strong>.
         </p>
 
-        <div style="background:rgba(0,0,0,0.4); border-radius:var(--radius-sm); padding:20px; max-width:440px; margin:0 auto 32px; border:1px solid rgba(0,255,255,0.2);">
-            <div style="font-size:13px; color:var(--text-muted); margin-bottom:4px;">Tarif de la formation complète</div>
-            <div style="font-size:36px; font-weight:700; color:var(--accent-cyan); font-family:'Righteous', cursive;">{{ course.price }} {{ course.currency }}</div>
+        <div style="background:rgba(0,0,0,0.5); border-radius:4px; padding:20px; max-width:440px; margin:0 auto 30px; border:1px solid rgba(0,255,255,0.25);">
+            <div style="font-size:12px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">Tarif de la formation complète</div>
+            <div style="font-size:34px; font-weight:700; color:var(--accent-cyan); font-family:'Righteous', cursive;">{{ course.price }} {{ course.currency }}</div>
             <div style="font-size:12px; color:var(--text-dim); margin-top:4px;">Accès illimité à vie &bull; Mises à jour incluses &bull; Paiement sécurisé Stripe</div>
         </div>
 
@@ -36,8 +36,8 @@
         </div>
 
         {% if not user.is_authenticated %}
-        <div style="margin-top:28px; font-size:14px; color:var(--text-dim);">
-            Vous possédez déjà cette formation ? <a href="{% url 'accounts:login' %}?next={{ request.path }}" style="color:var(--accent-cyan); font-weight:700;">Connectez-vous pour y accéder</a>
+        <div style="margin-top:28px; font-size:13px; color:var(--text-dim);">
+            Vous possédez déjà cette formation ? <a href="{% url 'accounts:login' %}?next={{ request.path }}" style="color:var(--accent-cyan); font-weight:700; text-decoration:none;">Connectez-vous pour y accéder</a>
         </div>
         {% endif %}
     </div>
