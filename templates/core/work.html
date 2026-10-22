@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Réalisations & Portfolio | MickaelCode{% endblock %}
+{% block meta_description %}Découvrez les réalisations de Mickael : plateformes SaaS, architectures e-commerce, applications Django et outils sur-mesure.{% endblock %}
+
+{% block content %}
+<div class="content-container">
+    <div class="section-header" style="margin-top:40px;">
+        <div class="section-subtitle">Portfolio</div>
+        <h1 class="section-title">Mes Réalisations</h1>
+        <p class="section-desc">Une sélection d'applications web déployées en production, de projets clients et d'expérimentations open-source.</p>
+    </div>
+
+    <div class="grid-3">
+        {% for project in projects %}
+        <article class="glass-card" style="display:flex; flex-direction:column; justify-content:space-between;">
+            <div>
+                <div class="card-media">
+                    {% if project.image %}
+                        <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                    {% else %}
+                        <img src="{% static 'img/projects/nestcase.png' %}" alt="{{ project.title }}">
+                    {% endif %}
+                    {% if project.client %}
+                    <span class="badge badge-coral" style="position:absolute; top:12px; left:12px;">{{ project.client }}</span>
+                    {% endif %}
+                </div>
+
+                <h2 style="font-size:22px; margin-bottom:8px;">
+                    <a href="{% url 'core:project_detail' project.slug %}">{{ project.title }}</a>
+                </h2>
+
+                <p style="color:var(--text-muted); font-size:14px; margin-bottom:16px;">
+                    {{ project.tagline|default:project.description|truncatewords:25 }}
+                </p>
+
+                <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:18px;">
+                    {% for tech in project.tech_list %}
+                        <span style="font-size:11px; background:rgba(0,255,255,0.08); border:1px solid rgba(0,255,255,0.2); padding:3px 8px; border-radius:4px; color:#cbd5e1;">{{ tech }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:16px; display:flex; justify-content:space-between; align-items:center;">
+                <a href="{% url 'core:project_detail' project.slug %}" class="btn btn-outline btn-sm">Détails du projet</a>
+                {% if project.live_url %}
+                    <a href="{{ project.live_url }}" target="_blank" rel="noopener noreferrer" style="font-size:13px; color:var(--accent-cyan); font-weight:600;"><i class="fa fa-external-link"></i> Visiter</a>
+                {% endif %}
+            </div>
+        </article>
+        {% empty %}
+        <div class="glass-card" style="grid-column: 1 / -1; text-align:center; padding:50px;">
+            <p style="color:var(--text-muted); font-size:16px;">Les projets sont en cours d'initialisation en base de données.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

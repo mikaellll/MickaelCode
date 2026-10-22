@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Plan du site | MickaelCode{% endblock %}
+{% block meta_description %}Plan complet du site MickaelCode : toutes les pages, cours, formations et articles de blog.{% endblock %}
+
+{% block content %}
+<div class="content-container" style="padding-top:40px; padding-bottom:60px;">
+    <div class="section-header">
+        <h1 class="section-title">Plan du site</h1>
+        <p class="section-desc">Index hiérarchique de l'ensemble des rubriques de la plateforme mickaelcode.com.</p>
+    </div>
+
+    <div class="grid-3">
+        <div class="glass-card">
+            <h3 style="color:var(--accent-cyan);">Pages Principales</h3>
+            <ul style="list-style:none; padding-left:0; margin-top:14px;">
+                <li style="margin-bottom:8px;"><a href="{% url 'core:home' %}">&bull; Accueil</a></li>
+                <li style="margin-bottom:8px;"><a href="{% url 'core:about' %}">&bull; À Propos</a></li>
+                <li style="margin-bottom:8px;"><a href="{% url 'core:work' %}">&bull; Réalisations / Portfolio</a></li>
+                <li style="margin-bottom:8px;"><a href="{% url 'core:skills' %}">&bull; Compétences</a></li>
+                <li style="margin-bottom:8px;"><a href="{% url 'core:contact' %}">&bull; Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="glass-card">
+            <h3 style="color:var(--accent-cyan);">Formations & E-learning</h3>
+            <ul style="list-style:none; padding-left:0; margin-top:14px;">
+                <li style="margin-bottom:8px;"><a href="{% url 'courses:course_list' %}">&bull; Catalogue des Formations</a></li>
+                <li style="margin-bottom:8px;"><a href="{% url 'accounts:login' %}">&bull; Espace Apprenant</a></li>
+                <li style="margin-bottom:8px;"><a href="{% url 'accounts:signup' %}">&bull; Créer un compte</a></li>
+            </ul>
+        </div>
+
+        <div class="glass-card">
+            <h3 style="color:var(--accent-cyan);">Blog & Légal</h3>
+            <ul style="list-style:none; padding-left:0; margin-top:14px;">
+                <li style="margin-bottom:8px;"><a href="{% url 'blog:post_list' %}">&bull; Articles du Blog</a></li>
+                <li style="margin-bottom:8px;"><a href="{% url 'core:legal_mentions' %}">&bull; Mentions Légales</a></li>
+                <li style="margin-bottom:8px;"><a href="{% url 'core:cgu_cgv' %}">&bull; CGU & CGV</a></li>
+                <li style="margin-bottom:8px;"><a href="{% url 'core:privacy_policy' %}">&bull; Données & RGPD</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

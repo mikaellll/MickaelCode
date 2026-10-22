@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Paiement Confirmé | MickaelCode{% endblock %}
+{% block robots %}noindex, nofollow{% endblock %}
+
+{% block content %}
+<div class="content-narrow" style="padding-top:60px; padding-bottom:70px; text-align:center;">
+    <div class="glass-card" style="padding:50px 36px;">
+        <div style="width:75px; height:75px; border-radius:50%; background:rgba(0,255,255,0.15); border:2px solid var(--accent-cyan); display:flex; align-items:center; justify-content:center; margin:0 auto 20px; color:var(--accent-cyan); font-size:36px;">
+            <i class="fa fa-check"></i>
+        </div>
+
+        <h1 style="font-size:30px; margin-bottom:12px;">Paiement Réussi !</h1>
+        <p style="color:var(--text-muted); font-size:16px; margin-bottom:28px;">
+            Merci pour votre confiance. Votre commande a été enregistrée avec succès.
+        </p>
+
+        {% if order %}
+        <div style="background:rgba(0,0,0,0.4); border-radius:var(--radius-sm); border:1px solid rgba(255,255,255,0.1); padding:24px; text-align:left; max-width:480px; margin:0 auto 32px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:14px;">
+                <span style="color:var(--text-dim);">Référence de commande :</span>
+                <span style="color:#ffffff; font-family:'Righteous', cursive;">{{ order.order_reference }}</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:14px;">
+                <span style="color:var(--text-dim);">Formation acquise :</span>
+                <span style="color:var(--accent-cyan); font-weight:700;">{{ order.course.title }}</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:14px;">
+                <span style="color:var(--text-dim);">Montant réglé :</span>
+                <span style="color:#ffffff; font-weight:700;">{{ order.amount }} {{ order.currency }}</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:14px;">
+                <span style="color:var(--text-dim);">Statut de l'accès :</span>
+                {% if order.status == 'completed' %}
+                    <span style="color:#10b981; font-weight:700;"><i class="fa fa-check-circle"></i> Débloqué & Actif</span>
+                {% else %}
+                    <span style="color:var(--accent-coral); font-weight:700;"><i class="fa fa-clock-o"></i> Synchronisation en cours...</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
+            <a href="{% url 'courses:course_detail' order.course.slug %}" class="btn btn-cyan">
+                <i class="fa fa-play"></i> Accéder immédiatement à ma formation
+            </a>
+            <a href="{% url 'dashboard:overview' %}" class="btn btn-outline">
+                Aller sur mon tableau de bord
+            </a>
+        </div>
+        {% else %}
+        <div style="margin-top:24px;">
+            <a href="{% url 'dashboard:overview' %}" class="btn btn-cyan">Accéder à mon espace personnel</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

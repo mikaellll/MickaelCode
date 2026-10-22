@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ project.title }} | Réalisation MickaelCode{% endblock %}
+{% block meta_description %}{{ project.meta_description|default:project.tagline|default:project.description|truncatewords:25 }}{% endblock %}
+
+{% block content %}
+<div class="content-container">
+    <div style="margin-top:30px; margin-bottom:20px;">
+        <a href="{% url 'core:work' %}" style="color:var(--text-muted); font-size:14px;"><i class="fa fa-arrow-left"></i> Retour aux réalisations</a>
+    </div>
+
+    <article class="glass-card" style="padding:40px; margin-bottom:40px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px; margin-bottom:24px;">
+            <div>
+                <span class="badge badge-cyan" style="margin-bottom:10px;">{{ project.client|default:"Projet Réalisé" }}</span>
+                <h1 style="font-size: clamp(32px, 5vw, 48px); margin-bottom: 8px;">{{ project.title }}</h1>
+                {% if project.tagline %}
+                    <p style="font-size:18px; color:var(--accent-coral); font-family:'Righteous', cursive;">{{ project.tagline }}</p>
+                {% endif %}
+            </div>
+
+            <div style="display:flex; gap:12px;">
+                {% if project.live_url %}
+                    <a href="{{ project.live_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-cyan btn-sm"><i class="fa fa-external-link"></i> Voir le site</a>
+                {% endif %}
+                {% if project.github_url %}
+                    <a href="{{ project.github_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm"><i class="fa fa-github"></i> Code source</a>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if project.image %}
+        <div style="border-radius:var(--radius-md); overflow:hidden; border:1px solid var(--border-color); margin-bottom:32px; max-height:550px; background:#000;">
+            <img src="{{ project.image.url }}" alt="{{ project.title }}" style="width:100%; height:auto; object-fit:contain;">
+        </div>
+        {% endif %}
+
+        <div style="margin-bottom:30px;">
+            <h3 style="color:var(--accent-cyan); font-size:18px; margin-bottom:12px;">Technologies Employées</h3>
+            <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                {% for tech in project.tech_list %}
+                    <span style="font-size:13px; background:rgba(0,255,255,0.1); border:1px solid rgba(0,255,255,0.3); padding:6px 14px; border-radius:50px; color:#ffffff;">{{ tech }}</span>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div style="color:#e2e8f0; font-size:17px; line-height:1.8;">
+            <h3 style="color:#ffffff; margin-bottom:16px;">Présentation & Enjeux Techniques</h3>
+            <p>{{ project.description|linebreaksbr }}</p>
+        </div>
+    </article>
+
+    {% if related_projects %}
+    <div style="margin-top:50px;">
+        <h3 style="margin-bottom:24px;">Autres projets récents</h3>
+        <div class="grid-3">
+            {% for rel in related_projects %}
+            <article class="glass-card">
+                <h4><a href="{% url 'core:project_detail' rel.slug %}">{{ rel.title }}</a></h4>
+                <p style="color:var(--text-muted); font-size:13px; margin-top:8px;">{{ rel.tagline|default:rel.description|truncatewords:15 }}</p>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Blog Django & Architecture Logicielle | MickaelCode{% endblock %}
+{% block meta_description %}Articles techniques, retours d'expérience, tutoriels Django, bonnes pratiques d'architecture logicielle et astuces Python par Mickael.{% endblock %}
+
+{% block content %}
+<div class="content-container" style="padding-top:40px; padding-bottom:60px;">
+    <div class="section-header">
+        <div class="section-subtitle">Articles & Analyses</div>
+        <h1 class="section-title">Le Blog Technique</h1>
+        <p class="section-desc">Retours d'expérience concrets sur Django, Python, la conception d'architectures SaaS et l'optimisation des performances web.</p>
+    </div>
+
+    <!-- Search and Filter Bar -->
+    <div class="glass-card" style="padding:20px; margin-bottom:40px;">
+        <form method="get" action="{% url 'blog:post_list' %}" style="display:flex; flex-wrap:wrap; gap:16px; align-items:center;">
+            <div style="flex:1; min-width:240px;">
+                <input type="text" name="q" value="{{ search_query }}" class="form-control" placeholder="Rechercher par mot-clé (ex: Django, ORM, API, Cache...)" id="blog-search-input">
+            </div>
+
+            {% if categories %}
+            <div style="min-width:180px;">
+                <select name="category" class="form-control" onchange="this.form.submit()" id="blog-category-select">
+                    <option value="">Toutes les catégories</option>
+                    {% for cat in categories %}
+                    <option value="{{ cat.slug }}" {% if selected_category.slug == cat.slug %}selected{% endif %}>{{ cat.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            {% endif %}
+
+            <button type="submit" class="btn btn-cyan btn-sm" id="blog-search-btn">
+                <i class="fa fa-search"></i> Filtrer
+            </button>
+            {% if search_query or selected_category or selected_tag %}
+                <a href="{% url 'blog:post_list' %}" class="btn btn-outline btn-sm">Réinitialiser</a>
+            {% endif %}
+        </form>
+    </div>
+
+    <!-- Articles Grid -->
+    <div class="grid-3">
+        {% for post in page_obj %}
+        <article class="glass-card" style="display:flex; flex-direction:column; justify-content:space-between;">
+            <div>
+                {% if post.cover_image %}
+                <div class="card-media">
+                    <a href="{{ post.get_absolute_url }}">
+                        <img src="{{ post.cover_image.url }}" alt="{{ post.title }}">
+                    </a>
+                    {% if post.category %}
+                        <span class="badge badge-coral" style="position:absolute; top:12px; left:12px;">{{ post.category.name }}</span>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; font-size:12px; color:var(--text-dim);">
+                    <span><i class="fa fa-calendar-o"></i> {{ post.published_at|date:"d M Y" }}</span>
+                    <span><i class="fa fa-clock-o"></i> {{ post.reading_time_minutes }} min</span>
+                </div>
+
+                <h2 style="font-size:20px; line-height:1.3; margin-bottom:12px;">
+                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                </h2>
+
+                <p style="color:var(--text-muted); font-size:14px; margin-bottom:16px;">
+                    {{ post.excerpt|truncatewords:22 }}
+                </p>
+
+                {% if post.tags.all %}
+                <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px;">
+                    {% for tag in post.tags.all %}
+                        <a href="{% url 'blog:tag_detail' tag.slug %}" style="font-size:11px; background:rgba(0,255,255,0.06); padding:2px 8px; border-radius:4px; color:#cbd5e1;">#{{ tag.name }}</a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:14px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:12px; color:var(--text-dim);"><i class="fa fa-user-o"></i> {{ post.author.display_name|default:"Mickael" }}</span>
+                <a href="{{ post.get_absolute_url }}" style="color:var(--accent-cyan); font-weight:700; font-size:13px;">Lire l'article &rarr;</a>
+            </div>
+        </article>
+        {% empty %}
+        <div class="glass-card" style="grid-column: 1 / -1; text-align:center; padding:50px;">
+            <i class="fa fa-pencil" style="font-size:40px; color:var(--text-dim); margin-bottom:16px;"></i>
+            <h3 style="margin-bottom:8px;">Aucun article trouvé</h3>
+            <p style="color:var(--text-muted); font-size:15px;">Aucun article ne correspond à votre recherche pour le moment.</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if page_obj.has_other_pages %}
+    <div style="display:flex; justify-content:center; gap:8px; margin-top:50px;">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_category %}&category={{ selected_category.slug }}{% endif %}" class="btn btn-outline btn-sm">&larr; Précédent</a>
+        {% endif %}
+
+        <span style="display:inline-flex; align-items:center; padding:0 14px; font-size:14px; color:var(--text-muted);">
+            Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_category %}&category={{ selected_category.slug }}{% endif %}" class="btn btn-outline btn-sm">Suivant &rarr;</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

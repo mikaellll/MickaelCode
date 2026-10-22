@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Catalogue des Formations Django & Web | MickaelCode{% endblock %}
+{% block meta_description %}Formations vidéo pratiques pour devenir développeur full-stack Python/Django autonome. Projets complets, architectures robustes, paiement sécurisé.{% endblock %}
+
+{% block content %}
+<div class="content-container" style="padding-top:40px; padding-bottom:70px;">
+    <div class="section-header">
+        <div class="section-subtitle">E-learning & Cursus</div>
+        <h1 class="section-title">Catalogue des Formations</h1>
+        <p class="section-desc">Des cursus structurés, pragmatiques et orientés production pour coder des applications solides avec Python et Django.</p>
+    </div>
+
+    <!-- Filter and Search -->
+    <div class="glass-card" style="padding:20px; margin-bottom:40px;">
+        <form method="get" action="{% url 'courses:course_list' %}" style="display:flex; flex-wrap:wrap; gap:16px; align-items:center;">
+            <div style="flex:1; min-width:240px;">
+                <input type="text" name="q" value="{{ search_query }}" class="form-control" placeholder="Rechercher une formation (ex: Django, API, Docker...)" id="course-search-input">
+            </div>
+
+            <div style="min-width:180px;">
+                <select name="level" class="form-control" onchange="this.form.submit()" id="course-level-select">
+                    <option value="">Tous les niveaux</option>
+                    {% for code, label in level_choices %}
+                    <option value="{{ code }}" {% if selected_level == code %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-cyan btn-sm">
+                <i class="fa fa-filter"></i> Filtrer
+            </button>
+            {% if search_query or selected_level %}
+                <a href="{% url 'courses:course_list' %}" class="btn btn-outline btn-sm">Réinitialiser</a>
+            {% endif %}
+        </form>
+    </div>
+
+    <!-- Courses Grid -->
+    <div class="grid-3">
+        {% for course in courses %}
+        <article class="glass-card" style="display:flex; flex-direction:column; justify-content:space-between;">
+            <div>
+                <div class="card-media">
+                    <a href="{{ course.get_absolute_url }}">
+                        {% if course.cover_image %}
+                            <img src="{{ course.cover_image.url }}" alt="{{ course.title }}">
+                        {% else %}
+                            <img src="{% static 'img/projects/magenta.png' %}" alt="{{ course.title }}">
+                        {% endif %}
+                    </a>
+                    <span class="badge badge-coral" style="position:absolute; top:12px; right:12px;">{{ course.get_level_display }}</span>
+                </div>
+
+                <div style="display:flex; gap:16px; color:var(--text-dim); font-size:12px; margin-bottom:10px;">
+                    <span><i class="fa fa-video-camera"></i> {{ course.total_lessons_count }} leçons</span>
+                    <span><i class="fa fa-clock-o"></i> ~{{ course.total_duration_minutes }} min</span>
+                </div>
+
+                <h2 style="font-size:21px; margin-bottom:10px; line-height:1.3;">
+                    <a href="{{ course.get_absolute_url }}">{{ course.title }}</a>
+                </h2>
+
+                <p style="color:var(--text-muted); font-size:14px; margin-bottom:16px;">
+                    {{ course.short_description|truncatewords:24 }}
+                </p>
+            </div>
+
+            <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:18px; display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <span style="font-size:24px; font-weight:700; color:var(--accent-cyan); font-family:'Righteous', cursive;">{{ course.price }} {{ course.currency }}</span>
+                    <span style="display:block; font-size:11px; color:var(--text-dim);">Accès à vie</span>
+                </div>
+
+                <a href="{{ course.get_absolute_url }}" class="btn btn-cyan btn-sm">Découvrir le cours</a>
+            </div>
+        </article>
+        {% empty %}
+        <div class="glass-card" style="grid-column: 1 / -1; text-align:center; padding:60px;">
+            <i class="fa fa-graduation-cap" style="font-size:48px; color:var(--text-dim); margin-bottom:16px;"></i>
+            <h3>Aucune formation trouvée</h3>
+            <p style="color:var(--text-muted); font-size:15px; margin-top:8px;">Aucun cours ne correspond actuellement à vos critères de recherche.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

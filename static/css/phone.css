@@ -1,0 +1,30 @@
+#btncontact {
+    top: 576px;
+    left: 6vw;
+    width: 108px;
+    height: 30px;
+}
+
+#box1{
+    left: 1vw;
+}
+
+#dev2 {
+    top: 133px;
+    letter-spacing: 10px;
+    left: 15px;
+    font-size: 49px;
+}
+
+#web2 {
+    font-size: 140px;
+}
+
+
+#pic img{
+    right: -186px;
+    opacity: 0.5;
+}
+
+
+   

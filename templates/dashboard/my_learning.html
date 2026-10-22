@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Mon Apprentissage & Progression | MickaelCode{% endblock %}
+{% block robots %}noindex, nofollow{% endblock %}
+
+{% block content %}
+<div class="content-container" style="padding-top:40px; padding-bottom:70px;">
+    {% include "dashboard/includes/nav_tabs.html" with active_tab="learning" %}
+
+    <div style="margin-bottom:30px;">
+        <h1 style="font-size:28px; margin-bottom:8px;">Historique d'Apprentissage</h1>
+        <p style="color:var(--text-muted); font-size:15px;">
+            Vous avez validé <strong style="color:var(--accent-cyan);">{{ completed_count }}</strong> leçon{{ completed_count|pluralize }} au total.
+        </p>
+    </div>
+
+    <div class="glass-card" style="padding:32px;">
+        {% if progresses %}
+        <div style="display:flex; flex-direction:column; gap:12px;">
+            {% for p in progresses %}
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:16px; background:rgba(0,0,0,0.4); border-radius:var(--radius-sm); border:1px solid rgba(255,255,255,0.06); flex-wrap:wrap; gap:12px;">
+                <div>
+                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:4px;">
+                        {% if p.is_completed %}
+                            <i class="fa fa-check-circle" style="color:#10b981; font-size:18px;"></i>
+                        {% else %}
+                            <i class="fa fa-clock-o" style="color:var(--accent-coral); font-size:18px;"></i>
+                        {% endif %}
+                        <span style="font-size:16px; font-weight:700; color:#ffffff;">{{ p.lesson.title }}</span>
+                    </div>
+                    <div style="font-size:12px; color:var(--text-dim); padding-left:28px;">
+                        Formation : {{ p.lesson.module.course.title }} &bull; Consulté {{ p.last_accessed_at|timesince }}
+                    </div>
+                </div>
+
+                <div style="display:flex; align-items:center; gap:16px;">
+                    {% if p.is_completed %}
+                        <span class="badge" style="background:rgba(16, 185, 129, 0.15); color:#10b981;">Validé le {{ p.completed_at|date:"d M Y" }}</span>
+                    {% else %}
+                        <span class="badge badge-coral">En cours</span>
+                    {% endif %}
+
+                    <a href="{% url 'courses:lesson_player' p.lesson.module.course.slug p.lesson.id %}" class="btn btn-outline btn-sm">
+                        Visionner
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div style="text-align:center; padding:40px; color:var(--text-muted);">
+            Vous n'avez pas encore commencé de leçon. Démarrez dès maintenant !
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Accès Verrouillé | {{ course.title }} - MickaelCode{% endblock %}
+{% block robots %}noindex, nofollow{% endblock %}
+
+{% block content %}
+<div class="content-narrow" style="padding: 80px 20px; text-align: center;">
+    <div class="glass-card" style="padding: 60px 40px;">
+        <div style="width:80px; height:80px; border-radius:50%; background:rgba(255, 99, 71, 0.15); border:2px solid var(--accent-coral); display:flex; align-items:center; justify-content:center; margin:0 auto 24px; color:var(--accent-coral); font-size:36px;">
+            <i class="fa fa-lock"></i>
+        </div>
+
+        <h1 style="font-size:30px; margin-bottom:14px;">Cette leçon est réservée aux inscrits</h1>
+
+        <p style="color:#cbd5e1; font-size:16px; max-width:540px; margin:0 auto 24px;">
+            La leçon <strong>« {{ lesson.title }} »</strong> fait partie du cursus complet <strong>« {{ course.title }} »</strong>.
+        </p>
+
+        <div style="background:rgba(0,0,0,0.4); border-radius:var(--radius-sm); padding:20px; max-width:440px; margin:0 auto 32px; border:1px solid rgba(0,255,255,0.2);">
+            <div style="font-size:13px; color:var(--text-muted); margin-bottom:4px;">Tarif de la formation complète</div>
+            <div style="font-size:36px; font-weight:700; color:var(--accent-cyan); font-family:'Righteous', cursive;">{{ course.price }} {{ course.currency }}</div>
+            <div style="font-size:12px; color:var(--text-dim); margin-top:4px;">Accès illimité à vie &bull; Mises à jour incluses &bull; Paiement sécurisé Stripe</div>
+        </div>
+
+        <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
+            <form method="post" action="{% url 'billing:create_checkout_session' course.slug %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-coral" id="btn-unlock-course">
+                    <i class="fa fa-shopping-cart"></i> Débloquer l'accès immédiat
+                </button>
+            </form>
+
+            <a href="{% url 'courses:course_detail' course.slug %}" class="btn btn-outline">
+                Voir le programme complet
+            </a>
+        </div>
+
+        {% if not user.is_authenticated %}
+        <div style="margin-top:28px; font-size:14px; color:var(--text-dim);">
+            Vous possédez déjà cette formation ? <a href="{% url 'accounts:login' %}?next={{ request.path }}" style="color:var(--accent-cyan); font-weight:700;">Connectez-vous pour y accéder</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

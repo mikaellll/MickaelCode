@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Mes Notifications | MickaelCode{% endblock %}
+{% block robots %}noindex, nofollow{% endblock %}
+
+{% block content %}
+<div class="content-container" style="padding-top:40px; padding-bottom:70px;">
+    {% include "dashboard/includes/nav_tabs.html" with active_tab="notifications" %}
+
+    <div style="margin-bottom:30px;">
+        <h1 style="font-size:28px; margin-bottom:8px;">Notifications & Mises à Jour</h1>
+        <p style="color:var(--text-muted); font-size:15px;">Informations importantes concernant vos formations et commandes.</p>
+    </div>
+
+    <div class="glass-card" style="padding:32px;">
+        {% if notifications %}
+        <div style="display:flex; flex-direction:column; gap:16px;">
+            {% for n in notifications %}
+            <div style="padding:18px; border-radius:var(--radius-sm); background:rgba(0,0,0,0.4); border-left:3px solid var(--accent-cyan); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                <div>
+                    <h3 style="font-size:17px; margin-bottom:6px; color:#ffffff;">{{ n.title }}</h3>
+                    <p style="color:var(--text-muted); font-size:14px; margin-bottom:6px;">{{ n.message }}</p>
+                    <div style="font-size:12px; color:var(--text-dim);">Reçu le {{ n.created_at|date:"d/m/Y à H:i" }}</div>
+                </div>
+
+                {% if n.link %}
+                <a href="{{ n.link }}" class="btn btn-outline btn-sm">Consulter &rarr;</a>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div style="text-align:center; padding:40px; color:var(--text-muted);">
+            Vous n'avez aucune notification pour le moment.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

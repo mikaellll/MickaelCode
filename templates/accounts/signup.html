@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}Créer un compte | MickaelCode{% endblock %}
+{% block meta_description %}Inscrivez-vous pour accéder à vos formations Django, suivre votre progression et rejoindre la communauté.{% endblock %}
+
+{% block content %}
+<div class="content-narrow" style="padding-top: 40px; padding-bottom: 60px;">
+    <div class="glass-card" style="padding: 40px;">
+        <div style="text-align:center; margin-bottom: 30px;">
+            <div class="section-subtitle">Rejoindre la plateforme</div>
+            <h1 style="font-size:32px; margin-bottom:8px;">Créer un Compte</h1>
+            <p style="color:var(--text-muted); font-size:15px;">Accédez à vos formations vidéo, vos exercices et votre progression.</p>
+        </div>
+
+        <form method="post" action="{% url 'accounts:signup' %}" id="signup-form" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="alert-banner alert-error" style="margin-bottom:20px;">
+                    {{ form.non_field_errors.0 }}
+                </div>
+            {% endif %}
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="{{ form.username.id_for_label }}" class="form-label">Nom d'utilisateur *</label>
+                    {{ form.username }}
+                    {% if form.username.errors %}<div class="form-error">{{ form.username.errors.0 }}</div>{% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.email.id_for_label }}" class="form-label">Adresse e-mail *</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}<div class="form-error">{{ form.email.errors.0 }}</div>{% endif %}
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="{{ form.first_name.id_for_label }}" class="form-label">Prénom</label>
+                    {{ form.first_name }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.last_name.id_for_label }}" class="form-label">Nom</label>
+                    {{ form.last_name }}
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="{{ form.password.id_for_label }}" class="form-label">Mot de passe *</label>
+                    {{ form.password }}
+                    {% if form.password.errors %}<div class="form-error">{{ form.password.errors.0 }}</div>{% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.password_confirm.id_for_label }}" class="form-label">Confirmation *</label>
+                    {{ form.password_confirm }}
+                    {% if form.password_confirm.errors %}<div class="form-error">{{ form.password_confirm.errors.0 }}</div>{% endif %}
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top:14px;">
+                <label class="checkbox-label">
+                    {{ form.terms_accepted }}
+                    <span>J'accepte les <a href="{% url 'core:cgu_cgv' %}" target="_blank">Conditions Générales</a> et la <a href="{% url 'core:privacy_policy' %}" target="_blank">Politique de Confidentialité</a>. *</span>
+                </label>
+                {% if form.terms_accepted.errors %}
+                    <div class="form-error">{{ form.terms_accepted.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label class="checkbox-label">
+                    {{ form.newsletter_accepted }}
+                    <span>Je souhaite recevoir les tutoriels techniques, analyses d'architecture et offres de MickaelCode (facultatif, non précoché).</span>
+                </label>
+            </div>
+
+            <div style="margin-top:28px;">
+                <button type="submit" class="btn btn-cyan btn-block" id="signup-submit-btn">
+                    <i class="fa fa-user-plus" aria-hidden="true"></i> Créer mon compte
+                </button>
+            </div>
+        </form>
+
+        <div style="text-align:center; margin-top:24px; color:var(--text-dim); font-size:14px;">
+            Vous avez déjà un compte ? <a href="{% url 'accounts:login' %}" style="color:var(--accent-cyan); font-weight:700;">Connectez-vous ici</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

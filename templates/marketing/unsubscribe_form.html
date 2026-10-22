@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Désinscription Newsletter | MickaelCode{% endblock %}
+{% block robots %}noindex, nofollow{% endblock %}
+
+{% block content %}
+<div class="content-narrow" style="padding-top:50px; padding-bottom:70px;">
+    <div class="glass-card" style="padding:40px;">
+        <h1 style="font-size:28px; margin-bottom:12px; text-align:center;">Se désinscrire de la newsletter</h1>
+        <p style="color:var(--text-muted); font-size:15px; text-align:center; margin-bottom:28px;">
+            Saisissez l'adresse email que vous souhaitez retirer de nos communications marketing.
+        </p>
+
+        <form method="post" action="{% url 'marketing:unsubscribe_view' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="unsub-email" class="form-label">Votre adresse email</label>
+                <input type="email" name="email" class="form-control" placeholder="nom@exemple.com" required id="unsub-email">
+            </div>
+
+            <div style="margin-top:24px;">
+                <button type="submit" class="btn btn-coral btn-block">Confirmer ma désinscription</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

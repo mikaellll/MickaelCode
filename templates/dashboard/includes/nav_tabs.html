@@ -1,0 +1,23 @@
+<div class="dashboard-tabs">
+    <a href="{% url 'dashboard:overview' %}" class="dashboard-tab-link {% if active_tab == 'overview' %}active{% endif %}">
+        <i class="fa fa-th-large"></i> Vue d'ensemble
+    </a>
+    <a href="{% url 'dashboard:my_courses' %}" class="dashboard-tab-link {% if active_tab == 'courses' %}active{% endif %}">
+        <i class="fa fa-graduation-cap"></i> Mes Formations ({{ ENROLLED_COURSES_COUNT }})
+    </a>
+    <a href="{% url 'dashboard:my_learning' %}" class="dashboard-tab-link {% if active_tab == 'learning' %}active{% endif %}">
+        <i class="fa fa-line-chart"></i> Mon Apprentissage
+    </a>
+    <a href="{% url 'dashboard:my_purchases' %}" class="dashboard-tab-link {% if active_tab == 'purchases' %}active{% endif %}">
+        <i class="fa fa-credit-card"></i> Mes Commandes
+    </a>
+    <a href="{% url 'accounts:profile' %}" class="dashboard-tab-link {% if active_tab == 'profile' %}active{% endif %}">
+        <i class="fa fa-user"></i> Mon Profil
+    </a>
+    <a href="{% url 'dashboard:notifications' %}" class="dashboard-tab-link {% if active_tab == 'notifications' %}active{% endif %}">
+        <i class="fa fa-bell"></i> Notifications
+        {% if UNREAD_NOTIFICATIONS_COUNT > 0 %}
+            <span class="badge badge-coral" style="font-size:10px; margin-left:4px;">{{ UNREAD_NOTIFICATIONS_COUNT }}</span>
+        {% endif %}
+    </a>
+</div>

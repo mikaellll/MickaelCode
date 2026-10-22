@@ -1,0 +1,17 @@
+{% if messages %}
+<div class="alert-container" id="system-alerts" role="status" aria-live="polite">
+    {% for message in messages %}
+    <div class="alert-banner alert-{{ message.tags|default:'info' }}">
+        <div class="alert-content">
+            {% if message.tags == 'error' %}
+                <i class="fa fa-exclamation-circle" aria-hidden="true" style="color: var(--accent-coral); margin-right: 8px;"></i>
+            {% else %}
+                <i class="fa fa-check-circle" aria-hidden="true" style="color: var(--accent-cyan); margin-right: 8px;"></i>
+            {% endif %}
+            <span>{{ message }}</span>
+        </div>
+        <button type="button" onclick="this.parentElement.remove()" style="background:none; border:none; color:#a0a0a0; cursor:pointer; font-size:16px; margin-left:12px;">&times;</button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}

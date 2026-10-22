@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Compétences & Expérience | MickaelCode{% endblock %}
+{% block meta_description %}Compétences techniques de Mickael : Django (90%), Python, Tailwind CSS (80%), Vue.js, React, PostgreSQL et architecture web.{% endblock %}
+
+{% block extra_css %}
+<style>
+.skills-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+    padding: 60px 0;
+}
+.skills-intro h1 {
+    font-size: clamp(36px, 5.5vw, 60px);
+    font-family: 'Righteous', cursive;
+    color: #ffffff;
+    margin-bottom: 24px;
+}
+.skills-intro p {
+    color: var(--text-muted);
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+.skills-intro a {
+    color: var(--accent-cyan);
+    font-weight: 700;
+}
+.skill-item {
+    margin-bottom: 24px;
+}
+.skill-label-wrap {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Righteous', cursive;
+}
+.skill-bar-track {
+    background: rgba(255, 255, 255, 0.08);
+    height: 12px;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(0, 255, 255, 0.15);
+}
+.skill-bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-coral));
+    transition: width 1.2s ease-in-out;
+    position: relative;
+}
+
+@media screen and (max-width: 868px) {
+    .skills-layout {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="content-container">
+    <div class="skills-layout">
+        <div class="skills-intro">
+            <div class="section-subtitle">Expertise technique</div>
+            <h1>Skills & <span>Experience</span></h1>
+            <p>
+                I create successful responsive websites that are fast, easy to use, and built with best practices.
+                The main area of my expertise is full-stack development, Python, Django, HTML, CSS, JS, building small and medium web apps, SaaS architectures, features, animations, and coding interactive layouts.
+            </p>
+            <p>
+                I also have strong experience with popular open-source CMS like WordPress, relational databases (PostgreSQL), and modern deployment pipelines (Docker, Railway, Linux).
+            </p>
+            <p>
+                Visit my <a href="{{ LINKEDIN_URL }}" target="_blank" rel="noopener noreferrer">LinkedIn</a> profile for more details or just <a href="{% url 'core:contact' %}">contact</a> me directly.
+            </p>
+
+            <div style="margin-top:32px;">
+                <a href="{% url 'core:contact' %}" class="btn btn-cyan" id="skills-btn-contact">Démarrer une collaboration</a>
+            </div>
+        </div>
+
+        <div class="glass-card" style="padding: 36px;">
+            <h3 style="margin-bottom:28px; font-size:22px; color:var(--accent-cyan);">Niveaux de Maîtrise</h3>
+
+            {% if skills %}
+                {% for skill in skills %}
+                <div class="skill-item">
+                    <div class="skill-label-wrap">
+                        <span style="color:#ffffff;">{{ skill.name }}</span>
+                        <span style="color:var(--accent-coral);">{{ skill.percentage }}%</span>
+                    </div>
+                    <div class="skill-bar-track">
+                        <div class="skill-bar-fill" style="width: {{ skill.percentage }}%;"></div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- Fallback to original skills values -->
+                <div class="skill-item">
+                    <div class="skill-label-wrap">
+                        <span style="color:#ffffff;">Django & Python</span>
+                        <span style="color:var(--accent-coral);">90%</span>
+                    </div>
+                    <div class="skill-bar-track">
+                        <div class="skill-bar-fill" style="width: 90%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-label-wrap">
+                        <span style="color:#ffffff;">Tailwind CSS</span>
+                        <span style="color:var(--accent-coral);">80%</span>
+                    </div>
+                    <div class="skill-bar-track">
+                        <div class="skill-bar-fill" style="width: 80%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-label-wrap">
+                        <span style="color:#ffffff;">Vue.js</span>
+                        <span style="color:var(--accent-coral);">65%</span>
+                    </div>
+                    <div class="skill-bar-track">
+                        <div class="skill-bar-fill" style="width: 65%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-label-wrap">
+                        <span style="color:#ffffff;">React.js</span>
+                        <span style="color:var(--accent-coral);">60%</span>
+                    </div>
+                    <div class="skill-bar-track">
+                        <div class="skill-bar-fill" style="width: 60%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-label-wrap">
+                        <span style="color:#ffffff;">Express.js & Node</span>
+                        <span style="color:var(--accent-coral);">60%</span>
+                    </div>
+                    <div class="skill-bar-track">
+                        <div class="skill-bar-fill" style="width: 60%;"></div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mickael | Développeur Web Full-Stack & Formateur Django Python{% endblock %}</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="{% block meta_description %}Portfolio et plateforme e-learning de Mickael, développeur full-stack Python & Django à Marseille. Formations vidéo, réalisations et articles techniques.{% endblock %}">
+    <meta name="author" content="Mickael">
+    <meta name="robots" content="{% block robots %}index, follow{% endblock %}">
+    <link rel="canonical" href="{% block canonical_url %}{{ request.build_absolute_uri }}{% endblock %}">
+
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:title" content="{% block og_title %}{% block title_og %}{{ block.super }}{% endblock %}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Mickael, développeur web full-stack, Django, Python, architectures SaaS et formations e-learning.{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'img/profil_portfolio.png' %}{% endblock %}">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}{{ block.super }}{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Mickael - Développeur Full-stack Python & Django.{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'img/profil_portfolio.png' %}{% endblock %}">
+
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300&family=Righteous&family=Roboto:wght@700;900&family=Sacramento&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{% static 'css/mickaelcode_app.css' %}">
+    {% block extra_css %}{% endblock %}
+
+    {% block structured_data %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "MickaelCode",
+      "url": "{{ SITE_URL }}",
+      "description": "Développement web full-stack Django Python, architecture SaaS et formations e-learning.",
+      "founder": {
+        "@type": "Person",
+        "name": "Mickael",
+        "jobTitle": "Lead Developer & Architecte Full-stack"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Marseille",
+        "addressCountry": "FR"
+      }
+    }
+    </script>
+    {% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+
+    <canvas id="demo-canvas" aria-hidden="true"></canvas>
+
+    <div class="floating-social" aria-label="Réseaux sociaux de Mickael">
+        <a href="{{ LINKEDIN_URL }}" target="_blank" rel="noopener noreferrer" title="LinkedIn" id="float-linkedin"><i class="fa fa-linkedin"></i></a>
+        <a href="{{ GITHUB_URL }}" target="_blank" rel="noopener noreferrer" title="GitHub" id="float-github"><i class="fa fa-github"></i></a>
+        <a href="{{ TWITTER_URL }}" target="_blank" rel="noopener noreferrer" title="Twitter" id="float-twitter"><i class="fa fa-twitter"></i></a>
+    </div>
+
+    <div class="site-wrapper">
+        {% include "includes/navbar.html" %}
+        {% include "includes/messages.html" %}
+
+        <main class="site-main" id="main-content">
+            {% block content %}{% endblock %}
+        </main>
+
+        {% include "includes/footer.html" %}
+    </div>
+
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

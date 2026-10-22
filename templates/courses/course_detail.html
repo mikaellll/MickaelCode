@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ course.meta_title|default:course.title }} | Formation MickaelCode{% endblock %}
+{% block meta_description %}{{ course.meta_description|default:course.short_description|truncatewords:28 }}{% endblock %}
+
+{% block content %}
+<div class="content-container" style="padding-top:40px; padding-bottom:70px;">
+
+    <!-- Course Header Hero -->
+    <div class="glass-card" style="padding:48px 36px; margin-bottom:40px;">
+        <div class="grid-2" style="align-items:center;">
+            <div>
+                <div style="display:flex; gap:10px; margin-bottom:14px;">
+                    <span class="badge badge-coral">{{ course.get_level_display }}</span>
+                    <span class="badge badge-cyan">{{ course.total_lessons_count }} leçons</span>
+                    <span class="badge" style="background:rgba(255,255,255,0.08); color:#cbd5e1;">~{{ course.total_duration_minutes }} minutes</span>
+                </div>
+
+                <h1 style="font-size: clamp(30px, 4.5vw, 44px); line-height:1.2; margin-bottom:18px;">
+                    {{ course.title }}
+                </h1>
+
+                <p style="color:#cbd5e1; font-size:17px; line-height:1.7; margin-bottom:28px;">
+                    {{ course.short_description }}
+                </p>
+
+                <div style="display:flex; align-items:center; gap:24px; flex-wrap:wrap;">
+                    <div>
+                        <span style="font-size:36px; font-weight:700; color:var(--accent-cyan); font-family:'Righteous', cursive;">{{ course.price }} {{ course.currency }}</span>
+                        <span style="display:block; font-size:12px; color:var(--text-dim);">Paiement unique &bull; Accès permanent</span>
+                    </div>
+
+                    {% if is_enrolled %}
+                        <div>
+                            {% if first_lesson %}
+                                <a href="{% url 'courses:lesson_player' course.slug first_lesson.id %}" class="btn btn-cyan">
+                                    <i class="fa fa-play"></i> Continuer la formation ({{ user_progress }}%)
+                                </a>
+                            {% else %}
+                                <span class="badge badge-cyan">Inscrit (cours en préparation)</span>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <form method="post" action="{% url 'billing:create_checkout_session' course.slug %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-coral" id="btn-buy-course">
+                                <i class="fa fa-shopping-cart"></i> Acheter la formation
+                            </button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card-media" style="margin-bottom:0; max-height:360px;">
+                {% if course.cover_image %}
+                    <img src="{{ course.cover_image.url }}" alt="{{ course.title }}">
+                {% else %}
+                    <img src="{% static 'img/projects/magenta.png' %}" alt="{{ course.title }}">
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Objectives & Description -->
+    <div class="grid-2" style="margin-bottom:48px; align-items:start;">
+        <div class="glass-card" style="padding:32px;">
+            <h3 style="color:var(--accent-cyan); margin-bottom:20px; font-size:22px;">
+                <i class="fa fa-check-square-o"></i> Ce que vous allez maîtriser
+            </h3>
+            <ul style="list-style:none; padding-left:0;">
+                {% for obj in course.objectives_list %}
+                <li style="display:flex; gap:12px; align-items:flex-start; margin-bottom:14px; font-size:15px; color:#e2e8f0;">
+                    <i class="fa fa-check" style="color:var(--accent-cyan); margin-top:4px;"></i>
+                    <span>{{ obj }}</span>
+                </li>
+                {% empty %}
+                <li style="color:var(--text-muted);">Compréhension approfondie de l'écosystème Django et mise en production.</li>
+                {% endfor %}
+            </ul>
+
+            {% if course.prerequisites %}
+            <div style="margin-top:24px; border-top:1px solid rgba(255,255,255,0.08); padding-top:16px;">
+                <h4 style="color:#ffffff; font-size:16px; margin-bottom:8px;"><i class="fa fa-info-circle"></i> Prérequis</h4>
+                <p style="color:var(--text-muted); font-size:14px; margin-bottom:0;">{{ course.prerequisites }}</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="glass-card" style="padding:32px;">
+            <h3 style="color:#ffffff; margin-bottom:16px; font-size:22px;">Description détaillée</h3>
+            <div class="markdown-body" style="font-size:15px;">
+                {{ course.render_description|safe }}
+            </div>
+        </div>
+    </div>
+
+    <!-- Syllabus / Curriculum -->
+    <div class="glass-card" style="padding:36px;">
+        <div style="margin-bottom:28px;">
+            <div class="section-subtitle">Programme pédagogique</div>
+            <h2 style="font-size:28px; margin-bottom:6px;">Syllabus complet du cursus</h2>
+            <p style="color:var(--text-muted); font-size:15px;">Parcourez les modules et testez les leçons gratuites en libre accès.</p>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:24px;">
+            {% for module in modules %}
+            <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); border-radius:var(--radius-sm); padding:24px;">
+                <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:12px; flex-wrap:wrap;">
+                    <h3 style="font-size:18px; color:var(--accent-cyan);">
+                        Module {{ module.order }} : {{ module.title }}
+                    </h3>
+                    <span style="font-size:12px; color:var(--text-dim);">{{ module.published_lessons.count }} leçons</span>
+                </div>
+
+                {% if module.description %}
+                    <p style="color:var(--text-muted); font-size:14px; margin-bottom:16px;">{{ module.description }}</p>
+                {% endif %}
+
+                <div style="display:flex; flex-direction:column; gap:8px;">
+                    {% for lesson in module.published_lessons %}
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:rgba(0,0,0,0.4); border-radius:4px;">
+                        <div style="display:flex; align-items:center; gap:12px;">
+                            {% if lesson.is_free_preview %}
+                                <i class="fa fa-play-circle" style="color:var(--accent-cyan);"></i>
+                            {% elif is_enrolled %}
+                                <i class="fa fa-unlock-alt" style="color:#10b981;"></i>
+                            {% else %}
+                                <i class="fa fa-lock" style="color:var(--text-dim);"></i>
+                            {% endif %}
+
+                            <span style="font-size:14px; color:#ffffff;">{{ lesson.title }}</span>
+                        </div>
+
+                        <div style="display:flex; align-items:center; gap:14px;">
+                            <span style="font-size:12px; color:var(--text-dim);"><i class="fa fa-clock-o"></i> {{ lesson.duration_minutes }} min</span>
+
+                            {% if lesson.is_free_preview %}
+                                <a href="{% url 'courses:lesson_player' course.slug lesson.id %}" class="btn btn-cyan btn-sm" style="padding:4px 10px; font-size:11px;">
+                                    Aperçu gratuit
+                                </a>
+                            {% elif is_enrolled %}
+                                <a href="{% url 'courses:lesson_player' course.slug lesson.id %}" class="btn btn-outline btn-sm" style="padding:4px 10px; font-size:11px;">
+                                    Regarder
+                                </a>
+                            {% else %}
+                                <span class="badge" style="background:rgba(255,255,255,0.06); color:var(--text-dim); font-size:11px;">Verrouillé</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div style="color:var(--text-dim); font-size:13px;">Leçons en cours de montage.</div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% empty %}
+            <p style="color:var(--text-muted);">Le programme détaillé est en cours de finalisation.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}

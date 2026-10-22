@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}Tableau de Bord Apprenant | MickaelCode{% endblock %}
+{% block robots %}noindex, nofollow{% endblock %}
+
+{% block content %}
+<div class="content-container" style="padding-top:40px; padding-bottom:70px;">
+
+    <!-- Welcome Hero -->
+    <div class="glass-card" style="padding:36px; margin-bottom:32px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;">
+        <div>
+            <div class="section-subtitle">Espace Personnel</div>
+            <h1 style="font-size:32px; margin-bottom:8px;">
+                Bienvenue, {{ user.display_name }} !
+            </h1>
+            <p style="color:var(--text-muted); font-size:15px; margin-bottom:0;">
+                Retrouvez l'accès direct à vos leçons, suivez votre avancée et découvrez les nouveautés.
+            </p>
+        </div>
+
+        <div style="display:flex; gap:16px;">
+            <a href="{% url 'courses:course_list' %}" class="btn btn-outline btn-sm">
+                <i class="fa fa-plus"></i> Explorer d'autres cours
+            </a>
+            <a href="{% url 'accounts:profile' %}" class="btn btn-cyan btn-sm">
+                <i class="fa fa-cog"></i> Gérer mon profil
+            </a>
+        </div>
+    </div>
+
+    {% include "dashboard/includes/nav_tabs.html" with active_tab="overview" %}
+
+    <!-- Resume Learning Banner if last progress exists -->
+    {% if last_progress %}
+    <div class="glass-card" style="padding:28px 32px; margin-bottom:36px; border-left:4px solid var(--accent-cyan); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+        <div>
+            <span class="badge badge-cyan" style="margin-bottom:8px;">Dernière leçon consultée</span>
+            <h3 style="font-size:20px; margin-bottom:4px; color:#ffffff;">{{ last_progress.lesson.title }}</h3>
+            <div style="font-size:13px; color:var(--text-dim);">
+                Formation : {{ last_progress.lesson.module.course.title }} &bull; Consulté {{ last_progress.last_accessed_at|timesince }}
+            </div>
+        </div>
+
+        <a href="{% url 'courses:lesson_player' last_progress.lesson.module.course.slug last_progress.lesson.id %}" class="btn btn-cyan">
+            <i class="fa fa-play"></i> Reprendre la lecture
+        </a>
+    </div>
+    {% endif %}
+
+    <!-- Enrolled Courses Progress Grid -->
+    <div style="margin-bottom:48px;">
+        <h2 style="font-size:24px; margin-bottom:20px; color:#ffffff;">Formations en cours</h2>
+
+        {% if enrolled_courses_data %}
+        <div class="grid-3">
+            {% for item in enrolled_courses_data %}
+            <article class="glass-card" style="display:flex; flex-direction:column; justify-content:space-between;">
+                <div>
+                    <h3 style="font-size:18px; margin-bottom:8px;">
+                        <a href="{{ item.course.get_absolute_url }}">{{ item.course.title }}</a>
+                    </h3>
+                    <div style="font-size:12px; color:var(--text-dim); margin-bottom:14px;">
+                        Inscrit le {{ item.enrolled_at|date:"d M Y" }}
+                    </div>
+
+                    <div style="margin-bottom:14px;">
+                        <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700;">
+                            <span style="color:var(--text-muted);">Progression</span>
+                            <span style="color:var(--accent-cyan);">{{ item.progress_pct }}%</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill" style="width: {{ item.progress_pct }}%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:14px; margin-top:10px;">
+                    {% if item.course.first_lesson %}
+                    <a href="{% url 'courses:lesson_player' item.course.slug item.course.first_lesson.id %}" class="btn btn-cyan btn-sm btn-block">
+                        Accéder aux leçons &rarr;
+                    </a>
+                    {% endif %}
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="glass-card" style="padding:40px; text-align:center;">
+            <i class="fa fa-book" style="font-size:40px; color:var(--text-dim); margin-bottom:14px;"></i>
+            <h3>Vous n'êtes inscrit à aucune formation pour le moment</h3>
+            <p style="color:var(--text-muted); font-size:15px; margin:8px auto 24px; max-width:440px;">
+                Découvrez nos cursus pratiques pour maîtriser le développement web moderne avec Django et Python.
+            </p>
+            <a href="{% url 'courses:course_list' %}" class="btn btn-cyan">
+                Découvrir le catalogue de formations
+            </a>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Suggested New Courses -->
+    {% if available_courses %}
+    <div>
+        <h2 style="font-size:24px; margin-bottom:20px; color:#ffffff;">Nouvelles formations disponibles</h2>
+        <div class="grid-3">
+            {% for c in available_courses %}
+            <article class="glass-card" style="display:flex; flex-direction:column; justify-content:space-between;">
+                <div>
+                    <span class="badge badge-coral" style="margin-bottom:10px;">{{ c.get_level_display }}</span>
+                    <h3 style="font-size:18px; margin-bottom:8px;"><a href="{{ c.get_absolute_url }}">{{ c.title }}</a></h3>
+                    <p style="color:var(--text-muted); font-size:13px;">{{ c.short_description|truncatewords:18 }}</p>
+                </div>
+                <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:14px; display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-weight:700; color:var(--accent-cyan); font-family:'Righteous', cursive;">{{ c.price }} €</span>
+                    <a href="{{ c.get_absolute_url }}" class="btn btn-outline btn-sm">En savoir plus</a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}

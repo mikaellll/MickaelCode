@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Paiement Non Finalisé | MickaelCode{% endblock %}
+{% block robots %}noindex, nofollow{% endblock %}
+
+{% block content %}
+<div class="content-narrow" style="padding-top:60px; padding-bottom:70px; text-align:center;">
+    <div class="glass-card" style="padding:50px 36px;">
+        <div style="width:75px; height:75px; border-radius:50%; background:rgba(255, 99, 71, 0.15); border:2px solid var(--accent-coral); display:flex; align-items:center; justify-content:center; margin:0 auto 20px; color:var(--accent-coral); font-size:36px;">
+            <i class="fa fa-times"></i>
+        </div>
+
+        <h1 style="font-size:30px; margin-bottom:12px;">Paiement non finalisé</h1>
+        <p style="color:var(--text-muted); font-size:16px; max-width:500px; margin:0 auto 30px;">
+            La session de paiement Stripe a été annulée. Aucun débit n'a été effectué sur votre compte bancaire.
+        </p>
+
+        <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
+            {% if course %}
+                <a href="{% url 'courses:course_detail' course.slug %}" class="btn btn-cyan">
+                    <i class="fa fa-arrow-left"></i> Revenir à la formation
+                </a>
+            {% else %}
+                <a href="{% url 'courses:course_list' %}" class="btn btn-cyan">
+                    <i class="fa fa-th-list"></i> Voir le catalogue
+                </a>
+            {% endif %}
+
+            <a href="{% url 'core:contact' %}" class="btn btn-outline">
+                <i class="fa fa-question-circle"></i> Besoin d'aide ?
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

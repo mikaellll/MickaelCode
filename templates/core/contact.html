@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Contact | MickaelCode - Parlons de votre projet{% endblock %}
+{% block meta_description %}Contactez Mickael pour une mission de développement Python/Django, un conseil en architecture logicielle ou des questions sur les formations.{% endblock %}
+
+{% block content %}
+<div class="content-container">
+    <div class="section-header" style="margin-top:40px;">
+        <div class="section-subtitle">Discutons</div>
+        <h1 class="section-title">Prendre Contact</h1>
+        <p class="section-desc">Un projet à concrétiser, un besoin d'expertise Django ou une question sur une formation ? Remplissez ce formulaire et je vous réponds sous 24 heures.</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns: 1fr 1.3fr; gap:40px; margin-bottom:60px;">
+        <!-- Contact Info Card -->
+        <div class="glass-card" style="display:flex; flex-direction:column; justify-content:space-between; padding:36px;">
+            <div>
+                <h3 style="color:var(--accent-cyan); font-size:24px; margin-bottom:18px;">Mickael</h3>
+                <p style="color:var(--text-muted); font-size:15px; margin-bottom:28px;">
+                    Développeur web senior & formateur.<br>
+                    Disponible pour missions d'architecture, audits techniques et accompagnement d'équipes de dev.
+                </p>
+
+                <div style="display:flex; flex-direction:column; gap:20px;">
+                    <div style="display:flex; align-items:center; gap:16px;">
+                        <div style="width:40px; height:40px; border-radius:50%; background:rgba(0,255,255,0.1); border:1px solid var(--accent-cyan); display:flex; align-items:center; justify-content:center; color:var(--accent-cyan);">
+                            <i class="fa fa-map-marker"></i>
+                        </div>
+                        <div>
+                            <div style="font-size:12px; color:var(--text-dim); text-transform:uppercase;">Localisation</div>
+                            <div style="color:#ffffff; font-weight:600;">Marseille, France</div>
+                        </div>
+                    </div>
+
+                    <div style="display:flex; align-items:center; gap:16px;">
+                        <div style="width:40px; height:40px; border-radius:50%; background:rgba(0,255,255,0.1); border:1px solid var(--accent-cyan); display:flex; align-items:center; justify-content:center; color:var(--accent-cyan);">
+                            <i class="fa fa-envelope-o"></i>
+                        </div>
+                        <div>
+                            <div style="font-size:12px; color:var(--text-dim); text-transform:uppercase;">Email Direct</div>
+                            <div style="color:#ffffff; font-weight:600;">contact@mickaelcode.com</div>
+                        </div>
+                    </div>
+
+                    <div style="display:flex; align-items:center; gap:16px;">
+                        <div style="width:40px; height:40px; border-radius:50%; background:rgba(0,255,255,0.1); border:1px solid var(--accent-cyan); display:flex; align-items:center; justify-content:center; color:var(--accent-cyan);">
+                            <i class="fa fa-linkedin"></i>
+                        </div>
+                        <div>
+                            <div style="font-size:12px; color:var(--text-dim); text-transform:uppercase;">Réseau Professionnel</div>
+                            <a href="{{ LINKEDIN_URL }}" target="_blank" rel="noopener noreferrer" style="color:var(--accent-cyan); font-weight:600;">Mickael sur LinkedIn</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top:30px; border-top:1px solid rgba(255,255,255,0.1); padding-top:20px;">
+                <span class="badge badge-coral">Réponse rapide garantie</span>
+            </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="glass-card" style="padding:36px;">
+            <form method="post" action="{% url 'core:contact' %}" id="contact-form" novalidate>
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="{{ form.name.id_for_label }}" class="form-label">Votre Nom *</label>
+                    {{ form.name }}
+                    {% if form.name.errors %}
+                        <div class="form-error">{{ form.name.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.email.id_for_label }}" class="form-label">Adresse Email *</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <div class="form-error">{{ form.email.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.subject.id_for_label }}" class="form-label">Objet du message</label>
+                    {{ form.subject }}
+                    {% if form.subject.errors %}
+                        <div class="form-error">{{ form.subject.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.message.id_for_label }}" class="form-label">Votre Message *</label>
+                    {{ form.message }}
+                    {% if form.message.errors %}
+                        <div class="form-error">{{ form.message.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div style="margin-top:28px;">
+                    <button type="submit" class="btn btn-cyan btn-block" id="contact-submit-btn">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i> Envoyer le message
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
