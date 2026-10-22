@@ -1,159 +1,186 @@
-{% extends "base.html" %}
 {% load static %}
+<!DOCTYPE html>
+<html lang="fr">
 
-{% block title %}Compétences & Expérience | MickaelCode{% endblock %}
-{% block meta_description %}Compétences techniques de Mickael : Django (90%), Python, Tailwind CSS (80%), Vue.js, React, PostgreSQL et architecture web.{% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mickael</title>
+     <!-- below is the link of font awesome icon  -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'css/master.css' %}">
+    <link rel="stylesheet" href="{% static 'css/skillstyle.css' %}">
+    <link rel="stylesheet" media="screen and (max-device-width: 608px)" href="{% static 'css/tablet.css' %}">
+    <link rel="stylesheet" media="screen and (max-device-width: 502px)" href="{% static 'css/phone.css' %}">
+</head>
 
-{% block extra_css %}
-<style>
-.skills-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 48px;
-    align-items: center;
-    padding: 60px 0;
-}
-.skills-intro h1 {
-    font-size: clamp(36px, 5.5vw, 60px);
-    font-family: 'Righteous', cursive;
-    color: #ffffff;
-    margin-bottom: 24px;
-}
-.skills-intro p {
-    color: var(--text-muted);
-    font-size: 16px;
-    line-height: 1.8;
-    margin-bottom: 20px;
-}
-.skills-intro a {
-    color: var(--accent-cyan);
-    font-weight: 700;
-}
-.skill-item {
-    margin-bottom: 24px;
-}
-.skill-label-wrap {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 8px;
-    font-size: 15px;
-    font-weight: 700;
-    font-family: 'Righteous', cursive;
-}
-.skill-bar-track {
-    background: rgba(255, 255, 255, 0.08);
-    height: 12px;
-    border-radius: 6px;
-    overflow: hidden;
-    position: relative;
-    border: 1px solid rgba(0, 255, 255, 0.15);
-}
-.skill-bar-fill {
-    height: 100%;
-    border-radius: 6px;
-    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-coral));
-    transition: width 1.2s ease-in-out;
-    position: relative;
-}
+<body>
 
-@media screen and (max-width: 868px) {
-    .skills-layout {
-        grid-template-columns: 1fr;
-    }
-}
-</style>
-{% endblock %}
+    <div id="container">
 
-{% block content %}
-<div class="content-container">
-    <div class="skills-layout">
-        <div class="skills-intro">
-            <div class="section-subtitle">Expertise technique</div>
-            <h1>Skills & <span>Experience</span></h1>
-            <p>
-                I create successful responsive websites that are fast, easy to use, and built with best practices.
-                The main area of my expertise is full-stack development, Python, Django, HTML, CSS, JS, building small and medium web apps, SaaS architectures, features, animations, and coding interactive layouts.
-            </p>
-            <p>
-                I also have strong experience with popular open-source CMS like WordPress, relational databases (PostgreSQL), and modern deployment pipelines (Docker, Railway, Linux).
-            </p>
-            <p>
-                Visit my <a href="{{ LINKEDIN_URL }}" target="_blank" rel="noopener noreferrer">LinkedIn</a> profile for more details or just <a href="{% url 'core:contact' %}">contact</a> me directly.
-            </p>
-
-            <div style="margin-top:32px;">
-                <a href="{% url 'core:contact' %}" class="btn btn-cyan" id="skills-btn-contact">Démarrer une collaboration</a>
+        <!--      creating navigation menu        -->
+        <div class="navbar">
+            <div id="nav">
+                <ul class="links">
+                    <li><a href="{% url 'core:home' %}">HOME</a></li>
+                    <li><a href="{% url 'core:about' %}">ABOUT</a></li>
+                    <li><a href="{% url 'core:work' %}">WORK</a></li>
+                    <li><a href="{% url 'core:skills' %}">SKILL</a></li>
+                    <li><a href="{% url 'core:contact' %}">CONTACT</a></li>
+                </ul>
             </div>
+
+        </div>
+        <!-- creating hamburger icon        -->
+        <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
         </div>
 
-        <div class="glass-card" style="padding: 36px;">
-            <h3 style="margin-bottom:28px; font-size:22px; color:var(--accent-cyan);">Niveaux de Maîtrise</h3>
 
-            {% if skills %}
-                {% for skill in skills %}
-                <div class="skill-item">
-                    <div class="skill-label-wrap">
-                        <span style="color:#ffffff;">{{ skill.name }}</span>
-                        <span style="color:var(--accent-coral);">{{ skill.percentage }}%</span>
-                    </div>
-                    <div class="skill-bar-track">
-                        <div class="skill-bar-fill" style="width: {{ skill.percentage }}%;"></div>
-                    </div>
-                </div>
-                {% endfor %}
-            {% else %}
-                <!-- Fallback to original skills values -->
-                <div class="skill-item">
-                    <div class="skill-label-wrap">
-                        <span style="color:#ffffff;">Django & Python</span>
-                        <span style="color:var(--accent-coral);">90%</span>
-                    </div>
-                    <div class="skill-bar-track">
-                        <div class="skill-bar-fill" style="width: 90%;"></div>
-                    </div>
-                </div>
-
-                <div class="skill-item">
-                    <div class="skill-label-wrap">
-                        <span style="color:#ffffff;">Tailwind CSS</span>
-                        <span style="color:var(--accent-coral);">80%</span>
-                    </div>
-                    <div class="skill-bar-track">
-                        <div class="skill-bar-fill" style="width: 80%;"></div>
-                    </div>
-                </div>
-
-                <div class="skill-item">
-                    <div class="skill-label-wrap">
-                        <span style="color:#ffffff;">Vue.js</span>
-                        <span style="color:var(--accent-coral);">65%</span>
-                    </div>
-                    <div class="skill-bar-track">
-                        <div class="skill-bar-fill" style="width: 65%;"></div>
-                    </div>
-                </div>
-
-                <div class="skill-item">
-                    <div class="skill-label-wrap">
-                        <span style="color:#ffffff;">React.js</span>
-                        <span style="color:var(--accent-coral);">60%</span>
-                    </div>
-                    <div class="skill-bar-track">
-                        <div class="skill-bar-fill" style="width: 60%;"></div>
-                    </div>
-                </div>
-
-                <div class="skill-item">
-                    <div class="skill-label-wrap">
-                        <span style="color:#ffffff;">Express.js & Node</span>
-                        <span style="color:var(--accent-coral);">60%</span>
-                    </div>
-                    <div class="skill-bar-track">
-                        <div class="skill-bar-fill" style="width: 60%;"></div>
-                    </div>
-                </div>
-            {% endif %}
+        <!-- adding social media icons     -->
+        <div id="follow">
+            <a href="{{ LINKEDIN_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-linkedin" aria-hidden="true"></i></a><br>
+            <a href="{{ GITHUB_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-github" aria-hidden="true"></i></a><br>
+            <a href="{{ TWITTER_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-twitter" aria-hidden="true"></i></a>
         </div>
+        <div id="develop">DEVELOP</div>
+        <div id="web">WEB</div>
+        <div id="dev">DEVELOPER</div>
+        <div id="fullstack">Full-stack</div>
+
+        
+        <!-- this box contain some in the right    -->
+        
+        <div id="box1">
+            
+        </div>
+
+        <div id="square1"></div>
+        <div id="square2"></div>
+        
+        
+        <!-- Adding skillbar in the right -->
+    
+        <div id="progressbar"></div>
+        
+        <div id="cont2">
+
+            <h1>skills & Experience</h1>
+            <p>I create successful responsive websites that are fast, easy to use, and built with best practices. The main area of my expertise is front-end development, HTML, CSS, JS, building small and medium web apps, features, animations, and coding interactive layouts.<br><br>
+            I also have a developper experience with popular open-source CMS like wordpress.<br>
+            <br>Visit my <a href="{{ LINKEDIN_URL }}" target="_blank" rel="noopener noreferrer">Linkedin</a> profile for more details or just <a href="{% url 'core:contact' %}">contact</a> me.</p>
+
+        </div>
+    
+        <div class="skillbox">
+            <p class="sk">Django</p>
+            <div class="container" data-aos="fade-right">
+                <div class="htmlbar bars" id="htBar">90%</div>
+                <div class="progress-line1 html">
+                    <span></span>
+                </div>
+            </div>
+
+            <p class="sk">Tailwind</p>
+            <div class="container" data-aos="fade-right">
+                <div class="cssbar bars" id="csBar">80%</div>
+                <div class="progress-line2 css">
+                    <span></span>
+                </div>
+            </div>
+
+            <p class="sk">Vue js</p>
+            <div class="container" data-aos="fade-right">
+                <div class="jsbar bars" id="jsBar">65%</div>
+                <div class="progress-line3 js">
+                    <span></span>
+                </div>
+            </div>
+
+            <p class="sk">React js</p>
+            <div class="container" data-aos="fade-right">
+                <div class="nodejsbar bars" id="nodeBar">60%</div>
+                <div class="progress-line4 nodejs">
+                    <span></span>
+                </div>
+            </div>
+
+            <p class="sk">Express.js</p>
+            <div class="container" data-aos="fade-right">
+                <div class="expressbar bars" id="expressBar">60%</div>
+                <div class="progress-line5 express">
+                    <span></span>
+                </div>
+            </div>
+
+        </div>
+
+        <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+        <script>
+            AOS.init({
+                duration: 1500
+            });
+        </script>
+    
+        <script>
+            let progress = document.getElementById('progressbar');
+            window.onscroll = function () {
+                let totalHeight = document.body.scrollHeight + window.innerHeight;
+                let progressHeight = (window.pageYOffset / totalHeight) * 28.1;
+                progress.style.display = 'revert';
+                progress.style.height = progressHeight + "%";
+                let flowBar1 = document.getElementById('htBar');
+                let flowBar2 = document.getElementById('csBar');
+                let flowBar3 = document.getElementById('jsBar');
+                let flowBar4 = document.getElementById('nodeBar');
+                let flowBar5 = document.getElementById('expressBar');
+                if (progressHeight > 5) {
+                    flowBar1.style.animationName = 'animateskillbar11';
+                    flowBar2.style.animationName = 'animateskillbar22';
+                    flowBar3.style.animationName = 'animateskillbar33';
+                    flowBar4.style.animationName = 'animateskillbar44';
+                    flowBar5.style.animationName = 'animateskillbar55';
+                }
+                else {
+                    flowBar1.style.animationName = 'animateskillbar1';
+                    flowBar2.style.animationName = 'animateskillbar2';
+                    flowBar3.style.animationName = 'animateskillbar3';
+                    flowBar4.style.animationName = 'animateskillbar4';
+                    flowBar5.style.animationName = 'animateskillbar5';
+                }
+            }
+        </script>
+
     </div>
-</div>
-{% endblock %}
+
+    <!-- javascript for functioning of sidebar menu  -->
+    <script>
+
+        const slide = () => {
+            const burger = document.querySelector('.burger');
+            const nav = document.querySelector('.navbar');
+            const navlinks = document.querySelectorAll('.links li');
+            burger.addEventListener('click', () => {
+                nav.classList.toggle('navbaract');
+
+                navlinks.forEach((link, index) => {
+
+                    if (link.style.animation) {
+                        link.style.animation = '';
+                    }
+                    else {
+                        link.style.animation = `navlinkfade 4s ease backwards ${index / 10}s`;
+                    }
+                });
+            });
+        }
+        slide();
+
+    </script>
+
+</body>
+
+</html>

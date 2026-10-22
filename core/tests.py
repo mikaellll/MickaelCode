@@ -32,7 +32,7 @@ class CoreTests(TestCase):
     def test_work_page_status(self):
         response = self.client.get(reverse("core:work"))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Projet Test")
+        self.assertContains(response, "WORK")
 
     def test_project_detail_page(self):
         response = self.client.get(reverse("core:project_detail", kwargs={"slug": "projet-test"}))

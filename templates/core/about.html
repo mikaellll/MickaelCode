@@ -1,157 +1,177 @@
-{% extends "base.html" %}
 {% load static %}
+<!DOCTYPE html>
+<html lang="fr">
 
-{% block title %}À propos de moi | MickaelCode - Développeur Full-Stack Marseille{% endblock %}
-{% block meta_description %}Découvrez le parcours de Mickael, développeur full-stack situé à Marseille, passionné par Python, Django, l'UX technique et l'enseignement.{% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mickael</title>
+     <!-- below is the link of font awesome icon  -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'css/master.css' %}">
+    <link rel="stylesheet" media="screen and (max-device-width: 608px)" href="{% static 'css/tablet.css' %}">
+    <link rel="stylesheet" media="screen and (max-device-width: 502px)" href="{% static 'css/phone_about.css' %}">
+    <link rel="stylesheet" href="{% static 'css/formstyle.css' %}">
+</head>
 
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/formstyle.css' %}">
-<style>
-.about-hero {
-    position: relative;
-    padding: 60px 0;
-}
-.about-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 50px;
-    align-items: center;
-}
-.about-card {
-    position: relative;
-    z-index: 2;
-}
-.about-headline {
-    font-size: clamp(38px, 6vw, 64px);
-    font-family: 'Righteous', cursive;
-    color: #ffffff;
-    margin-bottom: 24px;
-}
-.about-headline span {
-    color: var(--accent-coral);
-}
-.about-lead {
-    font-size: 20px;
-    line-height: 1.5;
-    color: #f1f5f9;
-    border-left: 3px solid var(--accent-cyan);
-    padding-left: 20px;
-    margin-bottom: 28px;
-    font-family: 'Lato', sans-serif;
-}
-.about-text {
-    color: var(--text-muted);
-    font-size: 16px;
-    line-height: 1.8;
-    margin-bottom: 20px;
-}
-.animated-dot-canvas-wrap {
-    position: relative;
-    min-height: 420px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--border-color);
-    background: rgba(16, 22, 30, 0.4);
-    overflow: hidden;
-}
-</style>
-{% endblock %}
+<body>
 
-{% block content %}
-<div class="content-container">
-    <section class="about-hero">
-        <div class="about-grid">
-            <div class="about-card">
-                <div class="section-subtitle">Qui suis-je ?</div>
-                <h1 class="about-headline">My<span>self</span></h1>
+    <div id="container">
 
-                <div class="about-lead">
-                    I’m a Full-stack Developer located in <strong>Marseille</strong>. I have a serious passion for UI effects, animations and creating intuitive, dynamic user experiences.
-                </div>
-
-                <div class="about-text">
-                    <p>Well-organised person, problem solver, independent engineer with high attention to detail. Fan of MMA, outdoor activities, TV series and french literature. A family person and father of two fractious children.</p>
-                </div>
-
-                <div class="about-text">
-                    <p>Interested in the entire fullstack spectrum and working on ambitious projects with positive people. Mon objectif quotidien est de concevoir des architectures informatiques pérennes, des interfaces agréables et de transmettre les compétences réelles du développement web moderne.</p>
-                </div>
-
-                <div style="display:flex; gap:16px; margin-top:32px;">
-                    <a href="{% url 'core:contact' %}" class="btn btn-cyan" id="about-btn-contact">Discuter d'un projet</a>
-                    <a href="{% url 'courses:course_list' %}" class="btn btn-outline" id="about-btn-courses">Voir mes formations</a>
-                </div>
+        <!--      creating navigation menu        -->
+        <div class="navbar">
+            <div id="nav">
+                <ul class="links">
+                    <li><a href="{% url 'core:home' %}">HOME</a></li>
+                    <li><a href="{% url 'core:about' %}">ABOUT</a></li>
+                    <li><a href="{% url 'core:work' %}">WORK</a></li>
+                    <li><a href="{% url 'core:skills' %}">SKILL</a></li>
+                    <li><a href="{% url 'core:contact' %}">CONTACT</a></li>
+                </ul>
             </div>
 
-            <!-- Original background canvas dots preserved -->
-            <div class="animated-dot-canvas-wrap">
-                <div class="canvas canvas--aqua">
-                    <div class="dot dot--dot1"></div>
-                    <div class="dot dot--dot2"></div>
-                    <div class="dot dot--dot3"></div>
-                    <div class="dot dot--dot4"></div>
-                    <div class="dot dot--dot5"></div>
-                    <div class="dot dot--dot6"></div>
-                    <div class="dot dot--dot7"></div>
-                    <div class="dot dot--dot8"></div>
-                    <div class="dot dot--dot9"></div>
-                    <div class="dot dot--dot10"></div>
-                </div>
-                <div class="canvas canvas--gold">
-                    <div class="dot dot--dot11"></div>
-                    <div class="dot dot--dot12"></div>
-                    <div class="dot dot--dot13"></div>
-                    <div class="dot dot--dot14"></div>
-                    <div class="dot dot--dot15"></div>
-                    <div class="dot dot--dot16"></div>
-                    <div class="dot dot--dot17"></div>
-                    <div class="dot dot--dot18"></div>
-                    <div class="dot dot--dot19"></div>
-                    <div class="dot dot--dot20"></div>
-                </div>
-                <div class="canvas canvas--tomato">
-                    <div class="dot dot--dot21"></div>
-                    <div class="dot dot--dot22"></div>
-                    <div class="dot dot--dot23"></div>
-                    <div class="dot dot--dot24"></div>
-                    <div class="dot dot--dot25"></div>
-                    <div class="dot dot--dot26"></div>
-                    <div class="dot dot--dot27"></div>
-                    <div class="dot dot--dot28"></div>
-                    <div class="dot dot--dot29"></div>
-                    <div class="dot dot--dot30"></div>
-                </div>
-            </div>
         </div>
-    </section>
-
-    <!-- TIMELINE & ENGAGEMENT -->
-    <section style="padding: 60px 0;">
-        <div class="section-header">
-            <div class="section-subtitle">Philosophie de développement</div>
-            <h2 class="section-title">Pourquoi le stack Python & Django ?</h2>
-            <p class="section-desc">Après des années d'expérience web, Django reste pour moi le standard absolu de productivité, robustesse et sécurité.</p>
+        <!-- creating hamburger icon        -->
+        <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
         </div>
 
-        <div class="grid-3">
-            <div class="glass-card">
-                <i class="fa fa-shield" style="font-size:32px; color:var(--accent-cyan); margin-bottom:16px;"></i>
-                <h3>Sécurité Native</h3>
-                <p style="color:var(--text-muted); font-size:14px;">Protection CSRF, injections SQL neutralisées, gestion sécurisée des sessions et hashing cryptographique éprouvé.</p>
-            </div>
-            <div class="glass-card">
-                <i class="fa fa-bolt" style="font-size:32px; color:var(--accent-coral); margin-bottom:16px;"></i>
-                <h3>Rendu Serveur Rapide</h3>
-                <p style="color:var(--text-muted); font-size:14px;">Django Templates pour un SEO optimal, des temps de chargement éclair et un code compréhensible sans complexité superflue.</p>
-            </div>
-            <div class="glass-card">
-                <i class="fa fa-database" style="font-size:32px; color:var(--accent-cyan); margin-bottom:16px;"></i>
-                <h3>Architecture Modulaire</h3>
-                <p style="color:var(--text-muted); font-size:14px;">Applications découplées, migrations fiables, ORM performant et maintenance aisée sur le long terme.</p>
-            </div>
+
+        <!-- adding social media icons     -->
+        <div id="follow">
+            <a href="{{ LINKEDIN_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-linkedin" aria-hidden="true"></i></a><br>
+            <a href="#" style="color:inherit;"><i class="fa fa-facebook-official" aria-hidden="true"></i></a><br>
+            <a href="{{ TWITTER_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-twitter" aria-hidden="true"></i></a>
         </div>
-    </section>
-</div>
-{% endblock %}
+        <div id="develop">DEVELOP</div>
+        <div id="web">WEB</div>
+        <div id="dev">DEVELOPER</div>
+        <div id="fullstack">Full-stack</div>
+        <!-- this box contain some information    -->
+        
+        <div id="box1">
+            <div id="dev2">Myself</div>
+            <div id="vl"></div>
+            <div id="hello">I’m a Full-stack Developer located in Marseille. I have a serious passion for UI effects, animations and creating intuitive, dynamic user experiences.</div>
+            <div id="me"><p>Well-organised person, problem solver, independent employee with high attention to detail. Fan of MMA, outdoor activities, TV series and french literature. A family person and father of two fractious children,</p>
+            <p>Interested in the entire fullstack spectrum and working on ambitious projects with positive people.</p></div>
+            
+
+        </div>
+
+        <div id="square1"></div>
+        <div id="square2"></div>
+        
+        <!-- creating button     -->
+        <button id="btncontact" type="button" onclick="location.href='{% url 'core:contact' %}'">contact</button>
+
+        <!-- Adding form effect in background -->
+        <div id="pic">
+
+            <div class="canvas canvas--aqua">
+                <div class="dot dot--dot1"></div>
+                <div class="dot dot--dot2"></div>
+                <div class="dot dot--dot3"></div>
+                <div class="dot dot--dot4"></div>
+                <div class="dot dot--dot5"></div>
+                <div class="dot dot--dot6"></div>
+                <div class="dot dot--dot7"></div>
+                <div class="dot dot--dot8"></div>
+                <div class="dot dot--dot9"></div>
+                <div class="dot dot--dot10"></div>
+            </div>
+            <div class="canvas canvas--gold">
+                <div class="dot dot--dot11"></div>
+                <div class="dot dot--dot12"></div>
+                <div class="dot dot--dot13"></div>
+                <div class="dot dot--dot14"></div>
+                <div class="dot dot--dot15"></div>
+                <div class="dot dot--dot16"></div>
+                <div class="dot dot--dot17"></div>
+                <div class="dot dot--dot18"></div>
+                <div class="dot dot--dot19"></div>
+                <div class="dot dot--dot20"></div>
+            </div>
+            <div class="canvas canvas--tomato">
+                <div class="dot dot--dot21"></div>
+                <div class="dot dot--dot22"></div>
+                <div class="dot dot--dot23"></div>
+                <div class="dot dot--dot24"></div>
+                <div class="dot dot--dot25"></div>
+                <div class="dot dot--dot26"></div>
+                <div class="dot dot--dot27"></div>
+                <div class="dot dot--dot28"></div>
+                <div class="dot dot--dot29"></div>
+                <div class="dot dot--dot30"></div>
+            </div><div class="canvas canvas--aqua">
+                <div class="dot dot--dot1"></div>
+                <div class="dot dot--dot2"></div>
+                <div class="dot dot--dot3"></div>
+                <div class="dot dot--dot4"></div>
+                <div class="dot dot--dot5"></div>
+                <div class="dot dot--dot6"></div>
+                <div class="dot dot--dot7"></div>
+                <div class="dot dot--dot8"></div>
+                <div class="dot dot--dot9"></div>
+                <div class="dot dot--dot10"></div>
+            </div>
+            <div class="canvas canvas--gold">
+                <div class="dot dot--dot11"></div>
+                <div class="dot dot--dot12"></div>
+                <div class="dot dot--dot13"></div>
+                <div class="dot dot--dot14"></div>
+                <div class="dot dot--dot15"></div>
+                <div class="dot dot--dot16"></div>
+                <div class="dot dot--dot17"></div>
+                <div class="dot dot--dot18"></div>
+                <div class="dot dot--dot19"></div>
+                <div class="dot dot--dot20"></div>
+            </div>
+            <div class="canvas canvas--tomato">
+                <div class="dot dot--dot21"></div>
+                <div class="dot dot--dot22"></div>
+                <div class="dot dot--dot23"></div>
+                <div class="dot dot--dot24"></div>
+                <div class="dot dot--dot25"></div>
+                <div class="dot dot--dot26"></div>
+                <div class="dot dot--dot27"></div>
+                <div class="dot dot--dot28"></div>
+                <div class="dot dot--dot29"></div>
+                <div class="dot dot--dot30"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- javascript for functioning of sidebar menu  -->
+    <script>
+
+        const slide = () => {
+            const burger = document.querySelector('.burger');
+            const nav = document.querySelector('.navbar');
+            const navlinks = document.querySelectorAll('.links li');
+            burger.addEventListener('click', () => {
+                nav.classList.toggle('navbaract');
+
+                navlinks.forEach((link, index) => {
+
+                    if (link.style.animation) {
+                        link.style.animation = '';
+                    }
+                    else {
+                        link.style.animation = `navlinkfade 4s ease backwards ${index / 10}s`;
+                    }
+                });
+            });
+        }
+        slide();
+
+    </script>
+
+</body>
+
+</html>
