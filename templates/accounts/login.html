@@ -1,55 +1,150 @@
-{% extends "base.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
 
-{% block title %}Connexion Apprenant | MickaelCode{% endblock %}
-{% block meta_description %}Connectez-vous à votre espace personnel MickaelCode pour retrouver vos formations et cours vidéo.{% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion | Mickael</title>
+    <!-- Font awesome icon -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" media="screen and (max-device-width: 608px)" href="{% static 'css/tablet.css' %}">
+    <link rel="stylesheet" media="screen and (max-device-width: 502px)" href="{% static 'css/phone.css' %}">
+    <style>
+        #container.auth-page-container {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            height: auto;
+            overflow-y: auto;
+            overflow-x: hidden;
+            background-color: #000000;
+        }
+    </style>
+</head>
 
-{% block content %}
-<div class="content-narrow" style="padding-top: 50px; padding-bottom: 70px;">
-    <div class="glass-card" style="padding: 44px;">
-        <div style="text-align:center; margin-bottom: 32px;">
-            <div class="section-subtitle">Espace Membre</div>
-            <h1 style="font-size:32px; margin-bottom:8px;">Connexion</h1>
-            <p style="color:var(--text-muted); font-size:15px;">Accédez à votre tableau de bord et reprenez votre apprentissage.</p>
+<body>
+
+    <div id="container" class="auth-page-container">
+
+        <!-- Navigation Menu -->
+        <div class="navbar">
+            <div id="nav">
+                <ul class="links">
+                    <li><a href="{% url 'core:home' %}">HOME</a></li>
+                    <li><a href="{% url 'core:about' %}">ABOUT</a></li>
+                    <li><a href="{% url 'core:work' %}">WORK</a></li>
+                    <li><a href="{% url 'core:skills' %}">SKILL</a></li>
+                    <li><a href="{% url 'blog:post_list' %}">BLOG</a></li>
+                    <li><a href="{% url 'courses:course_list' %}">FORMATIONS</a></li>
+                    <li><a href="{% url 'core:contact' %}">CONTACT</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'dashboard:overview' %}">DASHBOARD</a></li>
+                    <li><a href="{% url 'accounts:logout' %}">LOGOUT</a></li>
+                    {% else %}
+                    <li><a href="{% url 'accounts:login' %}" class="nvg">SIGN IN</a></li>
+                    <li><a href="{% url 'accounts:signup' %}">SIGN UP</a></li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
 
-        <form method="post" action="{% url 'accounts:login' %}{% if next %}?next={{ next }}{% endif %}" id="login-form" novalidate>
-            {% csrf_token %}
-
-            {% if form.non_field_errors %}
-                <div class="alert-banner alert-error" style="margin-bottom:20px;">
-                    {{ form.non_field_errors.0 }}
-                </div>
-            {% endif %}
-
-            <div class="form-group">
-                <label for="{{ form.login.id_for_label }}" class="form-label">Email ou Nom d'utilisateur *</label>
-                {{ form.login }}
-                {% if form.login.errors %}
-                    <div class="form-error">{{ form.login.errors.0 }}</div>
-                {% endif %}
-            </div>
-
-            <div class="form-group">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                    <label for="{{ form.password.id_for_label }}" class="form-label" style="margin-bottom:0;">Mot de passe *</label>
-                    <a href="{% url 'accounts:password_reset' %}" style="font-size:12px; color:var(--accent-coral);">Mot de passe oublié ?</a>
-                </div>
-                {{ form.password }}
-                {% if form.password.errors %}
-                    <div class="form-error">{{ form.password.errors.0 }}</div>
-                {% endif %}
-            </div>
-
-            <div style="margin-top:28px;">
-                <button type="submit" class="btn btn-cyan btn-block" id="login-submit-btn">
-                    <i class="fa fa-sign-in" aria-hidden="true"></i> Se connecter
-                </button>
-            </div>
-        </form>
-
-        <div style="text-align:center; margin-top:24px; color:var(--text-dim); font-size:14px;">
-            Pas encore de compte ? <a href="{% url 'accounts:signup' %}" style="color:var(--accent-cyan); font-weight:700;">Créer un compte apprenant</a>
+        <!-- Hamburger Icon -->
+        <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
         </div>
+
+        <!-- Social Media Icons -->
+        <div id="follow">
+            <a href="{{ LINKEDIN_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-linkedin" aria-hidden="true"></i></a><br>
+            <a href="{{ GITHUB_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-github" aria-hidden="true"></i></a><br>
+            <a href="{{ TWITTER_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+        </div>
+
+        <!-- Background Typography Elements -->
+        <div id="develop">DEVELOP</div>
+        <div id="web">WEB</div>
+        <div id="dev">DEVELOPER</div>
+        <div id="fullstack">Full-stack</div>
+
+        <div id="square1"></div>
+        <div id="square2"></div>
+
+        <!-- Sober Auth Form Container -->
+        <div class="auth-wrapper">
+            <div class="auth-box">
+                <div class="auth-tabs">
+                    <a href="{% url 'accounts:login' %}" class="auth-tab-link active">SIGN IN</a>
+                    <a href="{% url 'accounts:signup' %}" class="auth-tab-link">SIGN UP</a>
+                </div>
+
+                <div class="auth-title">CONNEXION</div>
+                <div class="auth-subtitle">Accédez à votre espace apprenant</div>
+
+                {% if form.non_field_errors %}
+                    <div class="auth-alert">
+                        {{ form.non_field_errors.0 }}
+                    </div>
+                {% endif %}
+
+                <form method="post" action="{% url 'accounts:login' %}{% if next %}?next={{ next }}{% endif %}" id="login-form" novalidate>
+                    {% csrf_token %}
+
+                    <div class="auth-form-group">
+                        <label for="login-identifier" class="auth-form-label">Email ou Nom d'utilisateur</label>
+                        <input type="text" name="login" class="auth-form-control" id="login-identifier" placeholder="Votre email ou pseudo" value="{{ form.login.value|default:'' }}" required autocomplete="username">
+                        {% if form.login.errors %}
+                            <div class="auth-error-msg">{{ form.login.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="auth-form-group">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <label for="login-password" class="auth-form-label" style="margin-bottom:0;">Mot de passe</label>
+                            <a href="{% url 'accounts:password_reset' %}" style="font-size:11px; color:#ff6347; text-decoration:none;">Oublié ?</a>
+                        </div>
+                        <input type="password" name="password" class="auth-form-control" id="login-password" placeholder="Votre mot de passe" required autocomplete="current-password" style="margin-top:6px;">
+                        {% if form.password.errors %}
+                            <div class="auth-error-msg">{{ form.password.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="auth-submit-btn" id="login-submit-btn">SE CONNECTER</button>
+                </form>
+
+                <div class="auth-footer-links">
+                    Pas encore de compte ? <a href="{% url 'accounts:signup' %}">S'inscrire</a>
+                </div>
+            </div>
+        </div>
+
     </div>
-</div>
-{% endblock %}
+
+    <!-- Javascript for functioning of sidebar menu -->
+    <script>
+        const slide = () => {
+            const burger = document.querySelector('.burger');
+            const nav = document.querySelector('.navbar');
+            const navlinks = document.querySelectorAll('.links li');
+            burger.addEventListener('click', () => {
+                nav.classList.toggle('navbaract');
+
+                navlinks.forEach((link, index) => {
+                    if (link.style.animation) {
+                        link.style.animation = '';
+                    } else {
+                        link.style.animation = `navlinkfade 4s ease backwards ${index / 10}s`;
+                    }
+                });
+            });
+        }
+        slide();
+    </script>
+
+</body>
+
+</html>

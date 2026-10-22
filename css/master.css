@@ -53,7 +53,7 @@ body{
     text-decoration: none;
     letter-spacing: 0.5px;
     color: #a0a0a0;
-    
+    white-space: nowrap;
 }
 
     /* animation of side bar navigation menu links      */
