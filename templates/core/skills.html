@@ -9,10 +9,32 @@
     <title>Mickael</title>
      <!-- below is the link of font awesome icon  -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{% static 'css/master.css' %}">
-    <link rel="stylesheet" href="{% static 'css/skillstyle.css' %}">
-    <link rel="stylesheet" media="screen and (max-device-width: 608px)" href="{% static 'css/tablet.css' %}">
-    <link rel="stylesheet" media="screen and (max-device-width: 502px)" href="{% static 'css/phone.css' %}">
+    <link rel="stylesheet" href="{% static 'css/master.css' %}?v=20261023">
+    <link rel="stylesheet" href="{% static 'css/skillstyle.css' %}?v=20261023">
+    <link rel="stylesheet" media="screen and (max-device-width: 608px)" href="{% static 'css/tablet.css' %}?v=20261023">
+    <link rel="stylesheet" media="screen and (max-device-width: 502px)" href="{% static 'css/phone.css' %}?v=20261023">
+    <style>
+        #nav ul li { width: auto !important; margin-inline: 10px !important; white-space: nowrap !important; }
+        #nav ul li a.signin-btn {
+            display: inline-block !important;
+            border: 1.5px solid #00FFFF !important;
+            border-radius: 20px !important;
+            padding: 3px 14px !important;
+            color: #00FFFF !important;
+            font-size: 13px !important;
+            letter-spacing: 0.8px !important;
+            white-space: nowrap !important;
+            text-decoration: none !important;
+            transition: all 0.3s ease !important;
+        }
+        #nav ul li a.signin-btn:hover {
+            background-color: #ff6347 !important;
+            border-color: #ff6347 !important;
+            color: #ffffff !important;
+            box-shadow: 0 0 12px rgba(255, 99, 71, 0.4) !important;
+        }
+        #nav ul li a.signin-btn:after { display: none !important; }
+    </style>
 </head>
 
 <body>

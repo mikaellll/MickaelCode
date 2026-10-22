@@ -6,13 +6,30 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription | Mickael</title>
+    <title>Inscription | MickaelCode</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Righteous&family=Roboto:wght@900&display=swap" rel="stylesheet">
     <!-- Font awesome icon -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" media="screen and (max-device-width: 608px)" href="{% static 'css/tablet.css' %}">
-    <link rel="stylesheet" media="screen and (max-device-width: 502px)" href="{% static 'css/phone.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20261023">
+    <link rel="stylesheet" media="screen and (max-device-width: 608px)" href="{% static 'css/tablet.css' %}?v=20261023">
+    <link rel="stylesheet" media="screen and (max-device-width: 502px)" href="{% static 'css/phone.css' %}?v=20261023">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Lato', sans-serif;
+            overflow-x: hidden;
+        }
+
         #container.auth-page-container {
             position: relative;
             width: 100%;
@@ -21,6 +38,333 @@
             overflow-y: auto;
             overflow-x: hidden;
             background-color: #000000;
+        }
+
+        /* Top Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 52px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 30;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        #nav {
+            position: static;
+        }
+
+        #nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #nav ul li {
+            position: relative;
+            margin-inline: 12px;
+            font-family: 'Lato', sans-serif;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        #nav ul li a {
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            color: #a0a0a0;
+            white-space: nowrap;
+            transition: color 0.25s ease;
+        }
+
+        #nav ul li a:hover {
+            color: #ffffff;
+        }
+
+        #nav ul li a.nvg {
+            color: #ffffff !important;
+        }
+
+        #nav ul li a.nvg:after {
+            content: "";
+            position: absolute;
+            background-color: #00FFFF;
+            height: 1px;
+            width: 100%;
+            left: 0;
+            top: 22px;
+        }
+
+        #nav ul li a.signin-btn {
+            display: inline-block;
+            border: 1.5px solid #00FFFF;
+            border-radius: 20px;
+            padding: 4px 16px;
+            color: #00FFFF !important;
+            font-size: 13px;
+            font-family: 'Righteous', cursive;
+            letter-spacing: 1px;
+            text-decoration: none !important;
+            white-space: nowrap !important;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        #nav ul li a.signin-btn:after {
+            display: none !important;
+        }
+
+        #nav ul li a.signin-btn:hover {
+            background-color: #ff6347;
+            border-color: #ff6347;
+            color: #ffffff !important;
+            box-shadow: 0 0 15px rgba(255, 99, 71, 0.5);
+        }
+
+        /* Lateral Social Icons */
+        #follow {
+            position: fixed;
+            top: 271px;
+            right: 18px;
+            z-index: 25;
+            text-align: center;
+        }
+
+        #follow i {
+            font-size: 24px;
+            color: #FFFFFF;
+            margin-top: 16px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: block;
+        }
+
+        #follow i:hover {
+            color: #00FFFF;
+            transform: scale(1.15);
+        }
+
+        /* Background Typography & Squares */
+        #develop, #web, #dev, #fullstack, #square1, #square2 {
+            pointer-events: none !important;
+            user-select: none !important;
+        }
+
+        /* Sober Auth Form Container */
+        .auth-wrapper {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 85px 20px 45px 20px;
+            z-index: 10;
+        }
+
+        .auth-box {
+            width: 100%;
+            max-width: 460px;
+            background: rgba(10, 10, 10, 0.94);
+            border: 1.5px solid rgba(0, 255, 255, 0.4);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.95), 0 0 30px rgba(0, 255, 255, 0.12);
+            border-radius: 10px;
+            padding: 36px 32px;
+            color: #ffffff;
+            font-family: 'Lato', sans-serif;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 15;
+        }
+
+        .auth-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 36px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid #222222;
+            padding-bottom: 12px;
+        }
+
+        .auth-tab-link {
+            font-family: 'Righteous', cursive;
+            font-size: 15px;
+            text-decoration: none;
+            letter-spacing: 1.5px;
+            color: #777777;
+            position: relative;
+            padding-bottom: 10px;
+            transition: color 0.25s;
+        }
+
+        .auth-tab-link.active {
+            color: #00FFFF;
+        }
+
+        .auth-tab-link.active::after {
+            content: "";
+            position: absolute;
+            bottom: -13px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #00FFFF;
+            box-shadow: 0 0 8px #00FFFF;
+        }
+
+        .auth-tab-link:hover {
+            color: #ffffff;
+        }
+
+        .auth-badge {
+            text-align: center;
+            font-family: 'Righteous', cursive;
+            color: #00FFFF;
+            font-size: 11px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .auth-title {
+            font-family: 'Righteous', cursive;
+            font-size: 26px;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+
+        .auth-subtitle {
+            color: #888888;
+            font-size: 13px;
+            text-align: center;
+            margin-bottom: 24px;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .auth-form-group {
+            margin-bottom: 16px;
+        }
+
+        .auth-form-label {
+            display: block;
+            font-size: 11px;
+            color: #a0a0a0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 7px;
+            font-weight: 600;
+        }
+
+        .auth-form-control {
+            width: 100%;
+            background-color: #121212;
+            border: 1px solid #2a2a2a;
+            border-radius: 6px;
+            padding: 12px 14px;
+            color: #ffffff;
+            font-size: 14px;
+            font-family: 'Lato', sans-serif;
+            outline: none;
+            transition: border-color 0.25s, box-shadow 0.25s, background-color 0.25s;
+            box-sizing: border-box;
+        }
+
+        .auth-form-control:focus {
+            border-color: #00FFFF;
+            box-shadow: 0 0 12px rgba(0, 255, 255, 0.35);
+            background-color: #181818;
+        }
+
+        .auth-form-control:-webkit-autofill,
+        .auth-form-control:-webkit-autofill:hover, 
+        .auth-form-control:-webkit-autofill:focus {
+            -webkit-text-fill-color: #ffffff !important;
+            -webkit-box-shadow: 0 0 0px 1000px #121212 inset !important;
+            box-shadow: 0 0 0px 1000px #121212 inset !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+
+        .auth-error-msg {
+            color: #ff6347;
+            font-size: 12px;
+            margin-top: 6px;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .auth-submit-btn {
+            width: 100%;
+            background: transparent;
+            border: 2px solid #00FFFF;
+            color: #FFFFFF;
+            padding: 12px 20px;
+            font-size: 15px;
+            font-family: 'Righteous', cursive;
+            letter-spacing: 1.5px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 14px;
+            text-transform: uppercase;
+            display: block;
+            text-align: center;
+        }
+
+        .auth-submit-btn:hover {
+            background-color: #ff6347;
+            border-color: #ff6347;
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(255, 99, 71, 0.45);
+            transform: translateY(-1px);
+        }
+
+        .auth-footer-links {
+            text-align: center;
+            margin-top: 22px;
+            font-size: 13px;
+            color: #777777;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .auth-footer-links a {
+            color: #00FFFF;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .auth-footer-links a:hover {
+            color: #ff6347;
+        }
+
+        .auth-alert {
+            background: rgba(255, 99, 71, 0.15);
+            border: 1px solid #ff6347;
+            color: #ff8b77;
+            padding: 11px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            margin-bottom: 20px;
+            font-family: 'Lato', sans-serif;
+        }
+
+        @media (max-width: 608px) {
+            #follow {
+                display: none;
+            }
+            .auth-box {
+                padding: 26px 20px;
+            }
         }
     </style>
 </head>
@@ -57,10 +401,10 @@
             <div class="line3"></div>
         </div>
 
-        <!-- Social Media Icons -->
+        <!-- Lateral Social Media Icons -->
         <div id="follow">
-            <a href="{{ LINKEDIN_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-linkedin" aria-hidden="true"></i></a><br>
-            <a href="{{ GITHUB_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-github" aria-hidden="true"></i></a><br>
+            <a href="{{ LINKEDIN_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+            <a href="{{ GITHUB_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-github" aria-hidden="true"></i></a>
             <a href="{{ TWITTER_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-twitter" aria-hidden="true"></i></a>
         </div>
 
@@ -81,9 +425,17 @@
                     <a href="{% url 'accounts:signup' %}" class="auth-tab-link active">SIGN UP</a>
                 </div>
 
-                <div class="auth-title">CRÉER UN COMPTE</div>
-                <div class="auth-subtitle">Rejoignez l'espace apprenant MickaelCode</div>
+                <div class="auth-badge">ESPACE MEMBRE</div>
+                <div class="auth-title">INSCRIPTION</div>
+                <div class="auth-subtitle">Créez votre compte apprenant MickaelCode</div>
 
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="auth-alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
                 {% if form.non_field_errors %}
                     <div class="auth-alert">
                         {{ form.non_field_errors.0 }}
@@ -146,23 +498,25 @@
 
     </div>
 
-    <!-- Javascript for functioning of sidebar menu -->
+    <!-- Javascript for functioning of sidebar menu on mobile -->
     <script>
         const slide = () => {
             const burger = document.querySelector('.burger');
             const nav = document.querySelector('.navbar');
             const navlinks = document.querySelectorAll('.links li');
-            burger.addEventListener('click', () => {
-                nav.classList.toggle('navbaract');
+            if (burger && nav) {
+                burger.addEventListener('click', () => {
+                    nav.classList.toggle('navbaract');
 
-                navlinks.forEach((link, index) => {
-                    if (link.style.animation) {
-                        link.style.animation = '';
-                    } else {
-                        link.style.animation = `navlinkfade 4s ease backwards ${index / 10}s`;
-                    }
+                    navlinks.forEach((link, index) => {
+                        if (link.style.animation) {
+                            link.style.animation = '';
+                        } else {
+                            link.style.animation = `navlinkfade 4s ease backwards ${index / 10}s`;
+                        }
+                    });
                 });
-            });
+            }
         }
         slide();
     </script>

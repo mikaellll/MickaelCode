@@ -44,10 +44,10 @@ body{
     position: relative;
     list-style: none;
     margin-top: 7px;
-    margin-inline: 12px;
+    margin-inline: 10px;
     font-size: 15px;
     font-family: 'Lato', sans-serif;
-    width: 100%;
+    white-space: nowrap;
 }
 #nav ul li a{
     text-decoration: none;
@@ -101,21 +101,26 @@ body{
 }
 
 #nav ul li a.signin-btn {
+    display: inline-block;
     border: 1.5px solid #00FFFF;
     border-radius: 20px;
     padding: 3px 14px;
     color: #00FFFF;
     font-size: 13px;
     letter-spacing: 0.8px;
+    white-space: nowrap !important;
+    text-decoration: none !important;
     transition: all 0.3s ease;
 }
 #nav ul li a.signin-btn:hover {
     background-color: #ff6347;
     border-color: #ff6347;
     color: #ffffff;
+    box-shadow: 0 0 12px rgba(255, 99, 71, 0.4);
 }
 #nav ul li a.signin-btn:after {
     display: none !important;
+    content: none !important;
 }
 
 #follow{
@@ -272,6 +277,11 @@ body{
 23deg
 );
     z-index: 4;
+}
+
+#web, #dev, #develop, #fullstack, #square1, #square2 {
+    pointer-events: none !important;
+    user-select: none !important;
 }
 
 #pic img {
