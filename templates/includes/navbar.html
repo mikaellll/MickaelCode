@@ -13,8 +13,7 @@
             <li><a href="{% url 'dashboard:overview' %}" class="{% if 'dashboard' in request.resolver_match.namespaces %}nvg{% endif %}">DASHBOARD</a></li>
             <li><a href="{% url 'accounts:logout' %}">LOGOUT</a></li>
             {% else %}
-            <li><a href="{% url 'accounts:login' %}" class="{% if request.resolver_match.url_name == 'login' %}nvg{% endif %}">SIGN IN</a></li>
-            <li><a href="{% url 'accounts:signup' %}" class="{% if request.resolver_match.url_name == 'signup' %}nvg{% endif %}">SIGN UP</a></li>
+            <li><a href="{% url 'accounts:login' %}" class="signin-btn {% if request.resolver_match.url_name == 'login' %}nvg{% endif %}">SIGN IN</a></li>
             {% endif %}
         </ul>
     </div>

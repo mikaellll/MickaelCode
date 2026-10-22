@@ -44,8 +44,7 @@
                     <li><a href="{% url 'dashboard:overview' %}">DASHBOARD</a></li>
                     <li><a href="{% url 'accounts:logout' %}">LOGOUT</a></li>
                     {% else %}
-                    <li><a href="{% url 'accounts:login' %}" class="nvg">SIGN IN</a></li>
-                    <li><a href="{% url 'accounts:signup' %}">SIGN UP</a></li>
+                    <li><a href="{% url 'accounts:login' %}" class="signin-btn nvg">SIGN IN</a></li>
                     {% endif %}
                 </ul>
             </div>

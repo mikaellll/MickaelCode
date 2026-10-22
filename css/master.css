@@ -100,6 +100,24 @@ body{
     top: 20px!important;
 }
 
+#nav ul li a.signin-btn {
+    border: 1.5px solid #00FFFF;
+    border-radius: 20px;
+    padding: 3px 14px;
+    color: #00FFFF;
+    font-size: 13px;
+    letter-spacing: 0.8px;
+    transition: all 0.3s ease;
+}
+#nav ul li a.signin-btn:hover {
+    background-color: #ff6347;
+    border-color: #ff6347;
+    color: #ffffff;
+}
+#nav ul li a.signin-btn:after {
+    display: none !important;
+}
+
 #follow{
     position:absolute;
     top: 271px;
