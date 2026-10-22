@@ -28,8 +28,7 @@ def home_view(request):
 
 def about_view(request):
     """
-    About page preserving the original bio, Marseille location, MMA and family passions,
-    and visual animated background canvas.
+    About page preserving the original bio, Marseille location, and passions.
     """
     skills = Skill.objects.all()
     return render(request, "core/about.html", {"skills": skills})
