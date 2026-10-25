@@ -29,17 +29,28 @@ if not DEBUG and (not SECRET_KEY or SECRET_KEY.startswith("django-insecure-")):
 
 ALLOWED_HOSTS = config(
     "ALLOWED_HOSTS",
-    default="localhost,127.0.0.1,mickaelcode.com,*.railway.app",
+    default="localhost,127.0.0.1,mickaelcode.com,www.mickaelcode.com,*.railway.app,*.onrender.com",
     cast=Csv()
 )
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://mickaelcode.com",
-    "https://*.mickaelcode.com",
-    "https://*.railway.app",
-    "http://127.0.0.1:8000",
-    "http://localhost:8000",
-]
+# Render auto-detects external hostname
+RENDER_EXTERNAL_HOSTNAME = config("RENDER_EXTERNAL_HOSTNAME", default=None)
+if RENDER_EXTERNAL_HOSTNAME and RENDER_EXTERNAL_HOSTNAME not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
+CSRF_TRUSTED_ORIGINS = config(
+    "CSRF_TRUSTED_ORIGINS",
+    default="https://mickaelcode.com,https://www.mickaelcode.com,https://*.mickaelcode.com,https://*.railway.app,https://*.onrender.com,http://127.0.0.1:8000,http://localhost:8000",
+    cast=Csv()
+)
+if RENDER_EXTERNAL_HOSTNAME:
+    render_origin = f"https://{RENDER_EXTERNAL_HOSTNAME}"
+    if render_origin not in CSRF_TRUSTED_ORIGINS:
+        CSRF_TRUSTED_ORIGINS.append(render_origin)
+
+# Reverse proxy SSL header (Render, Railway, Cloudflare, etc.)
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
 
 # Custom User Model
 AUTH_USER_MODEL = "accounts.User"
