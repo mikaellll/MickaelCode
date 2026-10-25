@@ -1,206 +1,174 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mickael</title>
-     <!-- below is the link of font awesome icon  -->
+    <title>Mickael | À propos</title>
+    <!-- Font awesome icon -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{% static 'css/master.css' %}?v=20261023">
-    <link rel="stylesheet" media="screen and (max-device-width: 608px)" href="{% static 'css/tablet.css' %}?v=20261023">
-    <link rel="stylesheet" media="screen and (max-device-width: 502px)" href="{% static 'css/phone_about.css' %}?v=20261023">
-    <link rel="stylesheet" href="{% static 'css/formstyle.css' %}?v=20261023">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300&family=Righteous&family=Roboto:wght@700;900&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS (compiled bundle) -->
+    <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">
+
     <style>
-        #nav ul li { width: auto !important; margin-inline: 10px !important; white-space: nowrap !important; }
-        #nav ul li a.signin-btn {
-            display: inline-block !important;
-            border: 1.5px solid #00FFFF !important;
-            border-radius: 20px !important;
-            padding: 3px 14px !important;
-            color: #00FFFF !important;
-            font-size: 13px !important;
-            letter-spacing: 0.8px !important;
-            white-space: nowrap !important;
-            text-decoration: none !important;
-            transition: all 0.3s ease !important;
+        #globe-container {
+            position: absolute;
+            top: 50%;
+            left: 66%;
+            transform: translate(-50%, -50%);
+            width: 560px;
+            height: 560px;
+            max-width: 90vw;
+            max-height: 90vh;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        #nav ul li a.signin-btn:hover {
-            background-color: #ff6347 !important;
-            border-color: #ff6347 !important;
-            color: #ffffff !important;
-            box-shadow: 0 0 12px rgba(255, 99, 71, 0.4) !important;
+
+        #globe-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
         }
-        #nav ul li a.signin-btn:after { display: none !important; }
+
+        @media (max-width: 1024px) {
+            #globe-container {
+                left: 70%;
+                width: 480px;
+                height: 480px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #globe-container {
+                left: 50% !important;
+                top: 52% !important;
+                width: 100vw !important;
+                height: 100vw !important;
+                max-width: 540px !important;
+                max-height: 85vh !important;
+                z-index: 1 !important;
+                opacity: 0.88;
+                pointer-events: none;
+            }
+
+            #box1 {
+                z-index: 20 !important;
+                pointer-events: auto;
+            }
+        }
     </style>
 </head>
 
-<body>
+<body class="bg-black text-white font-lato overflow-x-hidden">
 
-    <div id="container">
+    <div id="container" class="relative w-full h-screen max-[768px]:h-auto max-[768px]:min-h-screen overflow-hidden max-[768px]:overflow-y-auto bg-black">
 
-        <!--      creating navigation menu        -->
-        <div class="navbar">
-            <div id="nav">
-                <ul class="links">
-                    <li><a href="{% url 'core:home' %}">HOME</a></li>
-                    <li><a href="{% url 'core:about' %}" class="nvg">ABOUT</a></li>
-                    <li><a href="{% url 'core:work' %}">WORK</a></li>
-                    <li><a href="{% url 'core:skills' %}">SKILL</a></li>
-                    <li><a href="{% url 'blog:post_list' %}">BLOG</a></li>
-                    <li><a href="{% url 'courses:course_list' %}">FORMATIONS</a></li>
-                    <li><a href="{% url 'core:contact' %}">CONTACT</a></li>
-                    {% if user.is_authenticated %}
-                    <li><a href="{% url 'dashboard:overview' %}">DASHBOARD</a></li>
-                    <li><a href="{% url 'accounts:logout' %}">LOGOUT</a></li>
-                    {% else %}
-                    <li><a href="{% url 'accounts:login' %}" class="signin-btn">SIGN IN</a></li>
-                    {% endif %}
-                </ul>
-            </div>
+        <!-- Navigation Menu -->
+        {% include "includes/navbar.html" %}
 
-        </div>
-        <!-- creating hamburger icon        -->
-        <div class="burger">
-            <div class="line1"></div>
-            <div class="line2"></div>
-            <div class="line3"></div>
+        <!-- Social Media Icons -->
+        <div id="follow" class="fixed top-1/2 -translate-y-1/2 right-5 sm:right-6 z-30 text-center max-[768px]:hidden flex flex-col items-center gap-3">
+            <a href="{{ LINKEDIN_URL }}" target="_blank" rel="noopener noreferrer" class="text-white hover:text-[#00FFFF] hover:scale-115 transition-all text-[32px] block" aria-label="LinkedIn"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+            <a href="{{ GITHUB_URL }}" target="_blank" rel="noopener noreferrer" class="text-white hover:text-[#00FFFF] hover:scale-115 transition-all text-[32px] block" aria-label="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>
+            <a href="{{ TWITTER_URL }}" target="_blank" rel="noopener noreferrer" class="text-white hover:text-[#00FFFF] hover:scale-115 transition-all text-[32px] block" aria-label="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
         </div>
 
+        <!-- Background Typography Elements -->
+        <div id="develop" class="absolute -top-[162px] left-[1005px] text-[#565656]/15 text-[218px] font-black font-roboto select-none pointer-events-none z-0 max-[608px]:hidden">DEVELOP</div>
+        <div id="web" class="absolute top-[145px] left-[23px] text-[#565656]/15 text-[218px] font-black font-roboto select-none pointer-events-none z-0 max-[608px]:text-[120px] max-[608px]:top-[80px]">WEB</div>
+        <div id="dev" class="absolute top-[355px] left-[23px] text-[#565656]/15 text-[218px] font-black font-roboto select-none pointer-events-none z-0 max-[608px]:text-[80px] max-[608px]:top-[180px]">DEVELOPER</div>
+        <div id="fullstack" class="absolute top-[568px] left-[23px] w-[1042px] text-[#565656]/15 text-[218px] font-black font-roboto select-none pointer-events-none z-0 max-[608px]:hidden">Full-stack</div>
 
-        <!-- adding social media icons     -->
-        <div id="follow">
-            <a href="{{ LINKEDIN_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-linkedin" aria-hidden="true"></i></a><br>
-            <a href="#" style="color:inherit;"><i class="fa fa-facebook-official" aria-hidden="true"></i></a><br>
-            <a href="{{ TWITTER_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+        <!-- Decorative Rotating Squares -->
+        <div id="square1" class="absolute top-[529px] -left-[192px] w-[410px] h-[345px] border-2 border-[#00FFFF]/15 rotate-[23deg] pointer-events-none z-0"></div>
+        <div id="square2" class="absolute top-[12px] left-[90%] w-[215px] h-[232px] border-2 border-[#00FFFF]/15 rotate-[23deg] pointer-events-none z-0"></div>
+
+        <!-- Information Box About -->
+        <div id="box1" class="absolute left-[5vw] max-[502px]:left-[4vw] text-white z-20 pointer-events-auto" style="top: calc(50% + 25px); transform: translateY(-50%);">
+            <style>
+                #box1 {
+                    top: calc(50% + 25px);
+                    transform: translateY(-50%);
+                }
+                @media (max-height: 550px) {
+                    #box1 {
+                        top: 65px !important;
+                        transform: none !important;
+                    }
+                }
+                .about-heading {
+                    font-size: 48px;
+                    letter-spacing: 9px;
+                    line-height: 1.1;
+                }
+                .about-text-content {
+                    width: 440px;
+                    max-width: 86vw;
+                    font-size: 18px;
+                    line-height: 1.45;
+                    gap: 8px;
+                }
+                @media (max-width: 608px) {
+                    .about-heading {
+                        font-size: 38px;
+                        letter-spacing: 6px;
+                    }
+                    .about-text-content {
+                        font-size: 15.5px;
+                        line-height: 1.4;
+                        gap: 6px;
+                    }
+                }
+            </style>
+            <div id="dev2" class="font-righteous text-[#00FFFF] pl-[15px] drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)] about-heading">
+                À propos
+            </div>
+
+            <!-- Group: Lateral cyan line and text block -->
+            <div class="flex items-stretch gap-3 pl-[15px]" style="margin-top: 12px;">
+                <!-- Lateral Cyan Bar -->
+                <div id="vl" class="w-[1.5px] bg-[#00FFFF] flex-shrink-0 shadow-[0_0_8px_#00FFFF]"></div>
+
+                <!-- Text group réagrandi et harmonisé -->
+                <div class="flex flex-col font-lato text-white [text-shadow:_0_2px_12px_rgb(0_0_0_/_95%),_0_0_6px_rgb(0_0_0_/_90%)] about-text-content">
+                    <div id="hello">
+                        Je suis un développeur full-stack basé à Marseille. Je suis passionné par les effets UI, les animations et la conception d'expériences utilisateur intuitives et dynamiques.
+                    </div>
+                    <div id="me" class="flex flex-col" style="gap: 7px;">
+                        <p>Organisé, axé sur la résolution de problèmes, autonome avec un grand sens du détail. Passionné de MMA, d'activités en plein air, de séries et de littérature française. Père dévoué de deux enfants pleins d'énergie,</p>
+                        <p>Passionné par tout l'écosystème full-stack et désireux de collaborer sur des projets ambitieux aux côtés de personnes inspirantes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Button -->
+            <div class="ml-[15px]" style="margin-top: 16px;">
+                <button id="btncontact" type="button" onclick="location.href='{% url 'core:contact' %}'" class="border-2 border-[#00FFFF] text-black bg-[#00FFFF] hover:bg-[#ff6347] hover:border-[#ff6347] hover:text-white font-righteous rounded-full cursor-pointer transition-all tracking-wide shadow-[0_0_15px_rgba(0,255,255,0.4)]" style="width: 141px; height: 33px; font-size: 14px;">
+                    contact
+                </button>
+            </div>
         </div>
-        <div id="develop">DEVELOP</div>
-        <div id="web">WEB</div>
-        <div id="dev">DEVELOPER</div>
-        <div id="fullstack">Full-stack</div>
-        <!-- this box contain some information    -->
-        
-        <div id="box1">
-            <div id="dev2">Myself</div>
-            <div id="vl"></div>
-            <div id="hello">I’m a Full-stack Developer located in Marseille. I have a serious passion for UI effects, animations and creating intuitive, dynamic user experiences.</div>
-            <div id="me"><p>Well-organised person, problem solver, independent employee with high attention to detail. Fan of MMA, outdoor activities, TV series and french literature. A family person and father of two fractious children,</p>
-            <p>Interested in the entire fullstack spectrum and working on ambitious projects with positive people.</p></div>
-            
 
-        </div>
-
-        <div id="square1"></div>
-        <div id="square2"></div>
-        
-        <!-- creating button     -->
-        <button id="btncontact" type="button" onclick="location.href='{% url 'core:contact' %}'">contact</button>
-
-        <!-- Adding form effect in background -->
-        <div id="pic">
-
-            <div class="canvas canvas--aqua">
-                <div class="dot dot--dot1"></div>
-                <div class="dot dot--dot2"></div>
-                <div class="dot dot--dot3"></div>
-                <div class="dot dot--dot4"></div>
-                <div class="dot dot--dot5"></div>
-                <div class="dot dot--dot6"></div>
-                <div class="dot dot--dot7"></div>
-                <div class="dot dot--dot8"></div>
-                <div class="dot dot--dot9"></div>
-                <div class="dot dot--dot10"></div>
-            </div>
-            <div class="canvas canvas--gold">
-                <div class="dot dot--dot11"></div>
-                <div class="dot dot--dot12"></div>
-                <div class="dot dot--dot13"></div>
-                <div class="dot dot--dot14"></div>
-                <div class="dot dot--dot15"></div>
-                <div class="dot dot--dot16"></div>
-                <div class="dot dot--dot17"></div>
-                <div class="dot dot--dot18"></div>
-                <div class="dot dot--dot19"></div>
-                <div class="dot dot--dot20"></div>
-            </div>
-            <div class="canvas canvas--tomato">
-                <div class="dot dot--dot21"></div>
-                <div class="dot dot--dot22"></div>
-                <div class="dot dot--dot23"></div>
-                <div class="dot dot--dot24"></div>
-                <div class="dot dot--dot25"></div>
-                <div class="dot dot--dot26"></div>
-                <div class="dot dot--dot27"></div>
-                <div class="dot dot--dot28"></div>
-                <div class="dot dot--dot29"></div>
-                <div class="dot dot--dot30"></div>
-            </div><div class="canvas canvas--aqua">
-                <div class="dot dot--dot1"></div>
-                <div class="dot dot--dot2"></div>
-                <div class="dot dot--dot3"></div>
-                <div class="dot dot--dot4"></div>
-                <div class="dot dot--dot5"></div>
-                <div class="dot dot--dot6"></div>
-                <div class="dot dot--dot7"></div>
-                <div class="dot dot--dot8"></div>
-                <div class="dot dot--dot9"></div>
-                <div class="dot dot--dot10"></div>
-            </div>
-            <div class="canvas canvas--gold">
-                <div class="dot dot--dot11"></div>
-                <div class="dot dot--dot12"></div>
-                <div class="dot dot--dot13"></div>
-                <div class="dot dot--dot14"></div>
-                <div class="dot dot--dot15"></div>
-                <div class="dot dot--dot16"></div>
-                <div class="dot dot--dot17"></div>
-                <div class="dot dot--dot18"></div>
-                <div class="dot dot--dot19"></div>
-                <div class="dot dot--dot20"></div>
-            </div>
-            <div class="canvas canvas--tomato">
-                <div class="dot dot--dot21"></div>
-                <div class="dot dot--dot22"></div>
-                <div class="dot dot--dot23"></div>
-                <div class="dot dot--dot24"></div>
-                <div class="dot dot--dot25"></div>
-                <div class="dot dot--dot26"></div>
-                <div class="dot dot--dot27"></div>
-                <div class="dot dot--dot28"></div>
-                <div class="dot dot--dot29"></div>
-                <div class="dot dot--dot30"></div>
-            </div>
-
+        <!-- 3D Rotating Cyber Globe -->
+        <div id="globe-container" data-texture="{% static 'img/world-continents-sharp.png' %}">
+            <canvas id="globe-canvas" class="cursor-grab active:cursor-grabbing"></canvas>
         </div>
 
     </div>
 
-    <!-- javascript for functioning of sidebar menu  -->
-    <script>
+    </div>
 
-        const slide = () => {
-            const burger = document.querySelector('.burger');
-            const nav = document.querySelector('.navbar');
-            const navlinks = document.querySelectorAll('.links li');
-            burger.addEventListener('click', () => {
-                nav.classList.toggle('navbaract');
-
-                navlinks.forEach((link, index) => {
-
-                    if (link.style.animation) {
-                        link.style.animation = '';
-                    }
-                    else {
-                        link.style.animation = `navlinkfade 4s ease backwards ${index / 10}s`;
-                    }
-                });
-            });
-        }
-        slide();
-
-    </script>
+    <!-- Three.js & 3D Globe Script -->
+    <script src="{% static 'js/three.min.js' %}"></script>
+    <script src="{% static 'js/globe.js' %}"></script>
 
 </body>
 

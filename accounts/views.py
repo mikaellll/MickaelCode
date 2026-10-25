@@ -3,6 +3,7 @@ from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.utils.http import url_has_allowed_host_and_scheme
+from django_ratelimit.decorators import ratelimit
 from .forms import UserSignUpForm, UserLoginForm, UserProfileForm
 
 
@@ -25,11 +26,16 @@ def signup_view(request):
     return render(request, "accounts/signup.html", {"form": form})
 
 
+@ratelimit(key="ip", rate="10/m", method=["POST"], block=False)
 def login_view(request):
     if request.user.is_authenticated:
         return redirect("dashboard:overview")
 
     redirect_to = request.GET.get("next", "")
+
+    if getattr(request, "limited", False):
+        messages.error(request, "Trop de tentatives de connexion. Veuillez patienter une minute avant de réessayer.")
+        return render(request, "accounts/login.html", {"form": UserLoginForm(), "next": redirect_to}, status=429)
 
     if request.method == "POST":
         form = UserLoginForm(request.POST)

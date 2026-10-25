@@ -1,29 +1,10 @@
 /**
  * MickaelCode Platform Main JavaScript
- * Handles responsive navigation and notifications.
+ * Handles alert notifications and global utilities.
+ * (Mobile navigation is self-contained in navbar.html)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Mobile navigation toggle
-    const burger = document.querySelector('.burger');
-    const nav = document.querySelector('.navbar');
-    const navlinks = document.querySelectorAll('.links li');
-
-    if (burger && nav) {
-        burger.addEventListener('click', () => {
-            nav.classList.toggle('navbaract');
-            burger.classList.toggle('toggle');
-
-            navlinks.forEach((link, index) => {
-                if (link.style.animation) {
-                    link.style.animation = '';
-                } else {
-                    link.style.animation = `navlinkfade 0.5s ease forwards ${index / 7 + 0.1}s`;
-                }
-            });
-        });
-    }
-
     // Auto-dismiss alert messages after 5 seconds
     const alerts = document.querySelectorAll('.alert-banner');
     alerts.forEach(alert => {

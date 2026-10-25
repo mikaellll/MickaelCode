@@ -4,23 +4,23 @@
 {% block robots %}noindex, nofollow{% endblock %}
 
 {% block content %}
-<div class="content-narrow" style="padding-top:50px; padding-bottom:70px;">
-    <div class="glass-card" style="padding:40px;">
-        <h1 style="font-size:28px; margin-bottom:12px; text-align:center;">Se désinscrire de la newsletter</h1>
-        <p style="color:var(--text-muted); font-size:15px; text-align:center; margin-bottom:28px;">
+<div class="max-w-md mx-auto px-4 py-16">
+    <div class="glass-card p-8 md:p-10 border border-white/10 rounded-2xl bg-neutral-900/60 backdrop-blur-md">
+        <h1 class="text-2xl md:text-3xl font-righteous text-white mb-3 text-center">Se désinscrire de la newsletter</h1>
+        <p class="text-neutral-400 text-sm text-center mb-8 leading-relaxed">
             Saisissez l'adresse email que vous souhaitez retirer de nos communications marketing.
         </p>
 
         <form method="post" action="{% url 'marketing:unsubscribe_view' %}">
             {% csrf_token %}
-            <div class="form-group">
-                <label for="unsub-email" class="form-label">Votre adresse email</label>
-                <input type="email" name="email" class="form-control" placeholder="nom@exemple.com" required id="unsub-email">
+            <div class="mb-6">
+                <label for="unsub-email" class="block text-xs uppercase tracking-wider text-neutral-400 font-semibold mb-2">Votre adresse email</label>
+                <input type="email" name="email" class="w-full bg-[#121212] border border-neutral-800 focus:border-cyan focus:ring-1 focus:ring-cyan focus:bg-[#181818] rounded-md px-3.5 py-3 text-white text-sm outline-none transition-all" placeholder="nom@exemple.com" required id="unsub-email">
             </div>
 
-            <div style="margin-top:24px;">
-                <button type="submit" class="btn btn-coral btn-block">Confirmer ma désinscription</button>
-            </div>
+            <button type="submit" class="w-full inline-block px-6 py-3 rounded-full font-righteous text-sm uppercase tracking-wider text-white bg-tomato hover:bg-cyan hover:text-black transition-all shadow-[0_0_15px_rgba(255,99,71,0.4)] cursor-pointer">
+                Confirmer ma désinscription
+            </button>
         </form>
     </div>
 </div>

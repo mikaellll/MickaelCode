@@ -14,6 +14,14 @@ class Command(BaseCommand):
     help = "Seeds initial database with realistic projects, courses, skills, and demonstration users."
 
     def handle(self, *args, **options):
+        from django.conf import settings
+        if not settings.DEBUG:
+            self.stderr.write(self.style.ERROR(
+                "SÉCURITÉ : La commande seed_data est réservée au développement local et "
+                "est strictement interdite lorsque DEBUG=False en production."
+            ))
+            return
+
         self.stdout.write("Seeding database...")
 
         # 1. Admin User

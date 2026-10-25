@@ -1,0 +1,21 @@
+# Nixpacks build configuration for MickaelCode (Django 5.1 + Tailwind CSS)
+# Guarantees both Python 3.12 and Node.js environments are available for building assets.
+
+[phases.setup]
+nixPkgs = ["python312", "nodejs_20", "npm"]
+
+[phases.install]
+cmds = [
+    "python -m venv /opt/venv",
+    ". /opt/venv/bin/activate && pip install --upgrade pip && pip install -r requirements.txt",
+    "npm ci --prefer-offline --no-audit"
+]
+
+[phases.build]
+cmds = [
+    "npm run build:css",
+    ". /opt/venv/bin/activate && python manage.py collectstatic --no-input"
+]
+
+[start]
+cmd = ". /opt/venv/bin/activate && gunicorn config.wsgi:application --workers 3 --bind 0.0.0.0:$PORT"

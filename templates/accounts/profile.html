@@ -3,85 +3,91 @@
 {% block title %}Mon Profil & Préférences | MickaelCode{% endblock %}
 
 {% block content %}
-<div class="content-container" style="padding-top:40px; padding-bottom:60px;">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
     {% include "dashboard/includes/nav_tabs.html" with active_tab="profile" %}
 
-    <div class="grid-2">
-        <div class="glass-card" style="padding:36px;">
-            <h2 style="font-size:24px; color:var(--accent-cyan); margin-bottom:20px;">Informations Personnelles</h2>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2 glass-card p-6 md:p-8 border border-white/10 rounded-2xl bg-neutral-900/60 backdrop-blur-md">
+            <h2 class="text-2xl font-righteous text-cyan mb-6">Informations Personnelles</h2>
 
             <form method="post" action="{% url 'accounts:profile' %}" enctype="multipart/form-data" id="profile-form">
                 {% csrf_token %}
 
-                <div class="grid-2">
-                    <div class="form-group">
-                        <label class="form-label">Prénom</label>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-neutral-400 font-semibold mb-1.5">Prénom</label>
                         {{ form.first_name }}
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">Nom</label>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-neutral-400 font-semibold mb-1.5">Nom</label>
                         {{ form.last_name }}
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label">Adresse e-mail (liée au compte)</label>
-                    <input type="text" class="form-control" value="{{ user.email }}" disabled style="opacity:0.6; cursor:not-allowed;">
-                    <div class="form-help">Pour modifier votre e-mail de facturation, contactez le support.</div>
+                <div class="mb-4">
+                    <label class="block text-xs uppercase tracking-wider text-neutral-400 font-semibold mb-1.5">Adresse e-mail (liée au compte)</label>
+                    <input type="text" class="w-full bg-[#121212] border border-neutral-800 rounded-md px-3.5 py-2.5 text-neutral-400 text-sm opacity-60 cursor-not-allowed" value="{{ user.email }}" disabled>
+                    <p class="text-xs text-neutral-500 mt-1">Pour modifier votre e-mail de facturation, contactez le support.</p>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label">Téléphone</label>
+                <div class="mb-4">
+                    <label class="block text-xs uppercase tracking-wider text-neutral-400 font-semibold mb-1.5">Téléphone</label>
                     {{ form.phone }}
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label">Biographie / À propos</label>
+                <div class="mb-4">
+                    <label class="block text-xs uppercase tracking-wider text-neutral-400 font-semibold mb-1.5">Biographie / À propos</label>
                     {{ form.bio }}
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label">Photo de profil (Avatar)</label>
+                <div class="mb-4">
+                    <label class="block text-xs uppercase tracking-wider text-neutral-400 font-semibold mb-1.5">Photo de profil (Avatar)</label>
                     {% if user.avatar %}
-                        <div style="margin-bottom:12px; display:flex; align-items:center; gap:16px;">
-                            <img src="{{ user.avatar.url }}" alt="{{ user.display_name }}" style="width:64px; height:64px; border-radius:50%; object-fit:cover; border:2px solid var(--accent-cyan);">
-                            <span style="font-size:13px; color:var(--text-muted);">Avatar actuel</span>
+                        <div class="mb-3 flex items-center gap-4">
+                            <img src="{{ user.avatar.url }}" alt="{{ user.display_name }}" class="w-16 h-16 rounded-full object-cover border-2 border-cyan">
+                            <span class="text-xs text-neutral-400">Avatar actuel</span>
                         </div>
                     {% endif %}
                     {{ form.avatar }}
                 </div>
 
-                <div class="form-group" style="margin-top:20px; border-top:1px solid rgba(255,255,255,0.08); padding-top:20px;">
-                    <h4 style="color:#ffffff; margin-bottom:12px;">Préférences de communication (RGPD)</h4>
-                    <label class="checkbox-label">
+                <div class="mt-6 pt-6 border-t border-white/10">
+                    <h4 class="text-white font-righteous text-sm mb-3">Préférences de communication (RGPD)</h4>
+                    <label class="flex items-start gap-3 cursor-pointer text-xs md:text-sm text-neutral-300">
                         {{ form.newsletter_accepted }}
                         <span>J'accepte de recevoir la newsletter pédagogique et les annonces de cours par email.</span>
                     </label>
                 </div>
 
-                <div style="margin-top:28px;">
-                    <button type="submit" class="btn btn-cyan" id="profile-submit-btn">
-                        <i class="fa fa-save"></i> Enregistrer les modifications
+                <div class="mt-8">
+                    <button type="submit" class="inline-flex items-center gap-2 px-6 py-3 rounded-full font-righteous text-sm text-black bg-cyan hover:bg-tomato hover:text-white transition-all shadow-[0_0_15px_rgba(0,255,255,0.3)]" id="profile-submit-btn">
+                        <i class="fa fa-save" aria-hidden="true"></i> Enregistrer les modifications
                     </button>
                 </div>
             </form>
         </div>
 
-        <div>
-            <div class="glass-card" style="padding:32px; margin-bottom:24px;">
-                <h3 style="color:var(--accent-coral); margin-bottom:16px;"><i class="fa fa-lock"></i> Sécurité du compte</h3>
-                <p style="color:var(--text-muted); font-size:14px; margin-bottom:20px;">
+        <div class="space-y-6">
+            <div class="glass-card p-6 md:p-8 border border-white/10 rounded-2xl bg-neutral-900/60 backdrop-blur-md">
+                <h3 class="text-lg font-righteous text-tomato mb-3 flex items-center gap-2">
+                    <i class="fa fa-lock" aria-hidden="true"></i> Sécurité du compte
+                </h3>
+                <p class="text-neutral-400 text-xs md:text-sm mb-5 leading-relaxed">
                     Modifiez régulièrement votre mot de passe pour garantir la sécurité de vos accès aux formations.
                 </p>
-                <a href="{% url 'accounts:password_reset' %}" class="btn btn-outline btn-sm">Réinitialiser mon mot de passe</a>
+                <a href="{% url 'accounts:password_reset' %}" class="inline-block px-4 py-2 rounded-full font-righteous text-xs text-white border border-white/20 hover:border-cyan hover:text-cyan transition-all">
+                    Réinitialiser mon mot de passe
+                </a>
             </div>
 
-            <div class="glass-card" style="padding:32px;">
-                <h3 style="color:#ffffff; margin-bottom:16px;"><i class="fa fa-shield"></i> Données & Confidentialité</h3>
-                <p style="color:var(--text-muted); font-size:14px; margin-bottom:16px;">
+            <div class="glass-card p-6 md:p-8 border border-white/10 rounded-2xl bg-neutral-900/60 backdrop-blur-md">
+                <h3 class="text-lg font-righteous text-white mb-3 flex items-center gap-2">
+                    <i class="fa fa-shield" aria-hidden="true"></i> Données & Confidentialité
+                </h3>
+                <p class="text-neutral-400 text-xs md:text-sm mb-4 leading-relaxed">
                     Vous pouvez à tout moment exporter vos données ou demander la suppression définitive de votre compte apprenant.
                 </p>
-                <a href="mailto:contact@mickaelcode.com?subject=Demande RGPD Suppression Compte" class="btn btn-sm" style="background:rgba(255,255,255,0.06); color:var(--text-muted); border:1px solid rgba(255,255,255,0.15);">
+                <a href="mailto:contact@mickaelcode.com?subject=Demande RGPD Suppression Compte" class="inline-block px-4 py-2 rounded-full font-righteous text-xs bg-white/5 text-neutral-400 border border-white/10 hover:text-white hover:border-white/30 transition-all">
                     Demande de suppression de compte
                 </a>
             </div>

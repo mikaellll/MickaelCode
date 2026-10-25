@@ -5,22 +5,22 @@
 {% block meta_description %}Formations vidéo pratiques pour devenir développeur full-stack Python/Django autonome. Projets complets, architectures robustes, paiement sécurisé.{% endblock %}
 
 {% block content %}
-<div class="content-container" style="padding-top:20px; padding-bottom:70px;">
-    <div class="section-header">
-        <div class="section-subtitle">E-learning & Cursus</div>
-        <h1 class="section-title">Catalogue des Formations</h1>
-        <p class="section-desc">Des cursus structurés, pragmatiques et orientés production pour coder des applications solides avec Python et Django.</p>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="mb-10">
+        <div class="text-xs uppercase tracking-widest text-cyan font-righteous mb-1.5">E-learning & Cursus</div>
+        <h1 class="text-3xl md:text-5xl font-righteous text-white mb-3">Catalogue des Formations</h1>
+        <p class="text-neutral-400 text-sm md:text-base max-w-2xl leading-relaxed">Des cursus structurés, pragmatiques et orientés production pour coder des applications solides avec Python et Django.</p>
     </div>
 
     <!-- Filter and Search -->
-    <div class="glass-card" style="padding:20px; margin-bottom:40px;">
-        <form method="get" action="{% url 'courses:course_list' %}" style="display:flex; flex-wrap:wrap; gap:16px; align-items:center;">
-            <div style="flex:1; min-width:240px;">
-                <input type="text" name="q" value="{{ search_query }}" class="form-control" placeholder="Rechercher une formation (ex: Django, API, Docker...)" id="course-search-input">
+    <div class="glass-card p-5 mb-10 border border-white/10 rounded-2xl bg-neutral-900/60 backdrop-blur-md">
+        <form method="get" action="{% url 'courses:course_list' %}" class="flex flex-wrap gap-4 items-center">
+            <div class="flex-1 min-w-[240px]">
+                <input type="text" name="q" value="{{ search_query }}" class="w-full bg-[#121212] border border-neutral-800 focus:border-cyan focus:ring-1 focus:ring-cyan focus:bg-[#181818] rounded-md px-3.5 py-2.5 text-white text-sm outline-none transition-all" placeholder="Rechercher une formation (ex: Django, API, Docker...)" id="course-search-input">
             </div>
 
-            <div style="min-width:180px;">
-                <select name="level" class="form-control" onchange="this.form.submit()" id="course-level-select">
+            <div class="min-w-[180px]">
+                <select name="level" class="w-full bg-[#121212] border border-neutral-800 focus:border-cyan focus:ring-1 focus:ring-cyan focus:bg-[#181818] rounded-md px-3.5 py-2.5 text-white text-sm outline-none transition-all" onchange="this.form.submit()" id="course-level-select">
                     <option value="">Tous les niveaux</option>
                     {% for code, label in level_choices %}
                     <option value="{{ code }}" {% if selected_level == code %}selected{% endif %}>{{ label }}</option>
@@ -28,59 +28,59 @@
                 </select>
             </div>
 
-            <button type="submit" class="btn btn-cyan btn-sm">
-                <i class="fa fa-filter"></i> Filtrer
+            <button type="submit" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-righteous text-xs uppercase tracking-wider text-black bg-cyan hover:bg-tomato hover:text-white transition-all cursor-pointer">
+                <i class="fa fa-filter" aria-hidden="true"></i> Filtrer
             </button>
             {% if search_query or selected_level %}
-                <a href="{% url 'courses:course_list' %}" class="btn btn-outline btn-sm">Réinitialiser</a>
+                <a href="{% url 'courses:course_list' %}" class="inline-flex items-center px-4 py-2.5 rounded-full font-righteous text-xs uppercase tracking-wider text-white border border-white/20 hover:border-cyan hover:text-cyan transition-all">Réinitialiser</a>
             {% endif %}
         </form>
     </div>
 
     <!-- Courses Grid -->
-    <div class="grid-3">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {% for course in courses %}
-        <article class="glass-card" style="display:flex; flex-direction:column; justify-content:space-between;">
+        <article class="glass-card flex flex-col justify-between p-6 border border-white/10 rounded-2xl bg-neutral-900/60 backdrop-blur-md hover:border-cyan/40 transition-all group">
             <div>
-                <div class="card-media" style="border-radius:4px; overflow:hidden; margin-bottom:16px;">
+                <div class="relative rounded-lg overflow-hidden mb-4 aspect-video bg-black">
                     <a href="{{ course.get_absolute_url }}">
                         {% if course.cover_image %}
-                            <img src="{{ course.cover_image.url }}" alt="{{ course.title }}">
+                            <img src="{{ course.cover_image.url }}" alt="{{ course.title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                         {% else %}
-                            <img src="{% static 'img/projects/magenta.png' %}" alt="{{ course.title }}">
+                            <img src="{% static 'img/projects/magenta.png' %}" alt="{{ course.title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                         {% endif %}
                     </a>
-                    <span class="badge badge-coral" style="position:absolute; top:12px; right:12px;">{{ course.get_level_display }}</span>
+                    <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full text-[10px] font-righteous bg-tomato/90 text-white shadow-md">{{ course.get_level_display }}</span>
                 </div>
 
-                <div style="display:flex; gap:16px; color:var(--text-dim); font-size:12px; margin-bottom:10px;">
-                    <span><i class="fa fa-video-camera"></i> {{ course.total_lessons_count }} leçons</span>
-                    <span><i class="fa fa-clock-o"></i> ~{{ course.total_duration_minutes }} min</span>
+                <div class="flex gap-4 text-neutral-400 text-xs mb-2.5">
+                    <span><i class="fa fa-video-camera mr-1" aria-hidden="true"></i> {{ course.total_lessons_count }} leçons</span>
+                    <span><i class="fa fa-clock-o mr-1" aria-hidden="true"></i> ~{{ course.total_duration_minutes }} min</span>
                 </div>
 
-                <h2 style="font-size:20px; margin-bottom:10px; line-height:1.3; font-family:'Righteous', cursive;">
-                    <a href="{{ course.get_absolute_url }}" style="color:#ffffff;">{{ course.title }}</a>
+                <h2 class="text-xl font-righteous text-white leading-snug mb-2.5 group-hover:text-cyan transition-colors">
+                    <a href="{{ course.get_absolute_url }}">{{ course.title }}</a>
                 </h2>
 
-                <p style="color:var(--text-muted); font-size:14px; margin-bottom:16px; line-height:1.6;">
+                <p class="text-neutral-400 text-sm mb-4 leading-relaxed">
                     {{ course.short_description|truncatewords:24 }}
                 </p>
             </div>
 
-            <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:18px; display:flex; justify-content:space-between; align-items:center;">
+            <div class="border-t border-white/10 pt-4 mt-2 flex justify-between items-center">
                 <div>
-                    <span style="font-size:24px; font-weight:700; color:var(--accent-cyan); font-family:'Righteous', cursive;">{{ course.price }} {{ course.currency }}</span>
-                    <span style="display:block; font-size:11px; color:var(--text-dim);">Accès à vie</span>
+                    <span class="text-2xl font-bold font-righteous text-cyan">{{ course.price }} {{ course.currency }}</span>
+                    <span class="block text-[11px] text-neutral-500">Accès à vie</span>
                 </div>
 
-                <a href="{{ course.get_absolute_url }}" class="btn btn-cyan btn-sm">Découvrir le cours</a>
+                <a href="{{ course.get_absolute_url }}" class="inline-flex items-center px-4 py-2 rounded-full font-righteous text-xs uppercase tracking-wider text-black bg-cyan hover:bg-tomato hover:text-white transition-all">Découvrir le cours</a>
             </div>
         </article>
         {% empty %}
-        <div class="glass-card" style="grid-column: 1 / -1; text-align:center; padding:60px;">
-            <i class="fa fa-graduation-cap" style="font-size:48px; color:var(--text-dim); margin-bottom:16px;"></i>
-            <h3 style="font-family:'Righteous', cursive; color:#ffffff;">Aucune formation trouvée</h3>
-            <p style="color:var(--text-muted); font-size:15px; margin-top:8px;">Aucun cours ne correspond actuellement à vos critères de recherche.</p>
+        <div class="col-span-full glass-card text-center p-14 border border-white/10 rounded-2xl bg-neutral-900/60 backdrop-blur-md">
+            <i class="fa fa-graduation-cap text-5xl text-neutral-500 mb-4 block" aria-hidden="true"></i>
+            <h3 class="text-xl font-righteous text-white mb-2">Aucune formation trouvée</h3>
+            <p class="text-neutral-400 text-sm">Aucun cours ne correspond actuellement à vos critères de recherche.</p>
         </div>
         {% endfor %}
     </div>

@@ -1,140 +1,92 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Mickael developpeur web, wordpress, django, python, react.js, vue.js" />
-    
     <title>Mickael</title>
-     <!-- below is the link of font awesome icon  -->
+    <!-- Font awesome icon -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20261023">
-    <link rel="stylesheet" media="screen and (max-device-width: 608px)" href="{% static 'css/tablet.css' %}?v=20261023">
-    <link rel="stylesheet" media="screen and (max-device-width: 502px)" href="{% static 'css/phone.css' %}?v=20261023">
-    <style>
-        #nav ul li { width: auto !important; margin-inline: 10px !important; white-space: nowrap !important; }
-        #nav ul li a.signin-btn {
-            display: inline-block !important;
-            border: 1.5px solid #00FFFF !important;
-            border-radius: 20px !important;
-            padding: 3px 14px !important;
-            color: #00FFFF !important;
-            font-size: 13px !important;
-            letter-spacing: 0.8px !important;
-            white-space: nowrap !important;
-            text-decoration: none !important;
-            transition: all 0.3s ease !important;
-        }
-        #nav ul li a.signin-btn:hover {
-            background-color: #ff6347 !important;
-            border-color: #ff6347 !important;
-            color: #ffffff !important;
-            box-shadow: 0 0 12px rgba(255, 99, 71, 0.4) !important;
-        }
-        #nav ul li a.signin-btn:after { display: none !important; }
-    </style>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300&family=Righteous&family=Roboto:wght@700;900&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS (compiled bundle) -->
+    <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">
 </head>
 
-<body>
-    
+<body class="bg-black text-white font-lato overflow-x-hidden">
 
-    <div id="container">
+    <div id="container" class="relative w-full h-screen overflow-hidden bg-black">
 
-        <!--      creating navigation menu        -->
-        <div class="navbar">
-            <div id="nav">
-                <ul class="links">
-                    <li><a href="{% url 'core:home' %}" class="nvg">HOME</a></li>
-                    <li><a href="{% url 'core:about' %}">ABOUT</a></li>
-                    <li><a href="{% url 'core:work' %}">WORK</a></li>
-                    <li><a href="{% url 'core:skills' %}">SKILL</a></li>
-                    <li><a href="{% url 'blog:post_list' %}">BLOG</a></li>
-                    <li><a href="{% url 'courses:course_list' %}">FORMATIONS</a></li>
-                    <li><a href="{% url 'core:contact' %}">CONTACT</a></li>
-                    {% if user.is_authenticated %}
-                    <li><a href="{% url 'dashboard:overview' %}">DASHBOARD</a></li>
-                    <li><a href="{% url 'accounts:logout' %}">LOGOUT</a></li>
-                    {% else %}
-                    <li><a href="{% url 'accounts:login' %}" class="signin-btn">SIGN IN</a></li>
-                    {% endif %}
-                </ul>
+        <!-- Navigation Menu -->
+        {% include "includes/navbar.html" %}
+
+        <!-- Social Media Icons -->
+        <div id="follow" class="fixed top-1/2 -translate-y-1/2 right-5 sm:right-6 z-30 text-center max-[768px]:hidden flex flex-col items-center gap-3">
+            <a href="{{ LINKEDIN_URL }}" target="_blank" rel="noopener noreferrer" class="text-white hover:text-[#00FFFF] hover:scale-115 transition-all text-[32px] block" aria-label="LinkedIn"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+            <a href="{{ GITHUB_URL }}" target="_blank" rel="noopener noreferrer" class="text-white hover:text-[#00FFFF] hover:scale-115 transition-all text-[32px] block" aria-label="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>
+            <a href="{{ TWITTER_URL }}" target="_blank" rel="noopener noreferrer" class="text-white hover:text-[#00FFFF] hover:scale-115 transition-all text-[32px] block" aria-label="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+        </div>
+
+        <!-- Background Typography Elements -->
+        <div id="develop" class="absolute -top-[162px] left-[1005px] text-[#565656]/15 text-[218px] font-black font-roboto select-none pointer-events-none z-0 max-[608px]:hidden">DEVELOP</div>
+        <div id="web" class="absolute top-[145px] left-[23px] text-[#565656]/15 text-[218px] font-black font-roboto select-none pointer-events-none z-0 max-[608px]:text-[120px] max-[608px]:top-[80px]">WEB</div>
+        <div id="dev" class="absolute top-[355px] left-[23px] text-[#565656]/15 text-[218px] font-black font-roboto select-none pointer-events-none z-0 max-[608px]:text-[80px] max-[608px]:top-[180px]">DEVELOPER</div>
+        <div id="fullstack" class="absolute top-[568px] left-[23px] w-[1042px] text-[#565656]/15 text-[218px] font-black font-roboto select-none pointer-events-none z-0 max-[608px]:hidden">Full-stack</div>
+
+        <!-- Decorative Rotating Squares -->
+        <div id="square1" class="absolute top-[529px] -left-[192px] w-[410px] h-[345px] border-2 border-[#00FFFF]/15 rotate-[23deg] pointer-events-none z-0"></div>
+        <div id="square2" class="absolute top-[12px] left-[90%] w-[215px] h-[232px] border-2 border-[#00FFFF]/15 rotate-[23deg] pointer-events-none z-0"></div>
+
+        <!-- Information Hero Box -->
+        <div id="box1" class="absolute top-[203px] left-[13vw] max-[608px]:top-[153px] max-[608px]:left-[6vw] max-[502px]:left-[1vw] text-white z-10 pointer-events-auto">
+            <div id="web2" class="text-[175px] max-[608px]:text-[140px] font-righteous leading-none">
+                Web<span id="dev2" class="block text-[55px] max-[608px]:text-[49px] tracking-[23px] max-[608px]:tracking-[10px] pl-[15px] font-righteous leading-tight">Developer</span>
             </div>
 
-        </div>
-        <!-- creating hamburger icon        -->
-        <div class="burger">
-            <div class="line1"></div>
-            <div class="line2"></div>
-            <div class="line3"></div>
-        </div>
+            <!-- Group: Lateral Cyan Bar bordering the 3 lines of text -->
+            <div class="flex items-stretch gap-2.5 pl-[18px] mt-4">
+                <!-- Lateral Cyan Bar -->
+                <div id="vl" class="w-[1.5px] bg-[#00FFFF] flex-shrink-0"></div>
 
-
-        <!-- adding social media icons     -->
-        <div id="follow">
-            <a href="{{ LINKEDIN_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-linkedin" aria-hidden="true"></i></a><br>
-            <a href="{{ GITHUB_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa fa-github" aria-hidden="true"></i></a><br>
-            <a href="{{ TWITTER_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-        </div>
-        <div id="develop">DEVELOP</div>
-        <div id="web">WEB</div>
-        <div id="dev">DEVELOPER</div>
-        <div id="fullstack">Full-stack</div>
-        <!-- this box contain some information    -->
-        <div id="box1">
-            <div id="web2">Web<span id="dev2">Developer</span></div>
-            <div id="vl"></div>
-            <div id="hello">Hello,</div>
-            <div id="me">I'm <span id="rks">Mickael</span></div>
-            <div id="fullstackdev">Full-stack <span id="webdev22"> Web Developer</span></div>
+                <!-- Text group directly beside the lateral bar -->
+                <div class="flex flex-col justify-center">
+                    <div id="hello" class="text-[15px] font-lato text-white leading-tight">Hello,</div>
+                    <div id="me" class="text-[21px] font-lato text-white leading-tight mt-0.5">I'm <span id="rks" class="text-[#ff6347]">Mickael</span></div>
+                    <div id="fullstackdev" class="text-[37px] max-[608px]:text-[24px] font-righteous text-white leading-tight mt-1">
+                        Full-stack <span id="webdev22" class="text-[#ff6347]">Web Developer</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div id="square1"></div>
-        <div id="square2"></div>
-        
-        <!-- creating button     -->
-        <button id="btncontact" type="button" onclick="location.href='{% url 'core:contact' %}'">contact</button>
+        <!-- Contact Button -->
+        <button id="btncontact" type="button" onclick="location.href='{% url 'core:contact' %}'" class="absolute top-[595px] left-[15vw] max-[608px]:top-[564px] max-[608px]:left-[9.8vw] max-[502px]:top-[576px] max-[502px]:left-[6vw] max-[502px]:w-[108px] max-[502px]:h-[30px] w-[141px] h-[33px] border-2 border-[#00FFFF] text-black bg-[#00FFFF] hover:bg-[#ff6347] hover:border-[#ff6347] hover:text-white font-righteous rounded-full cursor-pointer z-10 transition-all text-sm tracking-wide">
+            contact
+        </button>
 
-        <!-- Adding profile image in background -->
-        <div id="pic">
-            <img src="{% static 'img/profil_portfolio.png' %}" width="10" alt="image_profil">
+        <!-- Profile Image in Background -->
+        <div id="pic" class="pointer-events-none">
+            <style>
+                @media (min-width: 1024px) {
+                    #pic img {
+                        width: 700px !important;
+                        height: 700px !important;
+                        top: 40px !important;
+                        right: 20px !important;
+                    }
+                }
+            </style>
+            <img src="{% static 'img/profil_portfolio.png' %}" alt="image_profil" class="absolute top-0 h-full w-auto max-w-none object-cover opacity-75 hero-mobile-pic lg:opacity-100 lg:top-[40px] lg:right-[20px] lg:w-[700px] lg:h-[700px] lg:rounded-[44px]">
         </div>
-
 
     </div>
 
-    
-
-    <!-- javascript for functioning of sidebar menu  -->
-    <script>
-
-        const slide = () => {
-            const burger = document.querySelector('.burger');
-            const nav = document.querySelector('.navbar');
-            const navlinks = document.querySelectorAll('.links li');
-            burger.addEventListener('click', () => {
-                nav.classList.toggle('navbaract');
-
-                navlinks.forEach((link, index) => {
-
-                    if (link.style.animation) {
-                        link.style.animation = '';
-                    }
-                    else {
-                        link.style.animation = `navlinkfade 4s ease backwards ${index / 10}s`;
-                    }
-                });
-            });
-        }
-        slide();
-
-
-
-    </script>
-
-
+    <!-- Script for mobile menu -->
 </body>
 
 </html>

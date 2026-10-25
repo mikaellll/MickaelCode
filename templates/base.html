@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,86 +26,41 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300&family=Righteous&family=Roboto:wght@700;900&family=Patua+One&display=swap" rel="stylesheet">
 
-    <!-- Stylesheets: portfolio style + app components -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20261023">
-    <link rel="stylesheet" media="screen and (max-device-width: 608px)" href="{% static 'css/tablet.css' %}?v=20261023">
-    <link rel="stylesheet" media="screen and (max-device-width: 502px)" href="{% static 'css/phone.css' %}?v=20261023">
-    <link rel="stylesheet" href="{% static 'css/mickaelcode_app.css' %}?v=20261023">
-    <style>
-        #nav ul li { width: auto !important; margin-inline: 10px !important; white-space: nowrap !important; }
-        #nav ul li a.signin-btn {
-            display: inline-block !important;
-            border: 1.5px solid #00FFFF !important;
-            border-radius: 20px !important;
-            padding: 3px 14px !important;
-            color: #00FFFF !important;
-            font-size: 13px !important;
-            letter-spacing: 0.8px !important;
-            white-space: nowrap !important;
-            text-decoration: none !important;
-            transition: all 0.3s ease !important;
-        }
-        #nav ul li a.signin-btn:hover {
-            background-color: #ff6347 !important;
-            border-color: #ff6347 !important;
-            color: #ffffff !important;
-            box-shadow: 0 0 12px rgba(255, 99, 71, 0.4) !important;
-        }
-        #nav ul li a.signin-btn:after { display: none !important; }
-    </style>
+    <!-- Tailwind CSS (compiled bundle) -->
+    <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">
     {% block extra_css %}{% endblock %}
 
     {% block structured_data %}{% endblock %}
 </head>
-<body class="{% block body_class %}{% endblock %}">
+<body class="bg-black text-white font-lato min-h-screen flex flex-col overflow-x-hidden {% block body_class %}{% endblock %}">
 
-    <!-- Social Media Icons (Graphic Charter) -->
-    <div id="follow">
-        <a href="{{ LINKEDIN_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-linkedin" aria-hidden="true"></i></a><br>
-        <a href="{{ GITHUB_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-github" aria-hidden="true"></i></a><br>
-        <a href="{{ TWITTER_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+    <!-- Lateral Social Media Icons -->
+    <div id="follow" class="fixed top-1/2 -translate-y-1/2 right-5 sm:right-6 z-30 text-center max-[768px]:hidden flex flex-col items-center gap-3">
+        <a href="{{ LINKEDIN_URL }}" target="_blank" rel="noopener noreferrer" class="text-white hover:text-[#00FFFF] hover:scale-115 transition-all text-[32px] block" aria-label="LinkedIn"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+        <a href="{{ GITHUB_URL }}" target="_blank" rel="noopener noreferrer" class="text-white hover:text-[#00FFFF] hover:scale-115 transition-all text-[32px] block" aria-label="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>
+        <a href="{{ TWITTER_URL }}" target="_blank" rel="noopener noreferrer" class="text-white hover:text-[#00FFFF] hover:scale-115 transition-all text-[32px] block" aria-label="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
     </div>
 
     <!-- Background Typography Accents (Graphic Charter) -->
-    <div id="develop">DEVELOP</div>
-    <div id="web">WEB</div>
-    <div id="dev">DEVELOPER</div>
-    <div id="fullstack">Full-stack</div>
+    <div id="develop" class="fixed -top-[162px] left-[1005px] text-[#565656]/15 text-[218px] font-black font-roboto select-none pointer-events-none z-0 max-[608px]:hidden">DEVELOP</div>
+    <div id="web" class="fixed top-[145px] left-[23px] text-[#565656]/15 text-[218px] font-black font-roboto select-none pointer-events-none z-0 max-[608px]:text-[120px] max-[608px]:top-[80px]">WEB</div>
+    <div id="dev" class="fixed top-[355px] left-[23px] text-[#565656]/15 text-[218px] font-black font-roboto select-none pointer-events-none z-0 max-[608px]:text-[80px] max-[608px]:top-[180px]">DEVELOPER</div>
+    <div id="fullstack" class="fixed top-[568px] left-[23px] w-[1042px] text-[#565656]/15 text-[218px] font-black font-roboto select-none pointer-events-none z-0 max-[608px]:hidden">Full-stack</div>
 
-    <div id="square1"></div>
-    <div id="square2"></div>
+    <div id="square1" class="fixed top-[529px] -left-[192px] w-[410px] h-[345px] border-2 border-[#00FFFF]/15 rotate-[23deg] pointer-events-none z-0"></div>
+    <div id="square2" class="fixed top-[12px] left-[90%] w-[215px] h-[232px] border-2 border-[#00FFFF]/15 rotate-[23deg] pointer-events-none z-0"></div>
 
-    <div class="site-wrapper">
-        {% include "includes/navbar.html" %}
+    <!-- Navigation Menu -->
+    {% include "includes/navbar.html" %}
+
+    <div class="relative z-10 flex flex-col min-h-screen">
         {% include "includes/messages.html" %}
 
-        <main class="site-main" id="main-content">
+        <main class="flex-grow pt-20 pb-16" id="main-content">
             {% block content %}{% endblock %}
         </main>
     </div>
 
-    <!-- Script for mobile menu -->
-    <script>
-        const slide = () => {
-            const burger = document.querySelector('.burger');
-            const nav = document.querySelector('.navbar');
-            const navlinks = document.querySelectorAll('.links li');
-            if (burger && nav) {
-                burger.addEventListener('click', () => {
-                    nav.classList.toggle('navbaract');
-
-                    navlinks.forEach((link, index) => {
-                        if (link.style.animation) {
-                            link.style.animation = '';
-                        } else {
-                            link.style.animation = `navlinkfade 4s ease backwards ${index / 10}s`;
-                        }
-                    });
-                });
-            }
-        }
-        slide();
-    </script>
     <script src="{% static 'js/main.js' %}"></script>
     {% block extra_js %}{% endblock %}
 </body>

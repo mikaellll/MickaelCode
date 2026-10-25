@@ -101,3 +101,110 @@ class CoursesTests(TestCase):
 
         progress = LessonProgress.objects.get(user=self.user_enrolled, lesson=self.paid_lesson)
         self.assertTrue(progress.is_completed)
+
+    def test_bunny_token_generation_algorithm(self):
+        import hashlib
+        from courses.services import VideoPlayerService
+        token_key = "test-token-key-12345"
+        video_id = "test-video-uuid-67890"
+        library_id = "9999"
+
+        signed_url = VideoPlayerService.generate_bunny_signed_url(
+            library_id=library_id,
+            video_id=video_id,
+            token_key=token_key,
+            expiration_seconds=3600
+        )
+
+        self.assertIn(f"https://iframe.mediadelivery.net/embed/{library_id}/{video_id}", signed_url)
+        self.assertIn("token=", signed_url)
+        self.assertIn("expires=", signed_url)
+
+        # Extract expires and verify SHA-256 match
+        from urllib.parse import urlparse, parse_qs
+        parsed = urlparse(signed_url)
+        params = parse_qs(parsed.query)
+        token = params["token"][0]
+        expires = params["expires"][0]
+
+        expected_raw = f"{token_key}{video_id}{expires}"
+        expected_token = hashlib.sha256(expected_raw.encode("utf-8")).hexdigest()
+        self.assertEqual(token, expected_token)
+
+    def test_bunny_player_renders_token_when_authorized(self):
+        from courses.services import VideoPlayerService
+        from django.test import override_settings
+
+        self.paid_lesson.video_provider = "bunny"
+        self.paid_lesson.video_id_or_url = "bunny-vid-123"
+        self.paid_lesson.save()
+
+        with override_settings(BUNNY_STREAM_LIBRARY_ID="12345", BUNNY_STREAM_TOKEN_KEY="secret-token-key"):
+            html = VideoPlayerService.render_player(self.paid_lesson, user=self.user_enrolled)
+            self.assertIn("bunny-stream-player", html)
+            self.assertIn("https://iframe.mediadelivery.net/embed/12345/bunny-vid-123", html)
+            self.assertIn("token=", html)
+            self.assertIn("expires=", html)
+
+    def test_bunny_player_blocks_unauthorized_user(self):
+        from courses.services import VideoPlayerService
+        self.paid_lesson.video_provider = "bunny"
+        self.paid_lesson.video_id_or_url = "bunny-vid-456"
+        self.paid_lesson.save()
+
+        html = VideoPlayerService.render_player(self.paid_lesson, user=self.user_stranger)
+        self.assertIn("Accès Réservé", html)
+        self.assertNotIn("iframe", html)
+        self.assertNotIn("bunny-vid-456", html)
+
+    def test_save_video_position_endpoint(self):
+        import json
+        self.client.force_login(self.user_enrolled)
+        url = reverse("courses:save_position", kwargs={"lesson_id": self.paid_lesson.id})
+
+        response = self.client.post(
+            url,
+            data=json.dumps({"seconds": 125}),
+            content_type="application/json"
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["saved_position"], 125)
+
+        progress = LessonProgress.objects.get(user=self.user_enrolled, lesson=self.paid_lesson)
+        self.assertEqual(progress.last_position_seconds, 125)
+
+    def test_save_video_position_bounds_sanitization(self):
+        import json
+        self.client.force_login(self.user_enrolled)
+        url = reverse("courses:save_position", kwargs={"lesson_id": self.paid_lesson.id})
+
+        # Negative seconds should be sanitized to 0
+        response_neg = self.client.post(
+            url,
+            data=json.dumps({"seconds": -50}),
+            content_type="application/json"
+        )
+        self.assertEqual(response_neg.status_code, 200)
+        self.assertEqual(response_neg.json()["saved_position"], 0)
+
+        # Huge seconds should be capped
+        response_huge = self.client.post(
+            url,
+            data=json.dumps({"seconds": 9999999}),
+            content_type="application/json"
+        )
+        self.assertEqual(response_huge.status_code, 200)
+        max_expected = (self.paid_lesson.duration_minutes * 60) + 3600
+        self.assertEqual(response_huge.json()["saved_position"], max_expected)
+
+    def test_save_video_position_unauthorized_rejected(self):
+        import json
+        self.client.force_login(self.user_stranger)
+        url = reverse("courses:save_position", kwargs={"lesson_id": self.paid_lesson.id})
+
+        response = self.client.post(
+            url,
+            data=json.dumps({"seconds": 60}),
+            content_type="application/json"
+        )
+        self.assertEqual(response.status_code, 403)

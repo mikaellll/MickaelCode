@@ -1,123 +1,99 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mickael</title>
-     <!-- below is the link of font awesome icon  -->
+    <title>Projets | Mickael – Développeur React & Next.js Marseille</title>
+    <meta name="description" content="Portfolio de réalisations web à Marseille : sites vitrines, e-commerce et applications Next.js / React.">
+    <!-- Font awesome icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20261023">
-    <link rel="stylesheet" media="screen and (max-device-width: 608px)" href="{% static 'css/tablet.css' %}?v=20261023">
-    <link rel="stylesheet" media="screen and (max-device-width: 502px)" href="{% static 'css/phone.css' %}?v=20261023">
-    <style>
-        #nav ul li { width: auto !important; margin-inline: 10px !important; white-space: nowrap !important; }
-        #nav ul li a.signin-btn {
-            display: inline-block !important;
-            border: 1.5px solid #00FFFF !important;
-            border-radius: 20px !important;
-            padding: 3px 14px !important;
-            color: #00FFFF !important;
-            font-size: 13px !important;
-            letter-spacing: 0.8px !important;
-            white-space: nowrap !important;
-            text-decoration: none !important;
-            transition: all 0.3s ease !important;
-        }
-        #nav ul li a.signin-btn:hover {
-            background-color: #ff6347 !important;
-            border-color: #ff6347 !important;
-            color: #ffffff !important;
-            box-shadow: 0 0 12px rgba(255, 99, 71, 0.4) !important;
-        }
-        #nav ul li a.signin-btn:after { display: none !important; }
-    </style>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300&family=Righteous&family=Roboto:wght@700;900&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS (compiled bundle) -->
+    <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">
+
+    <!-- Structured Data JSON-LD for Projects -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "itemListElement": [
+        {% for project in projects %}
+        {
+          "@type": "ListItem",
+          "position": {{ forloop.counter }},
+          "item": {
+            "@type": "CreativeWork",
+            "name": "{{ project.name }}",
+            "url": "{{ project.url }}",
+            "image": "{{ request.scheme }}://{{ request.get_host }}{% static project.image %}"
+          }
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+      ]
+    }
+    </script>
 </head>
 
-<body>
+<body class="bg-black text-white font-lato overflow-x-hidden">
 
-    <div id="container">
+    <div id="container" class="relative w-full min-h-screen lg:h-screen lg:overflow-hidden bg-black flex flex-col">
 
-        <!--      creating navigation menu        -->
-        <div class="navbar">
-            <div id="nav">
-                <ul class="links">
-                    <li><a href="{% url 'core:home' %}">HOME</a></li>
-                    <li><a href="{% url 'core:about' %}">ABOUT</a></li>
-                    <li><a href="{% url 'core:work' %}" class="nvg">WORK</a></li>
-                    <li><a href="{% url 'core:skills' %}">SKILL</a></li>
-                    <li><a href="{% url 'blog:post_list' %}">BLOG</a></li>
-                    <li><a href="{% url 'courses:course_list' %}">FORMATIONS</a></li>
-                    <li><a href="{% url 'core:contact' %}">CONTACT</a></li>
-                    {% if user.is_authenticated %}
-                    <li><a href="{% url 'dashboard:overview' %}">DASHBOARD</a></li>
-                    <li><a href="{% url 'accounts:logout' %}">LOGOUT</a></li>
-                    {% else %}
-                    <li><a href="{% url 'accounts:login' %}" class="signin-btn">SIGN IN</a></li>
-                    {% endif %}
-                </ul>
-            </div>
+        <!-- Navigation Menu -->
+        {% include "includes/navbar.html" %}
 
-        </div>
-        <!-- creating hamburger icon        -->
-        <div class="burger">
-            <div class="line1"></div>
-            <div class="line2"></div>
-            <div class="line3"></div>
+        <!-- Social Media Icons (Right Lateral) -->
+        <div id="follow" class="fixed top-1/2 -translate-y-1/2 right-5 sm:right-6 z-30 text-center max-[768px]:hidden flex flex-col items-center gap-3">
+            <a href="{{ LINKEDIN_URL|default:'https://www.linkedin.com/in/mickael-developpeur/' }}" target="_blank" rel="noopener noreferrer" class="text-white hover:text-cyan hover:scale-115 transition-all text-[32px] block" aria-label="LinkedIn"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+            <a href="{{ GITHUB_URL|default:'https://github.com/mickaelcode' }}" target="_blank" rel="noopener noreferrer" class="text-white hover:text-cyan hover:scale-115 transition-all text-[32px] block" aria-label="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>
+            <a href="{{ TWITTER_URL|default:'https://twitter.com/mickaelcode' }}" target="_blank" rel="noopener noreferrer" class="text-white hover:text-cyan hover:scale-115 transition-all text-[32px] block" aria-label="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
         </div>
 
+        <!-- Background Typography Elements -->
+        <div id="develop" class="fixed -top-[162px] left-[1005px] text-[#565656]/15 text-[218px] font-black font-roboto select-none pointer-events-none z-0 max-[608px]:hidden">DEVELOP</div>
+        <div id="web" class="fixed top-[145px] left-[23px] text-[#565656]/15 text-[218px] font-black font-roboto select-none pointer-events-none z-0 max-[608px]:text-[120px] max-[608px]:top-[80px]">WEB</div>
+        <div id="dev" class="fixed top-[355px] left-[23px] text-[#565656]/15 text-[218px] font-black font-roboto select-none pointer-events-none z-0 max-[608px]:text-[80px] max-[608px]:top-[180px]">DEVELOPER</div>
+        <div id="fullstack" class="fixed top-[568px] left-[23px] w-[1042px] text-[#565656]/15 text-[218px] font-black font-roboto select-none pointer-events-none z-0 max-[608px]:hidden">Full-stack</div>
 
-        <!-- adding social media icons     -->
-        <div id="follow">
-            <a href="{{ LINKEDIN_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-linkedin" aria-hidden="true"></i></a><br>
-            <a href="{{ GITHUB_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-github" aria-hidden="true"></i></a><br>
-            <a href="{{ TWITTER_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-        </div>
-        <div id="develop">DEVELOP</div>
-        <div id="web">WEB</div>
-        <div id="dev">DEVELOPER</div>
-        <div id="fullstack">Full-stack</div>
-        <!-- this box contain some information    -->
-        
+        <!-- Decorative Rotating Squares -->
+        <div id="square1" class="fixed top-[529px] -left-[192px] w-[410px] h-[345px] border-2 border-[#00FFFF]/15 rotate-[23deg] pointer-events-none z-0"></div>
+        <div id="square2" class="fixed top-[12px] left-[90%] w-[215px] h-[232px] border-2 border-[#00FFFF]/15 rotate-[23deg] pointer-events-none z-0"></div>
 
-        <div id="square1"></div>
-        <div id="square2"></div>
-        
-        
-        <!-- Adding profile image in background -->
-        <div id="pic">
-            
-        </div>
+        <!-- Projects Main Section -->
+        <main class="relative w-full flex-grow flex flex-col items-center justify-center z-10 pt-[64px] pb-4 px-4 sm:px-6 lg:px-8">
+            <section class="w-full max-w-[1360px] h-full flex flex-col items-center justify-center">
+                <h1 class="sr-only">Mes projets de développeur web à Marseille</h1>
 
+                <!-- Projects Grid -->
+                <div class="w-full h-full max-h-[82vh] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2 gap-5 lg:gap-6">
+                    {% for project in projects %}
+                    <div class="relative w-full h-full min-h-[180px] sm:min-h-[200px] lg:min-h-0">
+                        <!-- Clickable Image Card -->
+                        <a href="{{ project.url }}" target="_blank" rel="noopener noreferrer" class="block w-full h-full" aria-label="Visiter le site {{ project.name }} (ouvre dans un nouvel onglet)">
+                            <article class="relative overflow-hidden rounded-xl lg:rounded-2xl border-2 border-white/10 group cursor-pointer aspect-[16/10] sm:aspect-[4/3] lg:aspect-auto bg-[#0a0a0a] hover:border-cyan/50 transition-all duration-700 ease-out shadow-2xl hover:shadow-[0_12px_45px_rgba(0,255,255,0.2)] hover:-translate-y-1.5 h-full w-full" style="border-radius: 14px;">
+                                <div class="absolute inset-0 w-full h-full flex items-center justify-center overflow-hidden rounded-[12px]" style="border-radius: 12px;">
+                                    <img src="{% static project.image %}"
+                                         alt="{{ project.name }}"
+                                         loading="lazy"
+                                         decoding="async"
+                                         class="scale-100 group-hover:scale-105 transition-transform duration-1000 opacity-90 group-hover:opacity-100 object-cover object-top w-full h-full absolute inset-0 rounded-[12px]" style="border-radius: 12px;">
+                                </div>
+                            </article>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+
+            </section>
+        </main>
 
     </div>
-
-    <!-- javascript for functioning of sidebar menu  -->
-    <script>
-
-        const slide = () => {
-            const burger = document.querySelector('.burger');
-            const nav = document.querySelector('.navbar');
-            const navlinks = document.querySelectorAll('.links li');
-            burger.addEventListener('click', () => {
-                nav.classList.toggle('navbaract');
-
-                navlinks.forEach((link, index) => {
-
-                    if (link.style.animation) {
-                        link.style.animation = '';
-                    }
-                    else {
-                        link.style.animation = `navlinkfade 4s ease backwards ${index / 10}s`;
-                    }
-                });
-            });
-        }
-        slide();
-
-    </script>
 
 </body>
 

@@ -5,60 +5,68 @@
 {% block meta_description %}{{ project.meta_description|default:project.tagline|default:project.description|truncatewords:25 }}{% endblock %}
 
 {% block content %}
-<div class="content-container">
-    <div style="margin-top:30px; margin-bottom:20px;">
-        <a href="{% url 'core:work' %}" style="color:var(--text-muted); font-size:14px;"><i class="fa fa-arrow-left"></i> Retour aux réalisations</a>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="mt-8 mb-5">
+        <a href="{% url 'core:work' %}" class="text-neutral-400 hover:text-cyan text-sm inline-flex items-center gap-2 transition-colors">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Retour aux réalisations
+        </a>
     </div>
 
-    <article class="glass-card" style="padding:40px; margin-bottom:40px;">
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px; margin-bottom:24px;">
+    <article class="glass-card p-6 md:p-10 mb-10 border border-white/10 rounded-2xl bg-neutral-900/60 backdrop-blur-md">
+        <div class="flex justify-between items-start flex-wrap gap-4 mb-6">
             <div>
-                <span class="badge badge-cyan" style="margin-bottom:10px;">{{ project.client|default:"Projet Réalisé" }}</span>
-                <h1 style="font-size: clamp(32px, 5vw, 48px); margin-bottom: 8px;">{{ project.title }}</h1>
+                <span class="inline-block px-3 py-1 rounded-full text-xs font-medium bg-cyan/10 text-cyan border border-cyan/30 mb-2.5">
+                    {{ project.client|default:"Projet Réalisé" }}
+                </span>
+                <h1 class="text-3xl md:text-5xl font-righteous text-white mb-2">{{ project.title }}</h1>
                 {% if project.tagline %}
-                    <p style="font-size:18px; color:var(--accent-coral); font-family:'Righteous', cursive;">{{ project.tagline }}</p>
+                    <p class="text-lg text-tomato font-righteous">{{ project.tagline }}</p>
                 {% endif %}
             </div>
 
-            <div style="display:flex; gap:12px;">
+            <div class="flex gap-3">
                 {% if project.live_url %}
-                    <a href="{{ project.live_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-cyan btn-sm"><i class="fa fa-external-link"></i> Voir le site</a>
+                    <a href="{{ project.live_url }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-righteous text-black bg-cyan hover:bg-tomato hover:text-white rounded-full transition-all">
+                        <i class="fa fa-external-link" aria-hidden="true"></i> Voir le site
+                    </a>
                 {% endif %}
                 {% if project.github_url %}
-                    <a href="{{ project.github_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm"><i class="fa fa-github"></i> Code source</a>
+                    <a href="{{ project.github_url }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-righteous text-white border border-white/20 hover:border-cyan hover:text-cyan rounded-full transition-all">
+                        <i class="fa fa-github" aria-hidden="true"></i> Code source
+                    </a>
                 {% endif %}
             </div>
         </div>
 
         {% if project.image %}
-        <div style="border-radius:var(--radius-md); overflow:hidden; border:1px solid var(--border-color); margin-bottom:32px; max-height:550px; background:#000;">
-            <img src="{{ project.image.url }}" alt="{{ project.title }}" style="width:100%; height:auto; object-fit:contain;">
+        <div class="rounded-xl overflow-hidden border border-white/10 mb-8 max-h-[550px] bg-black">
+            <img src="{{ project.image.url }}" alt="{{ project.title }}" class="w-full h-auto object-contain">
         </div>
         {% endif %}
 
-        <div style="margin-bottom:30px;">
-            <h3 style="color:var(--accent-cyan); font-size:18px; margin-bottom:12px;">Technologies Employées</h3>
-            <div style="display:flex; flex-wrap:wrap; gap:8px;">
+        <div class="mb-8">
+            <h3 class="text-cyan text-lg font-righteous mb-3">Technologies Employées</h3>
+            <div class="flex flex-wrap gap-2">
                 {% for tech in project.tech_list %}
-                    <span style="font-size:13px; background:rgba(0,255,255,0.1); border:1px solid rgba(0,255,255,0.3); padding:6px 14px; border-radius:50px; color:#ffffff;">{{ tech }}</span>
+                    <span class="text-xs bg-cyan/10 border border-cyan/30 px-3.5 py-1.5 rounded-full text-white">{{ tech }}</span>
                 {% endfor %}
             </div>
         </div>
 
-        <div style="color:#e2e8f0; font-size:17px; line-height:1.8;">
-            <h3 style="color:#ffffff; margin-bottom:16px;">Présentation & Enjeux Techniques</h3>
+        <div class="text-slate-300 text-base md:text-lg leading-relaxed">
+            <h3 class="text-white text-xl font-righteous mb-4">Présentation & Enjeux Techniques</h3>
             <p>{{ project.description|linebreaksbr }}</p>
         </div>
     </article>
 
     {% if related_projects %}
-    <div style="margin-top:50px;">
-        <h3 style="margin-bottom:24px;">Autres projets récents</h3>
-        <div class="grid-3">
+    <div class="mt-12">
+        <h3 class="text-white text-2xl font-righteous mb-6">Autres projets récents</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             {% for rel in related_projects %}
-            <article class="glass-card">
-                <h4><a href="{% url 'core:project_detail' rel.slug %}">{{ rel.title }}</a></h4>
-                <p style="color:var(--text-muted); font-size:13px; margin-top:8px;">{{ rel.tagline|default:rel.description|truncatewords:15 }}</p>
+            <article class="glass-card p-6 border border-white/10 rounded-xl bg-neutral-900/60 hover:border-cyan/50 transition-all">
+                <h4 class="text-lg font-righteous text-white hover:text-cyan"><a href="{% url 'core:project_detail' rel.slug %}">{{ rel.title }}</a></h4>
+                <p class="text-neutral-400 text-sm mt-2">{{ rel.tagline|default:rel.description|truncatewords:15 }}</p>
             </article>
             {% endfor %}
         </div>

@@ -4,57 +4,57 @@
 {% block robots %}noindex, nofollow{% endblock %}
 
 {% block content %}
-<div class="content-container" style="padding-top:40px; padding-bottom:70px;">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
     {% include "dashboard/includes/nav_tabs.html" with active_tab="courses" %}
 
-    <div style="margin-bottom:30px;">
-        <h1 style="font-size:28px; margin-bottom:8px;">Mes Formations Acquises</h1>
-        <p style="color:var(--text-muted); font-size:15px;">Accédez à tous vos cours sans limite de temps.</p>
+    <div class="mb-8">
+        <h1 class="text-2xl md:text-3xl font-righteous text-white mb-2">Mes Formations Acquises</h1>
+        <p class="text-neutral-400 text-sm">Accédez à tous vos cours sans limite de temps.</p>
     </div>
 
-    <div class="grid-3">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {% for item in courses_list %}
-        <article class="glass-card" style="display:flex; flex-direction:column; justify-content:space-between;">
+        <article class="glass-card flex flex-col justify-between p-6 border border-white/10 rounded-2xl bg-neutral-900/60 backdrop-blur-md hover:border-cyan/40 transition-all">
             <div>
-                <div class="card-media">
+                <div class="relative rounded-lg overflow-hidden mb-4 aspect-video bg-black">
                     {% if item.course.cover_image %}
-                        <img src="{{ item.course.cover_image.url }}" alt="{{ item.course.title }}">
+                        <img src="{{ item.course.cover_image.url }}" alt="{{ item.course.title }}" class="w-full h-full object-cover">
                     {% endif %}
                     {% if item.is_completed %}
-                        <span class="badge" style="position:absolute; top:12px; right:12px; background:#10b981; color:#fff;">Terminé</span>
+                        <span class="absolute top-3 right-3 px-2.5 py-0.5 rounded-full text-[10px] font-righteous bg-emerald-500 text-white shadow-md">Terminé</span>
                     {% else %}
-                        <span class="badge badge-cyan" style="position:absolute; top:12px; right:12px;">En cours</span>
+                        <span class="absolute top-3 right-3 px-2.5 py-0.5 rounded-full text-[10px] font-righteous bg-cyan text-black shadow-md">En cours</span>
                     {% endif %}
                 </div>
 
-                <h3 style="font-size:20px; margin-bottom:10px;">
+                <h3 class="text-lg font-righteous text-white hover:text-cyan mb-3">
                     <a href="{{ item.course.get_absolute_url }}">{{ item.course.title }}</a>
                 </h3>
 
-                <div style="margin-bottom:14px;">
-                    <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700;">
-                        <span style="color:var(--text-muted);">Progression</span>
-                        <span style="color:var(--accent-cyan);">{{ item.progress_pct }}%</span>
+                <div class="mb-4">
+                    <div class="flex justify-between text-xs font-bold mb-1.5">
+                        <span class="text-neutral-400">Progression</span>
+                        <span class="text-cyan">{{ item.progress_pct }}%</span>
                     </div>
-                    <div class="progress-track">
-                        <div class="progress-fill" style="width: {{ item.progress_pct }}%;"></div>
+                    <div class="w-full bg-neutral-800 rounded-full h-2 overflow-hidden">
+                        <div class="bg-cyan h-2 rounded-full transition-all duration-500 shadow-[0_0_8px_rgba(0,255,255,0.6)]" style="width: {{ item.progress_pct }}%;"></div>
                     </div>
                 </div>
             </div>
 
-            <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:14px; margin-top:10px;">
+            <div class="border-t border-white/10 pt-4 mt-2">
                 {% if item.first_lesson %}
-                <a href="{% url 'courses:lesson_player' item.course.slug item.first_lesson.id %}" class="btn btn-cyan btn-sm btn-block">
+                <a href="{% url 'courses:lesson_player' item.course.slug item.first_lesson.id %}" class="w-full text-center inline-block px-4 py-2 rounded-full font-righteous text-xs uppercase tracking-wider text-black bg-cyan hover:bg-tomato hover:text-white transition-all">
                     Ouvrir les leçons &rarr;
                 </a>
                 {% endif %}
             </div>
         </article>
         {% empty %}
-        <div class="glass-card" style="grid-column: 1 / -1; text-align:center; padding:50px;">
-            <h3>Vous ne possédez pas encore de formation</h3>
-            <p style="color:var(--text-muted); font-size:14px; margin-top:8px;">Explorez le catalogue pour débloquer votre premier cursus.</p>
-            <a href="{% url 'courses:course_list' %}" class="btn btn-cyan" style="margin-top:16px;">Voir les formations</a>
+        <div class="col-span-full glass-card text-center p-12 border border-white/10 rounded-2xl bg-neutral-900/60 backdrop-blur-md">
+            <h3 class="text-xl font-righteous text-white mb-2">Vous ne possédez pas encore de formation</h3>
+            <p class="text-neutral-400 text-sm mb-6">Explorez le catalogue pour débloquer votre premier cursus.</p>
+            <a href="{% url 'courses:course_list' %}" class="inline-block px-6 py-2.5 rounded-full font-righteous text-xs uppercase tracking-wider text-black bg-cyan hover:bg-tomato hover:text-white transition-all shadow-[0_0_15px_rgba(0,255,255,0.3)]">Voir les formations</a>
         </div>
         {% endfor %}
     </div>

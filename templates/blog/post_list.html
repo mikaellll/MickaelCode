@@ -5,23 +5,23 @@
 {% block meta_description %}Articles techniques, retours d'expérience, tutoriels Django, bonnes pratiques d'architecture logicielle et astuces Python par Mickael.{% endblock %}
 
 {% block content %}
-<div class="content-container" style="padding-top:20px; padding-bottom:60px;">
-    <div class="section-header">
-        <div class="section-subtitle">Articles & Analyses</div>
-        <h1 class="section-title">Le Blog Technique</h1>
-        <p class="section-desc">Retours d'expérience concrets sur Django, Python, la conception d'architectures SaaS et l'optimisation des performances web.</p>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="mb-10">
+        <div class="text-xs uppercase tracking-widest text-cyan font-righteous mb-1.5">Articles & Analyses</div>
+        <h1 class="text-3xl md:text-5xl font-righteous text-white mb-3">Le Blog Technique</h1>
+        <p class="text-neutral-400 text-sm md:text-base max-w-2xl leading-relaxed">Retours d'expérience concrets sur Django, Python, la conception d'architectures SaaS et l'optimisation des performances web.</p>
     </div>
 
     <!-- Search and Filter Bar -->
-    <div class="glass-card" style="padding:20px; margin-bottom:40px;">
-        <form method="get" action="{% url 'blog:post_list' %}" style="display:flex; flex-wrap:wrap; gap:16px; align-items:center;">
-            <div style="flex:1; min-width:240px;">
-                <input type="text" name="q" value="{{ search_query }}" class="form-control" placeholder="Rechercher par mot-clé (ex: Django, ORM, API, Cache...)" id="blog-search-input">
+    <div class="glass-card p-5 mb-10 border border-white/10 rounded-2xl bg-neutral-900/60 backdrop-blur-md">
+        <form method="get" action="{% url 'blog:post_list' %}" class="flex flex-wrap gap-4 items-center">
+            <div class="flex-1 min-w-[240px]">
+                <input type="text" name="q" value="{{ search_query }}" class="w-full bg-[#121212] border border-neutral-800 focus:border-cyan focus:ring-1 focus:ring-cyan focus:bg-[#181818] rounded-md px-3.5 py-2.5 text-white text-sm outline-none transition-all" placeholder="Rechercher par mot-clé (ex: Django, ORM, API, Cache...)" id="blog-search-input">
             </div>
 
             {% if categories %}
-            <div style="min-width:180px;">
-                <select name="category" class="form-control" onchange="this.form.submit()" id="blog-category-select">
+            <div class="min-w-[180px]">
+                <select name="category" class="w-full bg-[#121212] border border-neutral-800 focus:border-cyan focus:ring-1 focus:ring-cyan focus:bg-[#181818] rounded-md px-3.5 py-2.5 text-white text-sm outline-none transition-all" onchange="this.form.submit()" id="blog-category-select">
                     <option value="">Toutes les catégories</option>
                     {% for cat in categories %}
                     <option value="{{ cat.slug }}" {% if selected_category.slug == cat.slug %}selected{% endif %}>{{ cat.name }}</option>
@@ -30,80 +30,80 @@
             </div>
             {% endif %}
 
-            <button type="submit" class="btn btn-cyan btn-sm" id="blog-search-btn">
-                <i class="fa fa-search"></i> Filtrer
+            <button type="submit" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-righteous text-xs uppercase tracking-wider text-black bg-cyan hover:bg-tomato hover:text-white transition-all cursor-pointer" id="blog-search-btn">
+                <i class="fa fa-search" aria-hidden="true"></i> Filtrer
             </button>
             {% if search_query or selected_category or selected_tag %}
-                <a href="{% url 'blog:post_list' %}" class="btn btn-outline btn-sm">Réinitialiser</a>
+                <a href="{% url 'blog:post_list' %}" class="inline-flex items-center px-4 py-2.5 rounded-full font-righteous text-xs uppercase tracking-wider text-white border border-white/20 hover:border-cyan hover:text-cyan transition-all">Réinitialiser</a>
             {% endif %}
         </form>
     </div>
 
     <!-- Articles Grid -->
-    <div class="grid-3">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {% for post in page_obj %}
-        <article class="glass-card" style="display:flex; flex-direction:column; justify-content:space-between;">
+        <article class="glass-card flex flex-col justify-between p-6 border border-white/10 rounded-2xl bg-neutral-900/60 backdrop-blur-md hover:border-cyan/40 transition-all group">
             <div>
                 {% if post.cover_image %}
-                <div class="card-media" style="border-radius:4px; overflow:hidden; margin-bottom:16px;">
+                <div class="relative rounded-lg overflow-hidden mb-4 aspect-video bg-black">
                     <a href="{{ post.get_absolute_url }}">
-                        <img src="{{ post.cover_image.url }}" alt="{{ post.title }}">
+                        <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                     </a>
                     {% if post.category %}
-                        <span class="badge badge-coral" style="position:absolute; top:12px; left:12px;">{{ post.category.name }}</span>
+                        <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-righteous bg-tomato/90 text-white shadow-md">{{ post.category.name }}</span>
                     {% endif %}
                 </div>
                 {% endif %}
 
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; font-size:12px; color:var(--text-dim);">
-                    <span><i class="fa fa-calendar-o"></i> {{ post.published_at|date:"d M Y" }}</span>
-                    <span><i class="fa fa-clock-o"></i> {{ post.reading_time_minutes }} min</span>
+                <div class="flex justify-between items-center mb-2.5 text-xs text-neutral-400">
+                    <span><i class="fa fa-calendar-o mr-1" aria-hidden="true"></i> {{ post.published_at|date:"d M Y" }}</span>
+                    <span><i class="fa fa-clock-o mr-1" aria-hidden="true"></i> {{ post.reading_time_minutes }} min</span>
                 </div>
 
-                <h2 style="font-size:20px; line-height:1.3; margin-bottom:12px; font-family:'Righteous', cursive;">
-                    <a href="{{ post.get_absolute_url }}" style="color:#ffffff;">{{ post.title }}</a>
+                <h2 class="text-xl font-righteous text-white leading-snug mb-3 group-hover:text-cyan transition-colors">
+                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
                 </h2>
 
-                <p style="color:var(--text-muted); font-size:14px; margin-bottom:16px; line-height:1.6;">
+                <p class="text-neutral-400 text-sm mb-4 leading-relaxed">
                     {{ post.excerpt|truncatewords:22 }}
                 </p>
 
                 {% if post.tags.all %}
-                <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px;">
+                <div class="flex flex-wrap gap-1.5 mb-4">
                     {% for tag in post.tags.all %}
-                        <a href="{% url 'blog:tag_detail' tag.slug %}" class="badge badge-coral" style="font-size:11px; text-decoration:none;">#{{ tag.name }}</a>
+                        <a href="{% url 'blog:tag_detail' tag.slug %}" class="px-2 py-0.5 rounded-full text-[10px] font-righteous bg-tomato/15 text-tomato border border-tomato/30 hover:bg-tomato hover:text-white transition-colors">#{{ tag.name }}</a>
                     {% endfor %}
                 </div>
                 {% endif %}
             </div>
 
-            <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:14px; display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size:12px; color:var(--text-dim);"><i class="fa fa-user-o"></i> {{ post.author.display_name|default:"Mickael" }}</span>
-                <a href="{{ post.get_absolute_url }}" style="color:var(--accent-cyan); font-weight:700; font-size:13px; font-family:'Righteous', cursive; letter-spacing:0.5px;">Lire l'article &rarr;</a>
+            <div class="border-t border-white/10 pt-3.5 mt-2 flex justify-between items-center text-xs">
+                <span class="text-neutral-500"><i class="fa fa-user-o mr-1" aria-hidden="true"></i> {{ post.author.display_name|default:"Mickael" }}</span>
+                <a href="{{ post.get_absolute_url }}" class="text-cyan group-hover:text-tomato font-righteous tracking-wide text-xs transition-colors">Lire l'article &rarr;</a>
             </div>
         </article>
         {% empty %}
-        <div class="glass-card" style="grid-column: 1 / -1; text-align:center; padding:50px;">
-            <i class="fa fa-pencil" style="font-size:40px; color:var(--text-dim); margin-bottom:16px;"></i>
-            <h3 style="margin-bottom:8px; font-family:'Righteous', cursive;">Aucun article trouvé</h3>
-            <p style="color:var(--text-muted); font-size:15px;">Aucun article ne correspond à votre recherche pour le moment.</p>
+        <div class="col-span-full glass-card text-center p-12 border border-white/10 rounded-2xl bg-neutral-900/60 backdrop-blur-md">
+            <i class="fa fa-pencil text-4xl text-neutral-500 mb-4 block" aria-hidden="true"></i>
+            <h3 class="text-xl font-righteous text-white mb-2">Aucun article trouvé</h3>
+            <p class="text-neutral-400 text-sm">Aucun article ne correspond à votre recherche pour le moment.</p>
         </div>
         {% endfor %}
     </div>
 
     <!-- Pagination -->
     {% if page_obj.has_other_pages %}
-    <div style="display:flex; justify-content:center; gap:8px; margin-top:50px;">
+    <div class="flex justify-center items-center gap-3 mt-12">
         {% if page_obj.has_previous %}
-            <a href="?page={{ page_obj.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_category %}&category={{ selected_category.slug }}{% endif %}" class="btn btn-outline btn-sm">&larr; Précédent</a>
+            <a href="?page={{ page_obj.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_category %}&category={{ selected_category.slug }}{% endif %}" class="px-4 py-2 rounded-full font-righteous text-xs text-white border border-white/20 hover:border-cyan hover:text-cyan transition-all">&larr; Précédent</a>
         {% endif %}
 
-        <span style="display:inline-flex; align-items:center; padding:0 14px; font-size:14px; color:var(--text-muted); font-family:'Lato', sans-serif;">
+        <span class="px-3 text-xs text-neutral-400">
             Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}
         </span>
 
         {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_category %}&category={{ selected_category.slug }}{% endif %}" class="btn btn-outline btn-sm">Suivant &rarr;</a>
+            <a href="?page={{ page_obj.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if selected_category %}&category={{ selected_category.slug }}{% endif %}" class="px-4 py-2 rounded-full font-righteous text-xs text-white border border-white/20 hover:border-cyan hover:text-cyan transition-all">Suivant &rarr;</a>
         {% endif %}
     </div>
     {% endif %}

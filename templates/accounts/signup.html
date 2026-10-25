@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="dark">
 
 <head>
     <meta charset="UTF-8">
@@ -13,431 +13,55 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Righteous&family=Roboto:wght@900&display=swap" rel="stylesheet">
     <!-- Font awesome icon -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20261023">
-    <link rel="stylesheet" media="screen and (max-device-width: 608px)" href="{% static 'css/tablet.css' %}?v=20261023">
-    <link rel="stylesheet" media="screen and (max-device-width: 502px)" href="{% static 'css/phone.css' %}?v=20261023">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: #000000;
-            color: #ffffff;
-            font-family: 'Lato', sans-serif;
-            overflow-x: hidden;
-        }
-
-        #container.auth-page-container {
-            position: relative;
-            width: 100%;
-            min-height: 100vh;
-            height: auto;
-            overflow-y: auto;
-            overflow-x: hidden;
-            background-color: #000000;
-        }
-
-        /* Top Navigation Bar */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 52px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 30;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-        }
-
-        #nav {
-            position: static;
-        }
-
-        #nav ul {
-            display: flex;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #nav ul li {
-            position: relative;
-            margin-inline: 12px;
-            font-family: 'Lato', sans-serif;
-            font-size: 14px;
-            white-space: nowrap;
-        }
-
-        #nav ul li a {
-            text-decoration: none;
-            letter-spacing: 0.5px;
-            color: #a0a0a0;
-            white-space: nowrap;
-            transition: color 0.25s ease;
-        }
-
-        #nav ul li a:hover {
-            color: #ffffff;
-        }
-
-        #nav ul li a.nvg {
-            color: #ffffff !important;
-        }
-
-        #nav ul li a.nvg:after {
-            content: "";
-            position: absolute;
-            background-color: #00FFFF;
-            height: 1px;
-            width: 100%;
-            left: 0;
-            top: 22px;
-        }
-
-        #nav ul li a.signin-btn {
-            display: inline-block;
-            border: 1.5px solid #00FFFF;
-            border-radius: 20px;
-            padding: 4px 16px;
-            color: #00FFFF !important;
-            font-size: 13px;
-            font-family: 'Righteous', cursive;
-            letter-spacing: 1px;
-            text-decoration: none !important;
-            white-space: nowrap !important;
-            transition: all 0.3s ease;
-            background: transparent;
-        }
-
-        #nav ul li a.signin-btn:after {
-            display: none !important;
-        }
-
-        #nav ul li a.signin-btn:hover {
-            background-color: #ff6347;
-            border-color: #ff6347;
-            color: #ffffff !important;
-            box-shadow: 0 0 15px rgba(255, 99, 71, 0.5);
-        }
-
-        /* Lateral Social Icons */
-        #follow {
-            position: fixed;
-            top: 271px;
-            right: 18px;
-            z-index: 25;
-            text-align: center;
-        }
-
-        #follow i {
-            font-size: 24px;
-            color: #FFFFFF;
-            margin-top: 16px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            display: block;
-        }
-
-        #follow i:hover {
-            color: #00FFFF;
-            transform: scale(1.15);
-        }
-
-        /* Background Typography & Squares */
-        #develop, #web, #dev, #fullstack, #square1, #square2 {
-            pointer-events: none !important;
-            user-select: none !important;
-        }
-
-        /* Sober Auth Form Container */
-        .auth-wrapper {
-            position: relative;
-            width: 100%;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 85px 20px 45px 20px;
-            z-index: 10;
-        }
-
-        .auth-box {
-            width: 100%;
-            max-width: 460px;
-            background: rgba(10, 10, 10, 0.94);
-            border: 1.5px solid rgba(0, 255, 255, 0.4);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.95), 0 0 30px rgba(0, 255, 255, 0.12);
-            border-radius: 10px;
-            padding: 36px 32px;
-            color: #ffffff;
-            font-family: 'Lato', sans-serif;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            position: relative;
-            z-index: 15;
-        }
-
-        .auth-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 36px;
-            margin-bottom: 24px;
-            border-bottom: 1px solid #222222;
-            padding-bottom: 12px;
-        }
-
-        .auth-tab-link {
-            font-family: 'Righteous', cursive;
-            font-size: 15px;
-            text-decoration: none;
-            letter-spacing: 1.5px;
-            color: #777777;
-            position: relative;
-            padding-bottom: 10px;
-            transition: color 0.25s;
-        }
-
-        .auth-tab-link.active {
-            color: #00FFFF;
-        }
-
-        .auth-tab-link.active::after {
-            content: "";
-            position: absolute;
-            bottom: -13px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: #00FFFF;
-            box-shadow: 0 0 8px #00FFFF;
-        }
-
-        .auth-tab-link:hover {
-            color: #ffffff;
-        }
-
-        .auth-badge {
-            text-align: center;
-            font-family: 'Righteous', cursive;
-            color: #00FFFF;
-            font-size: 11px;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            margin-bottom: 6px;
-        }
-
-        .auth-title {
-            font-family: 'Righteous', cursive;
-            font-size: 26px;
-            color: #ffffff;
-            text-align: center;
-            margin-bottom: 6px;
-            letter-spacing: 1px;
-        }
-
-        .auth-subtitle {
-            color: #888888;
-            font-size: 13px;
-            text-align: center;
-            margin-bottom: 24px;
-            font-family: 'Lato', sans-serif;
-        }
-
-        .auth-form-group {
-            margin-bottom: 16px;
-        }
-
-        .auth-form-label {
-            display: block;
-            font-size: 11px;
-            color: #a0a0a0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 7px;
-            font-weight: 600;
-        }
-
-        .auth-form-control {
-            width: 100%;
-            background-color: #121212;
-            border: 1px solid #2a2a2a;
-            border-radius: 6px;
-            padding: 12px 14px;
-            color: #ffffff;
-            font-size: 14px;
-            font-family: 'Lato', sans-serif;
-            outline: none;
-            transition: border-color 0.25s, box-shadow 0.25s, background-color 0.25s;
-            box-sizing: border-box;
-        }
-
-        .auth-form-control:focus {
-            border-color: #00FFFF;
-            box-shadow: 0 0 12px rgba(0, 255, 255, 0.35);
-            background-color: #181818;
-        }
-
-        .auth-form-control:-webkit-autofill,
-        .auth-form-control:-webkit-autofill:hover, 
-        .auth-form-control:-webkit-autofill:focus {
-            -webkit-text-fill-color: #ffffff !important;
-            -webkit-box-shadow: 0 0 0px 1000px #121212 inset !important;
-            box-shadow: 0 0 0px 1000px #121212 inset !important;
-            transition: background-color 5000s ease-in-out 0s;
-        }
-
-        .auth-error-msg {
-            color: #ff6347;
-            font-size: 12px;
-            margin-top: 6px;
-            font-family: 'Lato', sans-serif;
-        }
-
-        .auth-submit-btn {
-            width: 100%;
-            background: transparent;
-            border: 2px solid #00FFFF;
-            color: #FFFFFF;
-            padding: 12px 20px;
-            font-size: 15px;
-            font-family: 'Righteous', cursive;
-            letter-spacing: 1.5px;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 14px;
-            text-transform: uppercase;
-            display: block;
-            text-align: center;
-        }
-
-        .auth-submit-btn:hover {
-            background-color: #ff6347;
-            border-color: #ff6347;
-            color: #ffffff;
-            box-shadow: 0 0 20px rgba(255, 99, 71, 0.45);
-            transform: translateY(-1px);
-        }
-
-        .auth-footer-links {
-            text-align: center;
-            margin-top: 22px;
-            font-size: 13px;
-            color: #777777;
-            font-family: 'Lato', sans-serif;
-        }
-
-        .auth-footer-links a {
-            color: #00FFFF;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.2s;
-        }
-
-        .auth-footer-links a:hover {
-            color: #ff6347;
-        }
-
-        .auth-alert {
-            background: rgba(255, 99, 71, 0.15);
-            border: 1px solid #ff6347;
-            color: #ff8b77;
-            padding: 11px 14px;
-            border-radius: 6px;
-            font-size: 13px;
-            margin-bottom: 20px;
-            font-family: 'Lato', sans-serif;
-        }
-
-        @media (max-width: 608px) {
-            #follow {
-                display: none;
-            }
-            .auth-box {
-                padding: 26px 20px;
-            }
-        }
-    </style>
+    <!-- Tailwind CSS (compiled bundle) -->
+    <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">
 </head>
 
-<body>
+<body class="bg-black text-white font-lato overflow-x-hidden">
 
-    <div id="container" class="auth-page-container">
+    <div id="container" class="relative w-full min-h-screen h-auto overflow-y-auto overflow-x-hidden bg-black">
 
         <!-- Navigation Menu -->
-        <div class="navbar">
-            <div id="nav">
-                <ul class="links">
-                    <li><a href="{% url 'core:home' %}">HOME</a></li>
-                    <li><a href="{% url 'core:about' %}">ABOUT</a></li>
-                    <li><a href="{% url 'core:work' %}">WORK</a></li>
-                    <li><a href="{% url 'core:skills' %}">SKILL</a></li>
-                    <li><a href="{% url 'blog:post_list' %}">BLOG</a></li>
-                    <li><a href="{% url 'courses:course_list' %}">FORMATIONS</a></li>
-                    <li><a href="{% url 'core:contact' %}">CONTACT</a></li>
-                    {% if user.is_authenticated %}
-                    <li><a href="{% url 'dashboard:overview' %}">DASHBOARD</a></li>
-                    <li><a href="{% url 'accounts:logout' %}">LOGOUT</a></li>
-                    {% else %}
-                    <li><a href="{% url 'accounts:login' %}" class="signin-btn">SIGN IN</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
-
-        <!-- Hamburger Icon -->
-        <div class="burger">
-            <div class="line1"></div>
-            <div class="line2"></div>
-            <div class="line3"></div>
-        </div>
+        {% include "includes/navbar.html" %}
 
         <!-- Lateral Social Media Icons -->
-        <div id="follow">
-            <a href="{{ LINKEDIN_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-            <a href="{{ GITHUB_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-github" aria-hidden="true"></i></a>
-            <a href="{{ TWITTER_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+        <div id="follow" class="fixed top-[271px] right-[18px] z-30 text-center max-[608px]:hidden">
+            <a href="{{ LINKEDIN_URL }}" target="_blank" rel="noopener noreferrer" class="text-white hover:text-cyan hover:scale-110 my-4 block transition-all text-2xl"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+            <a href="{{ GITHUB_URL }}" target="_blank" rel="noopener noreferrer" class="text-white hover:text-cyan hover:scale-110 my-4 block transition-all text-2xl"><i class="fa fa-github" aria-hidden="true"></i></a>
+            <a href="{{ TWITTER_URL }}" target="_blank" rel="noopener noreferrer" class="text-white hover:text-cyan hover:scale-110 my-4 block transition-all text-2xl"><i class="fa fa-twitter" aria-hidden="true"></i></a>
         </div>
 
         <!-- Background Typography Elements -->
-        <div id="develop">DEVELOP</div>
-        <div id="web">WEB</div>
-        <div id="dev">DEVELOPER</div>
-        <div id="fullstack">Full-stack</div>
+        <div id="develop" class="absolute -top-[162px] left-[1005px] text-[#565656]/15 text-[218px] font-black font-roboto select-none pointer-events-none z-0 max-[608px]:hidden">DEVELOP</div>
+        <div id="web" class="absolute top-[145px] left-[23px] text-[#565656]/15 text-[218px] font-black font-roboto select-none pointer-events-none z-0 max-[608px]:text-[120px] max-[608px]:top-[80px]">WEB</div>
+        <div id="dev" class="absolute top-[355px] left-[23px] text-[#565656]/15 text-[218px] font-black font-roboto select-none pointer-events-none z-0 max-[608px]:text-[80px] max-[608px]:top-[180px]">DEVELOPER</div>
+        <div id="fullstack" class="absolute top-[568px] left-[23px] w-[1042px] text-[#565656]/15 text-[218px] font-black font-roboto select-none pointer-events-none z-0 max-[608px]:hidden">Full-stack</div>
 
-        <div id="square1"></div>
-        <div id="square2"></div>
+        <!-- Decorative Rotating Squares -->
+        <div id="square1" class="absolute top-[529px] -left-[192px] w-[410px] h-[345px] border-2 border-cyan/15 rotate-[23deg] pointer-events-none z-0"></div>
+        <div id="square2" class="absolute top-[12px] left-[90%] w-[215px] h-[232px] border-2 border-cyan/15 rotate-[23deg] pointer-events-none z-0"></div>
 
         <!-- Sober Auth Form Container -->
-        <div class="auth-wrapper">
-            <div class="auth-box">
-                <div class="auth-tabs">
-                    <a href="{% url 'accounts:login' %}" class="auth-tab-link">SIGN IN</a>
-                    <a href="{% url 'accounts:signup' %}" class="auth-tab-link active">SIGN UP</a>
+        <div class="relative w-full min-h-screen flex justify-center items-center px-4 pt-[85px] pb-[45px] z-10">
+            <div class="w-full max-w-[460px] bg-neutral-950/95 border-[1.5px] border-cyan/40 shadow-[0_15px_40px_rgba(0,0,0,0.95),0_0_30px_rgba(0,255,255,0.12)] rounded-xl p-7 sm:p-9 text-white font-lato backdrop-blur-md relative z-20">
+                <div class="flex justify-center gap-9 mb-6 border-b border-neutral-800 pb-3">
+                    <a href="{% url 'accounts:login' %}" class="font-righteous text-[15px] tracking-[1.5px] text-neutral-500 hover:text-white transition-colors pb-2.5">CONNEXION</a>
+                    <a href="{% url 'accounts:signup' %}" class="font-righteous text-[15px] tracking-[1.5px] text-cyan relative pb-2.5 after:content-[''] after:absolute after:-bottom-[13px] after:left-0 after:w-full after:h-[2px] after:bg-cyan after:shadow-[0_0_8px_#00FFFF]">INSCRIPTION</a>
                 </div>
 
-                <div class="auth-badge">ESPACE MEMBRE</div>
-                <div class="auth-title">INSCRIPTION</div>
-                <div class="auth-subtitle">Créez votre compte apprenant MickaelCode</div>
+                <div class="text-center font-righteous text-cyan text-[11px] tracking-[2.5px] uppercase mb-1.5">ESPACE MEMBRE</div>
+                <h1 class="font-righteous text-2xl sm:text-[26px] text-white text-center mb-1.5 tracking-wider">INSCRIPTION</h1>
+                <p class="text-neutral-400 text-xs sm:text-[13px] text-center mb-6">Créez votre compte apprenant MickaelCode</p>
 
                 {% if messages %}
                     {% for message in messages %}
-                        <div class="auth-alert">
+                        <div class="bg-tomato/15 border border-tomato text-[#ff8b77] px-3.5 py-2.5 rounded-md text-xs sm:text-sm mb-5">
                             {{ message }}
                         </div>
                     {% endfor %}
                 {% endif %}
                 {% if form.non_field_errors %}
-                    <div class="auth-alert">
+                    <div class="bg-tomato/15 border border-tomato text-[#ff8b77] px-3.5 py-2.5 rounded-md text-xs sm:text-sm mb-5">
                         {{ form.non_field_errors.0 }}
                     </div>
                 {% endif %}
@@ -445,82 +69,60 @@
                 <form method="post" action="{% url 'accounts:signup' %}" id="signup-form" novalidate>
                     {% csrf_token %}
 
-                    <div class="auth-form-group">
-                        <label for="signup-username" class="auth-form-label">Nom d'utilisateur</label>
-                        <input type="text" name="username" class="auth-form-control" id="signup-username" placeholder="Choisissez un pseudo" value="{{ form.username.value|default:'' }}" required autocomplete="username">
+                    <div class="mb-4">
+                        <label for="signup-username" class="block text-[11px] text-neutral-400 uppercase tracking-wider mb-2 font-semibold">Nom d'utilisateur</label>
+                        <input type="text" name="username" class="w-full bg-[#121212] border border-neutral-800 focus:border-cyan focus:ring-1 focus:ring-cyan focus:bg-[#181818] rounded-md px-3.5 py-3 text-white text-sm outline-none transition-all" id="signup-username" placeholder="Choisissez un pseudo" value="{{ form.username.value|default:'' }}" required autocomplete="username">
                         {% if form.username.errors %}
-                            <div class="auth-error-msg">{{ form.username.errors.0 }}</div>
+                            <div class="text-tomato text-xs mt-1.5">{{ form.username.errors.0 }}</div>
                         {% endif %}
                     </div>
 
-                    <div class="auth-form-group">
-                        <label for="signup-email" class="auth-form-label">Adresse e-mail</label>
-                        <input type="email" name="email" class="auth-form-control" id="signup-email" placeholder="nom@exemple.com" value="{{ form.email.value|default:'' }}" required autocomplete="email">
+                    <div class="mb-4">
+                        <label for="signup-email" class="block text-[11px] text-neutral-400 uppercase tracking-wider mb-2 font-semibold">Adresse e-mail</label>
+                        <input type="email" name="email" class="w-full bg-[#121212] border border-neutral-800 focus:border-cyan focus:ring-1 focus:ring-cyan focus:bg-[#181818] rounded-md px-3.5 py-3 text-white text-sm outline-none transition-all" id="signup-email" placeholder="nom@exemple.com" value="{{ form.email.value|default:'' }}" required autocomplete="email">
                         {% if form.email.errors %}
-                            <div class="auth-error-msg">{{ form.email.errors.0 }}</div>
+                            <div class="text-tomato text-xs mt-1.5">{{ form.email.errors.0 }}</div>
                         {% endif %}
                     </div>
 
-                    <div class="auth-form-group">
-                        <label for="signup-password" class="auth-form-label">Mot de passe</label>
-                        <input type="password" name="password" class="auth-form-control" id="signup-password" placeholder="Minimum 8 caractères" required autocomplete="new-password">
+                    <div class="mb-4">
+                        <label for="signup-password" class="block text-[11px] text-neutral-400 uppercase tracking-wider mb-2 font-semibold">Mot de passe</label>
+                        <input type="password" name="password" class="w-full bg-[#121212] border border-neutral-800 focus:border-cyan focus:ring-1 focus:ring-cyan focus:bg-[#181818] rounded-md px-3.5 py-3 text-white text-sm outline-none transition-all" id="signup-password" placeholder="Minimum 8 caractères" required autocomplete="new-password">
                         {% if form.password.errors %}
-                            <div class="auth-error-msg">{{ form.password.errors.0 }}</div>
+                            <div class="text-tomato text-xs mt-1.5">{{ form.password.errors.0 }}</div>
                         {% endif %}
                     </div>
 
-                    <div class="auth-form-group">
-                        <label for="signup-password-confirm" class="auth-form-label">Confirmez le mot de passe</label>
-                        <input type="password" name="password_confirm" class="auth-form-control" id="signup-password-confirm" placeholder="Retapez votre mot de passe" required autocomplete="new-password">
+                    <div class="mb-4">
+                        <label for="signup-password-confirm" class="block text-[11px] text-neutral-400 uppercase tracking-wider mb-2 font-semibold">Confirmez le mot de passe</label>
+                        <input type="password" name="password_confirm" class="w-full bg-[#121212] border border-neutral-800 focus:border-cyan focus:ring-1 focus:ring-cyan focus:bg-[#181818] rounded-md px-3.5 py-3 text-white text-sm outline-none transition-all" id="signup-password-confirm" placeholder="Retapez votre mot de passe" required autocomplete="new-password">
                         {% if form.password_confirm.errors %}
-                            <div class="auth-error-msg">{{ form.password_confirm.errors.0 }}</div>
+                            <div class="text-tomato text-xs mt-1.5">{{ form.password_confirm.errors.0 }}</div>
                         {% endif %}
                     </div>
 
-                    <div class="auth-form-group" style="margin-top:14px;">
-                        <label style="display:flex; align-items:flex-start; gap:8px; font-size:12px; color:#a0a0a0; cursor:pointer;">
-                            <input type="checkbox" name="terms_accepted" id="signup-terms" required style="accent-color:#00FFFF; margin-top:2px;" {% if form.terms_accepted.value %}checked{% endif %}>
+                    <div class="mb-4 mt-3">
+                        <label class="flex items-start gap-2 text-xs text-neutral-400 cursor-pointer">
+                            <input type="checkbox" name="terms_accepted" id="signup-terms" required class="accent-cyan mt-0.5" {% if form.terms_accepted.value %}checked{% endif %}>
                             <span>J'accepte les conditions d'utilisation et la politique de confidentialité.</span>
                         </label>
                         {% if form.terms_accepted.errors %}
-                            <div class="auth-error-msg">{{ form.terms_accepted.errors.0 }}</div>
+                            <div class="text-tomato text-xs mt-1.5">{{ form.terms_accepted.errors.0 }}</div>
                         {% endif %}
                     </div>
 
-                    <button type="submit" class="auth-submit-btn" id="signup-submit-btn">CRÉER MON COMPTE</button>
+                    <button type="submit" class="w-full bg-transparent border-2 border-cyan text-white hover:bg-tomato hover:border-tomato hover:shadow-[0_0_20px_rgba(255,99,71,0.45)] hover:-translate-y-0.5 py-3 px-5 text-[15px] font-righteous tracking-wider rounded-full cursor-pointer transition-all duration-300 mt-2 uppercase block text-center" id="signup-submit-btn">CRÉER MON COMPTE</button>
                 </form>
 
-                <div class="auth-footer-links">
-                    Vous avez déjà un compte ? <a href="{% url 'accounts:login' %}">Se connecter</a>
+                <div class="text-center mt-5 text-xs sm:text-[13px] text-neutral-500">
+                    Vous avez déjà un compte ? <a href="{% url 'accounts:login' %}" class="text-cyan hover:text-tomato font-semibold transition-colors">Se connecter</a>
                 </div>
             </div>
         </div>
 
     </div>
 
-    <!-- Javascript for functioning of sidebar menu on mobile -->
-    <script>
-        const slide = () => {
-            const burger = document.querySelector('.burger');
-            const nav = document.querySelector('.navbar');
-            const navlinks = document.querySelectorAll('.links li');
-            if (burger && nav) {
-                burger.addEventListener('click', () => {
-                    nav.classList.toggle('navbaract');
-
-                    navlinks.forEach((link, index) => {
-                        if (link.style.animation) {
-                            link.style.animation = '';
-                        } else {
-                            link.style.animation = `navlinkfade 4s ease backwards ${index / 10}s`;
-                        }
-                    });
-                });
-            }
-        }
-        slide();
-    </script>
-
+    <!-- Javascript for mobile menu -->
 </body>
 
 </html>

@@ -4,40 +4,40 @@
 {% block robots %}noindex, nofollow{% endblock %}
 
 {% block content %}
-<div class="content-narrow" style="padding: 60px 20px; text-align: center;">
-    <div class="glass-card" style="padding: 50px 36px;">
-        <div style="width:76px; height:76px; border-radius:50%; background:rgba(255, 99, 71, 0.15); border:2px solid var(--accent-coral); display:flex; align-items:center; justify-content:center; margin:0 auto 24px; color:var(--accent-coral); font-size:32px;">
-            <i class="fa fa-lock"></i>
+<div class="max-w-xl mx-auto px-4 py-16 text-center">
+    <div class="glass-card p-8 md:p-12 border border-tomato/30 rounded-2xl bg-neutral-900/60 backdrop-blur-md">
+        <div class="w-16 h-16 rounded-full bg-tomato/15 border-2 border-tomato flex items-center justify-center mx-auto mb-6 text-tomato text-2xl">
+            <i class="fa fa-lock" aria-hidden="true"></i>
         </div>
 
-        <h1 style="font-size:26px; margin-bottom:14px; font-family:'Righteous', cursive; color:#ffffff;">Cette leçon est réservée aux inscrits</h1>
+        <h1 class="text-2xl md:text-3xl font-righteous text-white mb-3">Cette leçon est réservée aux inscrits</h1>
 
-        <p style="color:#cbd5e1; font-size:15px; max-width:540px; margin:0 auto 24px; line-height:1.6;">
-            La leçon <strong>« {{ lesson.title }} »</strong> fait partie du cursus complet <strong>« {{ course.title }} »</strong>.
+        <p class="text-slate-300 text-sm max-w-md mx-auto mb-6 leading-relaxed">
+            La leçon <strong class="text-white">« {{ lesson.title }} »</strong> fait partie du cursus complet <strong class="text-white">« {{ course.title }} »</strong>.
         </p>
 
-        <div style="background:rgba(0,0,0,0.5); border-radius:4px; padding:20px; max-width:440px; margin:0 auto 30px; border:1px solid rgba(0,255,255,0.25);">
-            <div style="font-size:12px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">Tarif de la formation complète</div>
-            <div style="font-size:34px; font-weight:700; color:var(--accent-cyan); font-family:'Righteous', cursive;">{{ course.price }} {{ course.currency }}</div>
-            <div style="font-size:12px; color:var(--text-dim); margin-top:4px;">Accès illimité à vie &bull; Mises à jour incluses &bull; Paiement sécurisé Stripe</div>
+        <div class="bg-black/60 rounded-xl p-5 max-w-sm mx-auto mb-8 border border-cyan/30">
+            <div class="text-[11px] text-neutral-400 uppercase tracking-wider mb-1">Tarif de la formation complète</div>
+            <div class="text-3xl md:text-4xl font-bold text-cyan font-righteous">{{ course.price }} {{ course.currency }}</div>
+            <div class="text-xs text-neutral-500 mt-1">Accès illimité à vie &bull; Mises à jour incluses &bull; Paiement sécurisé Stripe</div>
         </div>
 
-        <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
+        <div class="flex justify-center gap-4 flex-wrap">
             <form method="post" action="{% url 'billing:create_checkout_session' course.slug %}">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-coral" id="btn-unlock-course">
-                    <i class="fa fa-shopping-cart"></i> Débloquer l'accès immédiat
+                <button type="submit" class="inline-flex items-center gap-2 px-6 py-3 rounded-full font-righteous text-sm uppercase tracking-wider text-white bg-tomato hover:bg-cyan hover:text-black transition-all shadow-[0_0_15px_rgba(255,99,71,0.4)] cursor-pointer" id="btn-unlock-course">
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> Débloquer l'accès immédiat
                 </button>
             </form>
 
-            <a href="{% url 'courses:course_detail' course.slug %}" class="btn btn-outline">
+            <a href="{% url 'courses:course_detail' course.slug %}" class="inline-flex items-center px-6 py-3 rounded-full font-righteous text-sm uppercase tracking-wider text-white border border-white/20 hover:border-cyan hover:text-cyan transition-all">
                 Voir le programme complet
             </a>
         </div>
 
         {% if not user.is_authenticated %}
-        <div style="margin-top:28px; font-size:13px; color:var(--text-dim);">
-            Vous possédez déjà cette formation ? <a href="{% url 'accounts:login' %}?next={{ request.path }}" style="color:var(--accent-cyan); font-weight:700; text-decoration:none;">Connectez-vous pour y accéder</a>
+        <div class="mt-8 text-xs text-neutral-500">
+            Vous possédez déjà cette formation ? <a href="{% url 'accounts:login' %}?next={{ request.path }}" class="text-cyan font-bold hover:underline">Connectez-vous pour y accéder</a>
         </div>
         {% endif %}
     </div>

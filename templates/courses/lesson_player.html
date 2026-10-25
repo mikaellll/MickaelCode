@@ -5,84 +5,84 @@
 {% block robots %}noindex, nofollow{% endblock %}
 
 {% block content %}
-<div class="content-container" style="padding-top:10px; padding-bottom:60px;">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
     <!-- Breadcrumb -->
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; flex-wrap:wrap; gap:12px;">
-        <div style="font-size:13px; color:var(--text-muted); font-family:'Righteous', cursive; letter-spacing:0.5px;">
-            <a href="{% url 'courses:course_detail' course.slug %}" style="color:var(--accent-cyan); text-decoration:none;">{{ course.title }}</a>
-            <span style="margin: 0 6px; color:#555;">&rsaquo;</span>
-            <span style="color:#ffffff;">{{ lesson.title }}</span>
+    <div class="flex justify-between items-center mb-5 flex-wrap gap-3">
+        <div class="text-xs text-neutral-400 font-righteous tracking-wider">
+            <a href="{% url 'courses:course_detail' course.slug %}" class="text-cyan hover:text-tomato transition-colors">{{ course.title }}</a>
+            <span class="mx-1.5 text-neutral-600">&rsaquo;</span>
+            <span class="text-white">{{ lesson.title }}</span>
         </div>
 
-        <a href="{% url 'dashboard:overview' %}" class="btn btn-outline btn-sm">
-            <i class="fa fa-th-large"></i> Mon Tableau de bord
+        <a href="{% url 'dashboard:overview' %}" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-righteous text-white border border-white/20 hover:border-cyan hover:text-cyan transition-all">
+            <i class="fa fa-th-large" aria-hidden="true"></i> Mon Tableau de bord
         </a>
     </div>
 
     <!-- Learning Workspace Layout -->
-    <div class="learning-layout">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
         <!-- Main Video & Notes Column -->
-        <div>
-            <div class="video-container" style="border:1px solid var(--border-color); border-radius:4px; overflow:hidden;">
-                <div class="video-frame-wrap" id="video-wrapper">
+        <div class="lg:col-span-2">
+            <div class="rounded-xl overflow-hidden border border-white/10 bg-black aspect-video relative shadow-2xl">
+                <div class="w-full h-full" id="video-wrapper">
                     {{ player_html }}
                 </div>
             </div>
 
             <!-- Player Controls & Navigation -->
-            <div class="glass-card" style="margin-top:16px; padding:18px 24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
-                <div style="display:flex; gap:12px; align-items:center;">
+            <div class="glass-card mt-4 p-4 md:p-5 flex justify-between items-center flex-wrap gap-4 border border-white/10 rounded-xl bg-neutral-900/60 backdrop-blur-md">
+                <div class="flex gap-3 items-center">
                     {% if user.is_authenticated %}
                     <form method="post" action="{% url 'courses:toggle_progress' lesson.id %}" id="progress-form">
                         {% csrf_token %}
-                        <button type="submit" class="btn {% if progress.is_completed %}btn-cyan{% else %}btn-outline{% endif %} btn-sm" id="btn-toggle-complete">
+                        <button type="submit" class="inline-flex items-center gap-2 px-4 py-2 rounded-full font-righteous text-xs uppercase tracking-wider transition-all cursor-pointer {% if progress.is_completed %}text-black bg-cyan hover:bg-tomato hover:text-white{% else %}text-white border border-white/20 hover:border-cyan hover:text-cyan{% endif %}" id="btn-toggle-complete">
                             {% if progress.is_completed %}
-                                <i class="fa fa-check-circle"></i> Leçon terminée
+                                <i class="fa fa-check-circle" aria-hidden="true"></i> Leçon terminée
                             {% else %}
-                                <i class="fa fa-circle-o"></i> Marquer comme terminée
+                                <i class="fa fa-circle-o" aria-hidden="true"></i> Marquer comme terminée
                             {% endif %}
                         </button>
                     </form>
                     {% endif %}
                 </div>
 
-                <div style="display:flex; gap:12px;">
+                <div class="flex gap-3">
                     {% if prev_lesson %}
-                        <a href="{% url 'courses:lesson_player' course.slug prev_lesson.id %}" class="btn btn-outline btn-sm">
-                            <i class="fa fa-chevron-left"></i> Précédente
+                        <a href="{% url 'courses:lesson_player' course.slug prev_lesson.id %}" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full font-righteous text-xs uppercase tracking-wider text-white border border-white/20 hover:border-cyan hover:text-cyan transition-all">
+                            <i class="fa fa-chevron-left" aria-hidden="true"></i> Précédente
                         </a>
                     {% endif %}
 
                     {% if next_lesson %}
-                        <a href="{% url 'courses:lesson_player' course.slug next_lesson.id %}" class="btn btn-cyan btn-sm">
-                            Suivante <i class="fa fa-chevron-right"></i>
+                        <a href="{% url 'courses:lesson_player' course.slug next_lesson.id %}" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full font-righteous text-xs uppercase tracking-wider text-black bg-cyan hover:bg-tomato hover:text-white transition-all">
+                            Suivante <i class="fa fa-chevron-right" aria-hidden="true"></i>
                         </a>
                     {% endif %}
                 </div>
             </div>
 
             <!-- Notes & Lesson Resources -->
-            <div class="glass-card" style="margin-top:20px; padding:32px;">
-                <h1 style="font-size:24px; margin-bottom:12px; font-family:'Righteous', cursive; color:#ffffff;">{{ lesson.title }}</h1>
-                <div style="font-size:13px; color:var(--text-dim); margin-bottom:20px;">
-                    <span><i class="fa fa-clock-o"></i> Durée estimée : {{ lesson.duration_minutes }} minutes</span>
+            <div class="glass-card mt-6 p-6 md:p-8 border border-white/10 rounded-2xl bg-neutral-900/60 backdrop-blur-md">
+                <h1 class="text-2xl md:text-3xl font-righteous text-white mb-2">{{ lesson.title }}</h1>
+                <div class="text-xs text-neutral-400 mb-5 flex items-center gap-3">
+                    <span><i class="fa fa-clock-o mr-1" aria-hidden="true"></i> Durée estimée : {{ lesson.duration_minutes }} minutes</span>
                     {% if lesson.is_free_preview %}
-                        <span class="badge badge-coral" style="margin-left:12px;">Extrait gratuit</span>
+                        <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-righteous bg-tomato/20 text-tomato border border-tomato/40">Extrait gratuit</span>
                     {% endif %}
                 </div>
 
                 {% if lesson.description %}
-                <div style="color:#e2e8f0; font-size:15px; line-height:1.7; margin-bottom:24px;">
+                <div class="text-slate-300 text-sm md:text-base leading-relaxed mb-6">
                     {{ lesson.description|linebreaks }}
                 </div>
                 {% endif %}
 
                 {% if lesson.resources_text %}
-                <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:20px;">
-                    <h3 style="color:var(--accent-cyan); font-size:16px; margin-bottom:10px; font-family:'Righteous', cursive;"><i class="fa fa-download"></i> Ressources & Liens utiles</h3>
-                    <div style="background:rgba(0,0,0,0.5); padding:16px; border-radius:4px; font-size:14px; color:#cbd5e1; border:1px solid rgba(0,255,255,0.1);">
+                <div class="mt-6 pt-5 border-t border-white/10">
+                    <h3 class="text-cyan text-sm mb-3 font-righteous flex items-center gap-2"><i class="fa fa-download" aria-hidden="true"></i> Ressources & Liens utiles</h3>
+                    <div class="bg-black/50 p-4 rounded-lg text-xs md:text-sm text-slate-300 border border-cyan/20 leading-relaxed font-mono">
                         {{ lesson.resources_text|linebreaksbr }}
                     </div>
                 </div>
@@ -91,36 +91,176 @@
         </div>
 
         <!-- Right Syllabus Sidebar -->
-        <aside class="learning-sidebar">
-            <h3 style="font-size:17px; color:var(--accent-cyan); margin-bottom:16px; font-family:'Righteous', cursive;">Contenu du cours</h3>
+        <aside class="glass-card p-6 border border-white/10 rounded-2xl bg-neutral-900/60 backdrop-blur-md max-h-[calc(100vh-140px)] overflow-y-auto">
+            <h3 class="text-base font-righteous text-cyan mb-4">Contenu du cours</h3>
 
             {% for mod in modules %}
-            <div style="margin-bottom:20px;">
-                <div style="font-weight:700; font-size:12px; color:var(--text-dim); text-transform:uppercase; margin-bottom:8px; font-family:'Righteous', cursive;">
+            <div class="mb-5">
+                <div class="font-righteous text-xs text-neutral-400 uppercase tracking-wider mb-2">
                     Module {{ mod.order }} : {{ mod.title }}
                 </div>
 
-                {% for item in mod.published_lessons %}
-                <a href="{% url 'courses:lesson_player' course.slug item.id %}"
-                   class="lesson-item {% if item.id == lesson.id %}active{% endif %} {% if item.id in completed_lesson_ids %}completed{% endif %}">
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        {% if item.id in completed_lesson_ids %}
-                            <i class="fa fa-check-circle" style="color:var(--accent-cyan); font-size:14px;"></i>
-                        {% elif item.id == lesson.id %}
-                            <i class="fa fa-play" style="color:var(--accent-cyan); font-size:12px;"></i>
-                        {% else %}
-                            <i class="fa fa-circle-thin" style="color:var(--text-dim); font-size:12px;"></i>
-                        {% endif %}
-                        <span style="font-size:13px; line-height:1.3;">{{ item.title }}</span>
-                    </div>
+                <div class="space-y-1.5">
+                    {% for item in mod.published_lessons %}
+                    <a href="{% url 'courses:lesson_player' course.slug item.id %}"
+                       class="flex justify-between items-center p-2.5 rounded-lg text-xs transition-all {% if item.id == lesson.id %}bg-cyan/15 text-cyan border border-cyan/40{% elif item.id in completed_lesson_ids %}bg-white/5 text-slate-300 hover:bg-white/10{% else %}text-neutral-400 hover:bg-white/5 hover:text-white{% endif %}">
+                        <div class="flex items-center gap-2">
+                            {% if item.id in completed_lesson_ids %}
+                                <i class="fa fa-check-circle text-cyan text-sm" aria-hidden="true"></i>
+                            {% elif item.id == lesson.id %}
+                                <i class="fa fa-play text-cyan text-xs" aria-hidden="true"></i>
+                            {% else %}
+                                <i class="fa fa-circle-thin text-neutral-500 text-xs" aria-hidden="true"></i>
+                            {% endif %}
+                            <span class="leading-snug">{{ item.title }}</span>
+                        </div>
 
-                    <span style="font-size:11px; color:var(--text-dim);">{{ item.duration_minutes }}m</span>
-                </a>
-                {% endfor %}
+                        <span class="text-[11px] text-neutral-500">{{ item.duration_minutes }}m</span>
+                    </a>
+                    {% endfor %}
+                </div>
             </div>
             {% endfor %}
         </aside>
 
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Bunny Stream Player.js SDK for cross-origin iframe communication -->
+<script src="https://assets.mediadelivery.net/playerjs/player-0.1.0.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const initialPosition = parseInt("{{ progress.last_position_seconds|default:0 }}", 10) || 0;
+    const savePositionUrl = "{% url 'courses:save_position' lesson.id %}";
+    const toggleProgressUrl = "{% url 'courses:toggle_progress' lesson.id %}";
+    const csrfToken = "{{ csrf_token }}";
+    const isUserAuthenticated = {{ user.is_authenticated|yesno:"true,false" }};
+
+    let lastSavedPosition = initialPosition;
+    let lastSaveTimestamp = Date.now();
+
+    function persistPlaybackPosition(seconds, force = false) {
+        if (!isUserAuthenticated || seconds < 0) return;
+        const now = Date.now();
+        // Throttle updates to at most once every 15 seconds unless forced (pause or end)
+        if (!force && (now - lastSaveTimestamp < 14000)) return;
+        if (!force && Math.abs(seconds - lastSavedPosition) < 3) return;
+
+        lastSaveTimestamp = now;
+        lastSavedPosition = Math.floor(seconds);
+
+        fetch(savePositionUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrfToken,
+                "X-Requested-With": "XMLHttpRequest"
+            },
+            body: JSON.stringify({ seconds: Math.floor(seconds) })
+        }).catch(function(err) {
+            console.debug("Video position save failed:", err);
+        });
+    }
+
+    // 1. Bunny Stream Player.js integration
+    const bunnyIframe = document.getElementById("bunny-stream-player");
+    if (bunnyIframe && typeof playerjs !== "undefined") {
+        try {
+            const player = new playerjs.Player(bunnyIframe);
+
+            player.on("ready", function() {
+                // Resume from saved position if student has already watched more than 5 seconds
+                if (initialPosition > 5) {
+                    player.setCurrentTime(initialPosition);
+                }
+
+                player.on("timeupdate", function(data) {
+                    if (data && typeof data.seconds !== "undefined") {
+                        persistPlaybackPosition(data.seconds);
+                    }
+                });
+
+                player.on("pause", function() {
+                    player.getCurrentTime(function(sec) {
+                        persistPlaybackPosition(sec, true);
+                    });
+                });
+
+                player.on("ended", function() {
+                    persistPlaybackPosition(0, true);
+                    // Automatically mark lesson as completed upon finishing
+                    const btn = document.getElementById("btn-toggle-complete");
+                    if (btn && !btn.classList.contains("is-completed")) {
+                        triggerToggleProgress();
+                    }
+                });
+            });
+        } catch (e) {
+            console.warn("Bunny Player.js initialization notice:", e);
+        }
+    }
+
+    // 2. Native HTML5 Video fallback integration
+    const html5Video = document.getElementById("html5-video-player");
+    if (html5Video) {
+        if (initialPosition > 5) {
+            html5Video.currentTime = initialPosition;
+        }
+        html5Video.addEventListener("timeupdate", function() {
+            persistPlaybackPosition(html5Video.currentTime);
+        });
+        html5Video.addEventListener("pause", function() {
+            persistPlaybackPosition(html5Video.currentTime, true);
+        });
+        html5Video.addEventListener("ended", function() {
+            persistPlaybackPosition(0, true);
+            const btn = document.getElementById("btn-toggle-complete");
+            if (btn && !btn.classList.contains("is-completed")) {
+                triggerToggleProgress();
+            }
+        });
+    }
+
+    // 3. AJAX Lesson completion toggle
+    const progressForm = document.getElementById("progress-form");
+    if (progressForm) {
+        progressForm.addEventListener("submit", function(e) {
+            e.preventDefault();
+            triggerToggleProgress();
+        });
+    }
+
+    function triggerToggleProgress() {
+        fetch(toggleProgressUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrfToken,
+                "X-Requested-With": "XMLHttpRequest"
+            }
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            if (data.success) {
+                const btn = document.getElementById("btn-toggle-complete");
+                if (btn) {
+                    if (data.is_completed) {
+                        btn.className = "inline-flex items-center gap-2 px-4 py-2 rounded-full font-righteous text-xs uppercase tracking-wider transition-all cursor-pointer text-black bg-cyan hover:bg-tomato hover:text-white is-completed";
+                        btn.innerHTML = '<i class="fa fa-check-circle" aria-hidden="true"></i> Leçon terminée';
+                    } else {
+                        btn.className = "inline-flex items-center gap-2 px-4 py-2 rounded-full font-righteous text-xs uppercase tracking-wider transition-all cursor-pointer text-white border border-white/20 hover:border-cyan hover:text-cyan";
+                        btn.innerHTML = '<i class="fa fa-circle-o" aria-hidden="true"></i> Marquer comme terminée';
+                    }
+                }
+            }
+        })
+        .catch(function(err) {
+            if (progressForm) progressForm.submit();
+        });
+    }
+});
+</script>
 {% endblock %}

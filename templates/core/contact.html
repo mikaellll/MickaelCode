@@ -1,124 +1,184 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mickael</title>
-     <!-- below is the link of font awesome icon  -->
+    <title>Contact | Mickael – Développeur React & Next.js Marseille</title>
+    <meta name="description" content="Projet de création de site internet ou application web à Marseille ? Contactez-moi pour un devis gratuit et personnalisé.">
+    <!-- Font awesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20261023">
-    <link rel="stylesheet" media="screen and (max-device-width: 608px)" href="{% static 'css/tablet.css' %}?v=20261023">
-    <link rel="stylesheet" media="screen and (max-device-width: 502px)" href="{% static 'css/phone.css' %}?v=20261023">
-    <style>
-        #nav ul li { width: auto !important; margin-inline: 10px !important; white-space: nowrap !important; }
-        #nav ul li a.signin-btn {
-            display: inline-block !important;
-            border: 1.5px solid #00FFFF !important;
-            border-radius: 20px !important;
-            padding: 3px 14px !important;
-            color: #00FFFF !important;
-            font-size: 13px !important;
-            letter-spacing: 0.8px !important;
-            white-space: nowrap !important;
-            text-decoration: none !important;
-            transition: all 0.3s ease !important;
-        }
-        #nav ul li a.signin-btn:hover {
-            background-color: #ff6347 !important;
-            border-color: #ff6347 !important;
-            color: #ffffff !important;
-            box-shadow: 0 0 12px rgba(255, 99, 71, 0.4) !important;
-        }
-        #nav ul li a.signin-btn:after { display: none !important; }
-    </style>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300&family=Righteous&family=Roboto:wght@700;900&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS (compiled bundle) -->
+    <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">
 </head>
 
-<body>
+<body class="bg-black text-white font-lato overflow-x-hidden">
 
-    <div id="container">
+    <div id="container" class="relative w-full min-h-screen lg:h-screen lg:overflow-hidden bg-black flex flex-col">
 
-        <!--      creating navigation menu        -->
-        <div class="navbar">
-            <div id="nav">
-                <ul class="links">
-                    <li><a href="{% url 'core:home' %}">HOME</a></li>
-                    <li><a href="{% url 'core:about' %}">ABOUT</a></li>
-                    <li><a href="{% url 'core:work' %}">WORK</a></li>
-                    <li><a href="{% url 'core:skills' %}">SKILL</a></li>
-                    <li><a href="{% url 'blog:post_list' %}">BLOG</a></li>
-                    <li><a href="{% url 'courses:course_list' %}">FORMATIONS</a></li>
-                    <li><a href="{% url 'core:contact' %}" class="nvg">CONTACT</a></li>
-                    {% if user.is_authenticated %}
-                    <li><a href="{% url 'dashboard:overview' %}">DASHBOARD</a></li>
-                    <li><a href="{% url 'accounts:logout' %}">LOGOUT</a></li>
-                    {% else %}
-                    <li><a href="{% url 'accounts:login' %}" class="signin-btn">SIGN IN</a></li>
-                    {% endif %}
-                </ul>
-            </div>
+        <!-- Navigation Menu -->
+        {% include "includes/navbar.html" %}
 
-        </div>
-        <!-- creating hamburger icon        -->
-        <div class="burger">
-            <div class="line1"></div>
-            <div class="line2"></div>
-            <div class="line3"></div>
+        <!-- Social Media Icons (lateral right) -->
+        <div id="follow" class="fixed top-1/2 -translate-y-1/2 right-5 sm:right-6 z-30 text-center max-[768px]:hidden flex flex-col items-center gap-3">
+            <a href="{{ LINKEDIN_URL|default:'https://www.linkedin.com/in/mickael-developpeur/' }}" target="_blank" rel="noopener noreferrer" class="text-white hover:text-cyan hover:scale-115 transition-all text-[32px] block" aria-label="LinkedIn"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+            <a href="{{ GITHUB_URL|default:'https://github.com/mickaelcode' }}" target="_blank" rel="noopener noreferrer" class="text-white hover:text-cyan hover:scale-115 transition-all text-[32px] block" aria-label="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>
+            <a href="{{ TWITTER_URL|default:'https://twitter.com/mickaelcode' }}" target="_blank" rel="noopener noreferrer" class="text-white hover:text-cyan hover:scale-115 transition-all text-[32px] block" aria-label="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
         </div>
 
+        <!-- Background Typography Elements -->
+        <div id="develop" class="fixed -top-[162px] left-[1005px] text-[#565656]/15 text-[218px] font-black font-roboto select-none pointer-events-none z-0 max-[608px]:hidden">DEVELOP</div>
+        <div id="web" class="fixed top-[145px] left-[23px] text-[#565656]/15 text-[218px] font-black font-roboto select-none pointer-events-none z-0 max-[608px]:text-[120px] max-[608px]:top-[80px]">WEB</div>
+        <div id="dev" class="fixed top-[355px] left-[23px] text-[#565656]/15 text-[218px] font-black font-roboto select-none pointer-events-none z-0 max-[608px]:text-[80px] max-[608px]:top-[180px]">DEVELOPER</div>
+        <div id="fullstack" class="fixed top-[568px] left-[23px] w-[1042px] text-[#565656]/15 text-[218px] font-black font-roboto select-none pointer-events-none z-0 max-[608px]:hidden">Full-stack</div>
 
-        <!-- adding social media icons     -->
-        <div id="follow">
-            <a href="{{ LINKEDIN_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-linkedin" aria-hidden="true"></i></a><br>
-            <a href="{{ GITHUB_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-github" aria-hidden="true"></i></a><br>
-            <a href="{{ TWITTER_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-        </div>
-        <div id="develop">DEVELOP</div>
-        <div id="web">WEB</div>
-        <div id="dev">DEVELOPER</div>
-        <div id="fullstack">Full-stack</div>
-        <!-- this box contain some information    -->
-        
+        <!-- Decorative Rotating Squares -->
+        <div id="square1" class="fixed top-[529px] -left-[192px] w-[410px] h-[345px] border-2 border-[#00FFFF]/15 rotate-[23deg] pointer-events-none z-0"></div>
+        <div id="square2" class="fixed top-[12px] left-[90%] w-[215px] h-[232px] border-2 border-[#00FFFF]/15 rotate-[23deg] pointer-events-none z-0"></div>
 
-        <div id="square1"></div>
-        <div id="square2"></div>
-        
-        
-        <!-- Adding profile image in background -->
-        <div id="pic">
-            
-        </div>
+        <!-- System Alerts / Flash Messages -->
+        {% include "includes/messages.html" %}
 
+        <!-- Contact Main Content -->
+        <main class="relative w-full flex-grow flex flex-col items-center justify-center z-10 pt-[62px] pb-3 px-4 sm:px-8 lg:pl-8 lg:pr-16">
+            <section class="w-full max-w-[1240px] flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-6 lg:gap-8">
+
+                <!-- Left Column: Presentation & Contact Details -->
+                <div class="w-full lg:w-[45%] max-w-[480px]">
+                    <h1 class="font-righteous text-[26px] lg:text-[40px] text-white mb-0.5 leading-tight">
+                        <span class="sr-only">Contactez un développeur web freelance à Marseille : </span>Contactez<span class="text-cyan">-moi</span>
+                    </h1>
+                    <div class="w-[36px] h-[2px] bg-gradient-to-r from-cyan to-tomato mb-2.5"></div>
+                    <p class="font-lato text-[13px] lg:text-[15px] text-[#a0a0a0] leading-relaxed mb-4">
+                        Vous avez un projet en tête ? Une question ? N'hésitez pas à me contacter, je vous répondrai dans les plus brefs délais.
+                    </p>
+
+                    <!-- Contact Details List -->
+                    <div class="flex flex-col gap-2.5 sm:gap-3">
+                        <!-- Email -->
+                        <div class="flex items-center gap-3 group">
+                            <div class="w-[38px] h-[38px] flex items-center justify-center border border-cyan/20 rounded-full bg-cyan/5 shrink-0 transition-all duration-300 group-hover:bg-cyan/10 group-hover:border-cyan">
+                                <i class="fa-solid fa-envelope text-[16px] text-cyan" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <span class="block font-lato text-[10px] text-gray-400 uppercase tracking-widest">Email</span>
+                                <a href="mailto:mickaelbn@gmail.com" class="font-lato text-[13px] text-white hover:text-cyan transition-colors duration-300">mickaelbn@gmail.com</a>
+                            </div>
+                        </div>
+
+                        <!-- Localisation -->
+                        <div class="flex items-center gap-3 group">
+                            <div class="w-[38px] h-[38px] flex items-center justify-center border border-cyan/20 rounded-full bg-cyan/5 shrink-0 transition-all duration-300 group-hover:bg-cyan/10 group-hover:border-cyan">
+                                <i class="fa-solid fa-location-dot text-[16px] text-cyan" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <span class="block font-lato text-[10px] text-gray-400 uppercase tracking-widest">Localisation</span>
+                                <span class="font-lato text-[13px] text-white">Marseille, France</span>
+                            </div>
+                        </div>
+
+                        <!-- Disponibilité -->
+                        <div class="hidden sm:flex items-center gap-3 group">
+                            <div class="w-[38px] h-[38px] flex items-center justify-center border border-cyan/20 rounded-full bg-cyan/5 shrink-0 transition-all duration-300 group-hover:bg-cyan/10 group-hover:border-cyan">
+                                <i class="fa-solid fa-clock text-[16px] text-cyan" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <span class="block font-lato text-[10px] text-gray-400 uppercase tracking-widest">Disponibilité</span>
+                                <span class="font-lato text-[13px] text-white">Lun – Ven, 9h – 18h</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Glassmorphism Form Card -->
+                <div class="w-full lg:w-[50%] max-w-[560px]">
+                    <form method="POST" action="{% url 'core:contact' %}" class="bg-[#0a0a0a]/80 border-2 border-white/5 rounded-[22px] backdrop-blur-xl w-full p-4 sm:p-5 shadow-[0_20px_50px_rgba(0,0,0,0.8)]" novalidate id="contact-form">
+                        {% csrf_token %}
+
+                        <!-- Honeypot Anti-Spam Field -->
+                        <div style="display:none;" aria-hidden="true">
+                            {{ form.bot_field }}
+                        </div>
+
+                        {% if form.non_field_errors %}
+                            <div class="mb-2 p-2 rounded-lg bg-tomato/15 border border-tomato text-tomato text-xs font-lato">
+                                {% for error in form.non_field_errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <!-- Nom -->
+                        <div class="mb-1.5">
+                            <label for="contact-name" class="block font-lato text-[11px] text-cyan-200 uppercase tracking-[1.5px] mb-0.5">Nom</label>
+                            {{ form.name }}
+                            {% if form.name.errors %}
+                                <p class="text-tomato text-xs mt-0.5">{{ form.name.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-1.5">
+                            <label for="contact-email" class="block font-lato text-[11px] text-cyan-200 uppercase tracking-[1.5px] mb-0.5">Email</label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <p class="text-tomato text-xs mt-0.5">{{ form.email.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+
+                        <!-- Sujet -->
+                        <div class="mb-1.5">
+                            <label for="contact-subject" class="block font-lato text-[11px] text-cyan-200 uppercase tracking-[1.5px] mb-0.5">Sujet</label>
+                            {{ form.subject }}
+                            {% if form.subject.errors %}
+                                <p class="text-tomato text-xs mt-0.5">{{ form.subject.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+
+                        <!-- Message -->
+                        <div class="mb-2.5">
+                            <label for="contact-message" class="block font-lato text-[11px] text-cyan-200 uppercase tracking-[1.5px] mb-0.5">Message</label>
+                            {{ form.message }}
+                            {% if form.message.errors %}
+                                <p class="text-tomato text-xs mt-0.5">{{ form.message.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" id="contact-submit-btn" class="w-full py-2.5 px-4 flex items-center justify-center h-[46px] min-h-[46px] font-righteous text-[16px] tracking-[1.5px] text-black bg-cyan border-2 border-cyan rounded-full hover:bg-tomato hover:border-tomato hover:text-white transition-all duration-300 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed">
+                            Envoyer
+                        </button>
+                    </form>
+                </div>
+
+            </section>
+        </main>
 
     </div>
 
-    <!-- javascript for functioning of sidebar menu  -->
+    <!-- Double-submit prevention script -->
     <script>
-
-        const slide = () => {
-            const burger = document.querySelector('.burger');
-            const nav = document.querySelector('.navbar');
-            const navlinks = document.querySelectorAll('.links li');
-            burger.addEventListener('click', () => {
-                nav.classList.toggle('navbaract');
-
-                navlinks.forEach((link, index) => {
-
-                    if (link.style.animation) {
-                        link.style.animation = '';
-                    }
-                    else {
-                        link.style.animation = `navlinkfade 4s ease backwards ${index / 10}s`;
-                    }
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('contact-form');
+            const submitBtn = document.getElementById('contact-submit-btn');
+            if (form && submitBtn) {
+                form.addEventListener('submit', function () {
+                    setTimeout(function () {
+                        submitBtn.disabled = true;
+                        submitBtn.innerText = 'Envoi en cours...';
+                        submitBtn.classList.add('opacity-70', 'cursor-not-allowed');
+                    }, 50);
                 });
-            });
-        }
-        slide();
-
+            }
+        });
     </script>
-
 </body>
 
 </html>

@@ -1,214 +1,176 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mickael</title>
-     <!-- below is the link of font awesome icon  -->
+    <title>Compétences | Mickael – Développeur React & Next.js Marseille</title>
+    <meta name="description" content="Expertise technique en développement web : React, Next.js, Django et WordPress pour vos projets à Marseille.">
+    <!-- Font awesome icon -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{% static 'css/master.css' %}?v=20261023">
-    <link rel="stylesheet" href="{% static 'css/skillstyle.css' %}?v=20261023">
-    <link rel="stylesheet" media="screen and (max-device-width: 608px)" href="{% static 'css/tablet.css' %}?v=20261023">
-    <link rel="stylesheet" media="screen and (max-device-width: 502px)" href="{% static 'css/phone.css' %}?v=20261023">
-    <style>
-        #nav ul li { width: auto !important; margin-inline: 10px !important; white-space: nowrap !important; }
-        #nav ul li a.signin-btn {
-            display: inline-block !important;
-            border: 1.5px solid #00FFFF !important;
-            border-radius: 20px !important;
-            padding: 3px 14px !important;
-            color: #00FFFF !important;
-            font-size: 13px !important;
-            letter-spacing: 0.8px !important;
-            white-space: nowrap !important;
-            text-decoration: none !important;
-            transition: all 0.3s ease !important;
-        }
-        #nav ul li a.signin-btn:hover {
-            background-color: #ff6347 !important;
-            border-color: #ff6347 !important;
-            color: #ffffff !important;
-            box-shadow: 0 0 12px rgba(255, 99, 71, 0.4) !important;
-        }
-        #nav ul li a.signin-btn:after { display: none !important; }
-    </style>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300&family=Righteous&family=Roboto:wght@700;900&family=Sacramento&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS (compiled bundle) -->
+    <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">
 </head>
 
-<body>
+<body class="bg-black text-white font-lato overflow-x-hidden">
 
-    <div id="container">
+    <div id="container" class="relative w-full min-h-screen overflow-x-hidden bg-black pb-16">
 
-        <!--      creating navigation menu        -->
-        <div class="navbar">
-            <div id="nav">
-                <ul class="links">
-                    <li><a href="{% url 'core:home' %}">HOME</a></li>
-                    <li><a href="{% url 'core:about' %}">ABOUT</a></li>
-                    <li><a href="{% url 'core:work' %}">WORK</a></li>
-                    <li><a href="{% url 'core:skills' %}" class="nvg">SKILL</a></li>
-                    <li><a href="{% url 'blog:post_list' %}">BLOG</a></li>
-                    <li><a href="{% url 'courses:course_list' %}">FORMATIONS</a></li>
-                    <li><a href="{% url 'core:contact' %}">CONTACT</a></li>
-                    {% if user.is_authenticated %}
-                    <li><a href="{% url 'dashboard:overview' %}">DASHBOARD</a></li>
-                    <li><a href="{% url 'accounts:logout' %}">LOGOUT</a></li>
-                    {% else %}
-                    <li><a href="{% url 'accounts:login' %}" class="signin-btn">SIGN IN</a></li>
-                    {% endif %}
-                </ul>
-            </div>
+        <!-- Navigation Menu -->
+        {% include "includes/navbar.html" %}
 
-        </div>
-        <!-- creating hamburger icon        -->
-        <div class="burger">
-            <div class="line1"></div>
-            <div class="line2"></div>
-            <div class="line3"></div>
+        <!-- Social Media Icons -->
+        <div id="follow" class="fixed top-1/2 -translate-y-1/2 right-5 sm:right-6 z-30 text-center max-[768px]:hidden flex flex-col items-center gap-3">
+            <a href="{{ LINKEDIN_URL|default:'https://www.linkedin.com/in/mickael-developpeur/' }}" target="_blank" rel="noopener noreferrer" class="text-white hover:text-[#00FFFF] hover:scale-115 transition-all text-[32px] block" aria-label="LinkedIn"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+            <a href="{{ GITHUB_URL|default:'https://github.com/' }}" target="_blank" rel="noopener noreferrer" class="text-white hover:text-[#00FFFF] hover:scale-115 transition-all text-[32px] block" aria-label="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>
+            <a href="{{ TWITTER_URL|default:'https://twitter.com/' }}" target="_blank" rel="noopener noreferrer" class="text-white hover:text-[#00FFFF] hover:scale-115 transition-all text-[32px] block" aria-label="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
         </div>
 
+        <!-- Background Typography Elements -->
+        <div id="develop" class="fixed -top-[162px] left-[1005px] text-[#565656]/15 text-[218px] font-black font-roboto select-none pointer-events-none z-0 max-[608px]:hidden">DEVELOP</div>
+        <div id="web" class="fixed top-[145px] left-[23px] text-[#565656]/15 text-[218px] font-black font-roboto select-none pointer-events-none z-0 max-[608px]:text-[120px] max-[608px]:top-[80px]">WEB</div>
+        <div id="dev" class="fixed top-[355px] left-[23px] text-[#565656]/15 text-[218px] font-black font-roboto select-none pointer-events-none z-0 max-[608px]:text-[80px] max-[608px]:top-[180px]">DEVELOPER</div>
+        <div id="fullstack" class="fixed top-[568px] left-[23px] w-[1042px] text-[#565656]/15 text-[218px] font-black font-roboto select-none pointer-events-none z-0 max-[608px]:hidden">Full-stack</div>
 
-        <!-- adding social media icons     -->
-        <div id="follow">
-            <a href="{{ LINKEDIN_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-linkedin" aria-hidden="true"></i></a><br>
-            <a href="{{ GITHUB_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-github" aria-hidden="true"></i></a><br>
-            <a href="{{ TWITTER_URL }}" target="_blank" rel="noopener noreferrer" style="color:inherit;"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-        </div>
-        <div id="develop">DEVELOP</div>
-        <div id="web">WEB</div>
-        <div id="dev">DEVELOPER</div>
-        <div id="fullstack">Full-stack</div>
+        <!-- Decorative Rotating Squares -->
+        <div id="square1" class="fixed top-[529px] -left-[192px] w-[410px] h-[345px] border-2 border-[#00FFFF]/15 rotate-[23deg] pointer-events-none z-0"></div>
+        <div id="square2" class="fixed top-[12px] left-[90%] w-[215px] h-[232px] border-2 border-[#00FFFF]/15 rotate-[23deg] pointer-events-none z-0"></div>
 
-        
-        <!-- this box contain some in the right    -->
-        
-        <div id="box1">
+        <!-- Scroll Progress Bar -->
+        <div id="progressbar" class="fixed top-0 left-0 w-[2px] bg-[#00FFFF] z-50"></div>
+
+        <!-- Skills Content Grid -->
+        <div class="relative z-10 pt-28 px-6 md:px-16 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-14 items-start">
             
+            <!-- Left: Description -->
+            <div id="cont2" class="space-y-6">
+                <div>
+                    <h1 class="text-[32px] sm:text-[40px] lg:text-[42px] font-righteous text-cyan leading-tight tracking-wide mb-4">
+                        Compétences et Expériences
+                    </h1>
+                </div>
+
+                <!-- Texte de présentation -->
+                <div class="text-[15px] font-lato text-[#a0a0a0] leading-relaxed space-y-4">
+                    <p>Je conçois et développe des sites web, des applications mobiles et des plateformes SaaS sur mesure. Mon approche associe design soigné, expérience utilisateur, performances et architecture technique fiable.</p>
+                    <p>Du site vitrine à l'application métier, je prends en charge des projets de toutes tailles, de la conception à la mise en production. Je développe des interfaces modernes, des fonctionnalités personnalisées, des API et des systèmes complets intégrant bases de données, authentification et services tiers.</p>
+                    <p>Mon expertise couvre le développement front-end avec <span class="text-white font-medium">React</span>, <span class="text-white font-medium">Next.js</span> et <span class="text-white font-medium">Tailwind CSS</span>, ainsi que le back-end avec <span class="text-white font-medium">Python</span> et <span class="text-white font-medium">Django</span>. Je développe également des applications mobiles avec <span class="text-white font-medium">React Native</span> et <span class="text-white font-medium">TypeScript</span>.</p>
+                    <p>Au-delà du développement, je partage mes connaissances à travers des contenus pédagogiques et des formations techniques, pour permettre à chacun d'apprendre à coder, de concrétiser ses idées et de gagner en autonomie dans le développement de ses propres projets. <a href="{% url 'core:contact' %}" class="text-cyan hover:text-tomato font-semibold transition-colors underline">Contactez-moi</a> pour discuter de votre projet.</p>
+                </div>
+            </div>
+
+            <!-- Right: Technology Cards Grid matching mickaelcode.com/skills -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-3.5 pt-2">
+                
+                <!-- React -->
+                <div class="py-3.5 px-5 rounded-xl bg-[#121212]/90 border border-white/10 hover:border-cyan/40 hover:shadow-[0_0_20px_rgba(0,255,255,0.08)] transition-all">
+                    <svg class="w-8 h-8 text-[#00d8ff]" viewBox="-11.5 -10.23174 23 20.46348" fill="none">
+                        <circle cx="0" cy="0" r="2.05" fill="#00d8ff"></circle>
+                        <g stroke="#00d8ff" stroke-width="1">
+                            <ellipse rx="11" ry="4.2"></ellipse>
+                            <ellipse rx="11" ry="4.2" transform="rotate(60)"></ellipse>
+                            <ellipse rx="11" ry="4.2" transform="rotate(120)"></ellipse>
+                        </g>
+                    </svg>
+                    <h3 class="font-righteous text-white text-[17px] tracking-wide mt-1.5 leading-snug">React</h3>
+                    <p class="font-lato text-xs text-[#a0a0a0] mt-0.5">Interface basée sur les composants</p>
+                </div>
+
+                <!-- Next.js -->
+                <div class="py-3.5 px-5 rounded-xl bg-[#121212]/90 border border-white/10 hover:border-cyan/40 hover:shadow-[0_0_20px_rgba(0,255,255,0.08)] transition-all">
+                    <svg class="w-8 h-8 text-white" viewBox="0 0 180 180" fill="none">
+                        <mask id="mask0_next" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="180" height="180">
+                            <circle cx="90" cy="90" r="90" fill="black"></circle>
+                        </mask>
+                        <g mask="url(#mask0_next)">
+                            <circle cx="90" cy="90" r="88" fill="black" stroke="white" stroke-width="4"></circle>
+                            <path d="M149.508 157.52L69.142 54H54V125.97H66.1136V69.3836L139.999 164.845C143.333 162.614 146.509 160.165 149.508 157.52Z" fill="white"></path>
+                            <rect x="115" y="54" width="12" height="72" fill="white"></rect>
+                        </g>
+                    </svg>
+                    <h3 class="font-righteous text-white text-[17px] tracking-wide mt-1.5 leading-snug">Next.js</h3>
+                    <p class="font-lato text-xs text-[#a0a0a0] mt-0.5">Le framework React</p>
+                </div>
+
+                <!-- Tailwind CSS (Full Width) -->
+                <div class="col-span-full py-3.5 px-5 rounded-xl bg-[#121212]/90 border border-white/10 hover:border-cyan/40 hover:shadow-[0_0_20px_rgba(0,255,255,0.08)] transition-all">
+                    <svg class="w-8 h-8 text-[#38bdf8]" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12.001,4.8c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 C13.666,10.618,15.027,12,18.001,12c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C16.337,6.182,14.976,4.8,12.001,4.8z M6.001,12c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 c1.177,1.194,2.538,2.576,5.512,2.576c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C9.537,13.382,8.176,12,6.001,12z"/>
+                    </svg>
+                    <h3 class="font-righteous text-white text-[17px] tracking-wide mt-1.5 leading-snug">Tailwind CSS</h3>
+                    <p class="font-lato text-xs text-[#a0a0a0] mt-0.5">Styles basés sur les utilitaires</p>
+                </div>
+
+                <!-- React Native -->
+                <div class="py-3.5 px-5 rounded-xl bg-[#121212]/90 border border-white/10 hover:border-cyan/40 hover:shadow-[0_0_20px_rgba(0,255,255,0.08)] transition-all">
+                    <svg class="w-8 h-8 text-[#61dafb]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <rect x="5" y="2" width="14" height="20" rx="3" stroke="#61dafb" stroke-width="1.6"></rect>
+                        <circle cx="12" cy="18" r="0.9" fill="#61dafb"></circle>
+                        <path d="M10 5h4" stroke="#61dafb" stroke-width="1.5" stroke-linecap="round"></path>
+                        <circle cx="12" cy="11" r="1.3" fill="#61dafb"></circle>
+                        <ellipse cx="12" cy="11" rx="4.2" ry="1.6" stroke="#61dafb" stroke-width="1"></ellipse>
+                        <ellipse cx="12" cy="11" rx="4.2" ry="1.6" stroke="#61dafb" stroke-width="1" transform="rotate(60 12 11)"></ellipse>
+                        <ellipse cx="12" cy="11" rx="4.2" ry="1.6" stroke="#61dafb" stroke-width="1" transform="rotate(120 12 11)"></ellipse>
+                    </svg>
+                    <h3 class="font-righteous text-white text-[17px] tracking-wide mt-1.5 leading-snug">React Native</h3>
+                    <p class="font-lato text-xs text-[#a0a0a0] mt-0.5">Applications mobiles multiplateformes</p>
+                </div>
+
+                <!-- TypeScript -->
+                <div class="py-3.5 px-5 rounded-xl bg-[#121212]/90 border border-white/10 hover:border-cyan/40 hover:shadow-[0_0_20px_rgba(0,255,255,0.08)] transition-all">
+                    <svg class="w-8 h-8 shrink-0" viewBox="0 0 24 24" fill="none">
+                        <rect width="24" height="24" rx="4" fill="#3178C6"/>
+                        <path d="M12.5 10.5h-5v1.8h1.8v6.7h2.2v-6.7h1.8v-1.8zm4.4 3.7c-.8-.4-1.3-.7-1.3-1.2 0-.4.3-.7.8-.7.6 0 1.2.3 1.7.7l1.1-1.3c-.7-.7-1.7-1-2.8-1-1.8 0-3 1-3 2.6 0 1.3.8 2 2.2 2.6.9.4 1.3.7 1.3 1.3 0 .5-.4.8-1 .8-.8 0-1.6-.4-2.2-1l-1.2 1.3c.9 1 2 1.5 3.3 1.5 2 0 3.2-1.1 3.2-2.7 0-1.4-.9-2.1-2.1-2.6z" fill="#ffffff"/>
+                    </svg>
+                    <h3 class="font-righteous text-white text-[17px] tracking-wide mt-1.5 leading-snug">TypeScript</h3>
+                    <p class="font-lato text-xs text-[#a0a0a0] mt-0.5">JavaScript typé et robuste</p>
+                </div>
+
+                <!-- Django -->
+                <div class="py-3.5 px-5 rounded-xl bg-[#121212]/90 border border-white/10 hover:border-cyan/40 hover:shadow-[0_0_20px_rgba(0,255,255,0.08)] transition-all">
+                    <svg class="w-8 h-8 text-[#ff6347]" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11.146 0h3.337v15.281c-.604.093-1.077.126-1.423.126-1.956 0-3.037-.9-3.037-2.529 0-1.57.962-2.571 2.502-2.571.24 0 .426.021.621.073V7.935a4.87 4.87 0 00-.776-.062c-3.151 0-5.188 1.956-5.188 4.989 0 3.109 2.058 5.062 5.176 5.062.77 0 1.393-.073 2.088-.261v6.337H11.15V0zm8.348 7.935h3.337v13.992c-.896.22-1.677.303-2.646.303-2.906 0-4.634-1.427-4.634-3.834 0-2.312 1.635-3.801 4.103-3.801.323 0 .552.021.84.073V7.935zm0 9.176a1.59 1.59 0 00-.51-.073c-.947 0-1.542.52-1.542 1.343 0 .802.584 1.312 1.48 1.312.187 0 .375-.021.572-.062v-2.52zM19.494 2.89a1.77 1.77 0 011.78-1.781c.99 0 1.782.791 1.782 1.78 0 .991-.792 1.782-1.781 1.782-.99 0-1.781-.791-1.781-1.781z"/>
+                    </svg>
+                    <h3 class="font-righteous text-white text-[17px] tracking-wide mt-1.5 leading-snug">Django</h3>
+                    <p class="font-lato text-xs text-[#a0a0a0] mt-0.5">Framework web Python haut niveau</p>
+                </div>
+
+                <!-- Flask -->
+                <div class="py-3.5 px-5 rounded-xl bg-[#121212]/90 border border-white/10 hover:border-cyan/40 hover:shadow-[0_0_20px_rgba(0,255,255,0.08)] transition-all">
+                    <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10 2v5.5L4.2 18.2A2 2 0 0 0 5.8 21h12.4a2 2 0 0 0 1.6-2.8L14 7.5V2"></path>
+                        <line x1="8" y1="2" x2="16" y2="2"></line>
+                        <path d="M8.5 14h7"></path>
+                        <path d="M12 9l-1 3h2l-1 3" stroke-width="1.5"></path>
+                    </svg>
+                    <h3 class="font-righteous text-white text-[17px] tracking-wide mt-1.5 leading-snug">Flask</h3>
+                    <p class="font-lato text-xs text-[#a0a0a0] mt-0.5">Framework WSGI léger</p>
+                </div>
+
+            </div>
+
         </div>
-
-        <div id="square1"></div>
-        <div id="square2"></div>
-        
-        
-        <!-- Adding skillbar in the right -->
-    
-        <div id="progressbar"></div>
-        
-        <div id="cont2">
-
-            <h1>skills & Experience</h1>
-            <p>I create successful responsive websites that are fast, easy to use, and built with best practices. The main area of my expertise is front-end development, HTML, CSS, JS, building small and medium web apps, features, animations, and coding interactive layouts.<br><br>
-            I also have a developper experience with popular open-source CMS like wordpress.<br>
-            <br>Visit my <a href="{{ LINKEDIN_URL }}" target="_blank" rel="noopener noreferrer">Linkedin</a> profile for more details or just <a href="{% url 'core:contact' %}">contact</a> me.</p>
-
-        </div>
-    
-        <div class="skillbox">
-            <p class="sk">Django</p>
-            <div class="container" data-aos="fade-right">
-                <div class="htmlbar bars" id="htBar">90%</div>
-                <div class="progress-line1 html">
-                    <span></span>
-                </div>
-            </div>
-
-            <p class="sk">Tailwind</p>
-            <div class="container" data-aos="fade-right">
-                <div class="cssbar bars" id="csBar">80%</div>
-                <div class="progress-line2 css">
-                    <span></span>
-                </div>
-            </div>
-
-            <p class="sk">Vue js</p>
-            <div class="container" data-aos="fade-right">
-                <div class="jsbar bars" id="jsBar">65%</div>
-                <div class="progress-line3 js">
-                    <span></span>
-                </div>
-            </div>
-
-            <p class="sk">React js</p>
-            <div class="container" data-aos="fade-right">
-                <div class="nodejsbar bars" id="nodeBar">60%</div>
-                <div class="progress-line4 nodejs">
-                    <span></span>
-                </div>
-            </div>
-
-            <p class="sk">Express.js</p>
-            <div class="container" data-aos="fade-right">
-                <div class="expressbar bars" id="expressBar">60%</div>
-                <div class="progress-line5 express">
-                    <span></span>
-                </div>
-            </div>
-
-        </div>
-
-        <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-        <script>
-            AOS.init({
-                duration: 1500
-            });
-        </script>
-    
-        <script>
-            let progress = document.getElementById('progressbar');
-            window.onscroll = function () {
-                let totalHeight = document.body.scrollHeight + window.innerHeight;
-                let progressHeight = (window.pageYOffset / totalHeight) * 28.1;
-                progress.style.display = 'revert';
-                progress.style.height = progressHeight + "%";
-                let flowBar1 = document.getElementById('htBar');
-                let flowBar2 = document.getElementById('csBar');
-                let flowBar3 = document.getElementById('jsBar');
-                let flowBar4 = document.getElementById('nodeBar');
-                let flowBar5 = document.getElementById('expressBar');
-                if (progressHeight > 5) {
-                    flowBar1.style.animationName = 'animateskillbar11';
-                    flowBar2.style.animationName = 'animateskillbar22';
-                    flowBar3.style.animationName = 'animateskillbar33';
-                    flowBar4.style.animationName = 'animateskillbar44';
-                    flowBar5.style.animationName = 'animateskillbar55';
-                }
-                else {
-                    flowBar1.style.animationName = 'animateskillbar1';
-                    flowBar2.style.animationName = 'animateskillbar2';
-                    flowBar3.style.animationName = 'animateskillbar3';
-                    flowBar4.style.animationName = 'animateskillbar4';
-                    flowBar5.style.animationName = 'animateskillbar5';
-                }
-            }
-        </script>
 
     </div>
 
-    <!-- javascript for functioning of sidebar menu  -->
+    <!-- Script for scroll progress bar -->
     <script>
-
-        const slide = () => {
-            const burger = document.querySelector('.burger');
-            const nav = document.querySelector('.navbar');
-            const navlinks = document.querySelectorAll('.links li');
-            burger.addEventListener('click', () => {
-                nav.classList.toggle('navbaract');
-
-                navlinks.forEach((link, index) => {
-
-                    if (link.style.animation) {
-                        link.style.animation = '';
-                    }
-                    else {
-                        link.style.animation = `navlinkfade 4s ease backwards ${index / 10}s`;
-                    }
-                });
-            });
-        }
-        slide();
-
+        const progress = document.getElementById('progressbar');
+        window.addEventListener('scroll', () => {
+            if (progress) {
+                const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+                if (totalHeight > 0) {
+                    const scrollPercent = (window.scrollY / totalHeight) * 100;
+                    progress.style.height = scrollPercent + '%';
+                }
+            }
+        });
     </script>
 
 </body>

@@ -4,52 +4,52 @@
 {% block robots %}noindex, nofollow{% endblock %}
 
 {% block content %}
-<div class="content-narrow" style="padding-top:60px; padding-bottom:70px; text-align:center;">
-    <div class="glass-card" style="padding:50px 36px;">
-        <div style="width:75px; height:75px; border-radius:50%; background:rgba(0,255,255,0.15); border:2px solid var(--accent-cyan); display:flex; align-items:center; justify-content:center; margin:0 auto 20px; color:var(--accent-cyan); font-size:36px;">
-            <i class="fa fa-check"></i>
+<div class="max-w-xl mx-auto px-4 py-16 text-center">
+    <div class="glass-card p-8 md:p-12 border border-white/10 rounded-2xl bg-neutral-900/60 backdrop-blur-md">
+        <div class="w-16 h-16 rounded-full bg-cyan/15 border-2 border-cyan flex items-center justify-center mx-auto mb-5 text-cyan text-3xl">
+            <i class="fa fa-check" aria-hidden="true"></i>
         </div>
 
-        <h1 style="font-size:30px; margin-bottom:12px;">Paiement Réussi !</h1>
-        <p style="color:var(--text-muted); font-size:16px; margin-bottom:28px;">
+        <h1 class="text-2xl md:text-3xl font-righteous text-white mb-3">Paiement Réussi !</h1>
+        <p class="text-neutral-400 text-sm md:text-base mb-8 leading-relaxed">
             Merci pour votre confiance. Votre commande a été enregistrée avec succès.
         </p>
 
         {% if order %}
-        <div style="background:rgba(0,0,0,0.4); border-radius:var(--radius-sm); border:1px solid rgba(255,255,255,0.1); padding:24px; text-align:left; max-width:480px; margin:0 auto 32px;">
-            <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:14px;">
-                <span style="color:var(--text-dim);">Référence de commande :</span>
-                <span style="color:#ffffff; font-family:'Righteous', cursive;">{{ order.order_reference }}</span>
+        <div class="bg-black/50 rounded-xl border border-white/10 p-6 text-left max-w-md mx-auto mb-8 space-y-3">
+            <div class="flex justify-between text-xs md:text-sm">
+                <span class="text-neutral-400">Référence de commande :</span>
+                <span class="text-white font-mono font-bold">{{ order.order_reference }}</span>
             </div>
-            <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:14px;">
-                <span style="color:var(--text-dim);">Formation acquise :</span>
-                <span style="color:var(--accent-cyan); font-weight:700;">{{ order.course.title }}</span>
+            <div class="flex justify-between text-xs md:text-sm">
+                <span class="text-neutral-400">Formation acquise :</span>
+                <span class="text-cyan font-bold">{{ order.course.title }}</span>
             </div>
-            <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:14px;">
-                <span style="color:var(--text-dim);">Montant réglé :</span>
-                <span style="color:#ffffff; font-weight:700;">{{ order.amount }} {{ order.currency }}</span>
+            <div class="flex justify-between text-xs md:text-sm">
+                <span class="text-neutral-400">Montant réglé :</span>
+                <span class="text-white font-righteous font-bold">{{ order.amount }} {{ order.currency }}</span>
             </div>
-            <div style="display:flex; justify-content:space-between; font-size:14px;">
-                <span style="color:var(--text-dim);">Statut de l'accès :</span>
+            <div class="flex justify-between text-xs md:text-sm pt-2 border-t border-white/10">
+                <span class="text-neutral-400">Statut de l'accès :</span>
                 {% if order.status == 'completed' %}
-                    <span style="color:#10b981; font-weight:700;"><i class="fa fa-check-circle"></i> Débloqué & Actif</span>
+                    <span class="text-emerald-400 font-bold flex items-center gap-1.5"><i class="fa fa-check-circle" aria-hidden="true"></i> Débloqué & Actif</span>
                 {% else %}
-                    <span style="color:var(--accent-coral); font-weight:700;"><i class="fa fa-clock-o"></i> Synchronisation en cours...</span>
+                    <span class="text-tomato font-bold flex items-center gap-1.5"><i class="fa fa-clock-o" aria-hidden="true"></i> Synchronisation en cours...</span>
                 {% endif %}
             </div>
         </div>
 
-        <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
-            <a href="{% url 'courses:course_detail' order.course.slug %}" class="btn btn-cyan">
-                <i class="fa fa-play"></i> Accéder immédiatement à ma formation
+        <div class="flex justify-center gap-4 flex-wrap">
+            <a href="{% url 'courses:course_detail' order.course.slug %}" class="inline-flex items-center gap-2 px-6 py-3 rounded-full font-righteous text-sm uppercase tracking-wider text-black bg-cyan hover:bg-tomato hover:text-white transition-all shadow-[0_0_15px_rgba(0,255,255,0.3)]">
+                <i class="fa fa-play" aria-hidden="true"></i> Accéder immédiatement à ma formation
             </a>
-            <a href="{% url 'dashboard:overview' %}" class="btn btn-outline">
+            <a href="{% url 'dashboard:overview' %}" class="inline-flex items-center px-6 py-3 rounded-full font-righteous text-sm uppercase tracking-wider text-white border border-white/20 hover:border-cyan hover:text-cyan transition-all">
                 Aller sur mon tableau de bord
             </a>
         </div>
         {% else %}
-        <div style="margin-top:24px;">
-            <a href="{% url 'dashboard:overview' %}" class="btn btn-cyan">Accéder à mon espace personnel</a>
+        <div class="mt-6">
+            <a href="{% url 'dashboard:overview' %}" class="inline-flex items-center px-6 py-3 rounded-full font-righteous text-sm uppercase tracking-wider text-black bg-cyan hover:bg-tomato hover:text-white transition-all shadow-[0_0_15px_rgba(0,255,255,0.3)]">Accéder à mon espace personnel</a>
         </div>
         {% endif %}
     </div>

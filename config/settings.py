@@ -20,6 +20,13 @@ SECRET_KEY = config(
 
 DEBUG = config("DEBUG", default=True, cast=bool)
 
+# Production security guard for SECRET_KEY
+if not DEBUG and (not SECRET_KEY or SECRET_KEY.startswith("django-insecure-")):
+    raise ValueError(
+        "CRITICAL SECURITY ERROR: You must configure a strong, random SECRET_KEY "
+        "environment variable when DEBUG=False in production."
+    )
+
 ALLOWED_HOSTS = config(
     "ALLOWED_HOSTS",
     default="localhost,127.0.0.1,mickaelcode.com,*.railway.app",
@@ -51,6 +58,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
+    "storages",
 
     # Business applications
     "core.apps.CoreConfig",
@@ -133,14 +141,47 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-STORAGES = {
-    "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage" if not DEBUG else "django.contrib.staticfiles.storage.StaticFilesStorage",
-    },
-}
+# Cloudflare R2 / S3-Compatible Persistent Storage Configuration
+USE_R2 = config("USE_R2", default=False, cast=bool)
+R2_ACCESS_KEY_ID = config("R2_ACCESS_KEY_ID", default="")
+R2_SECRET_ACCESS_KEY = config("R2_SECRET_ACCESS_KEY", default="")
+R2_BUCKET_NAME = config("R2_BUCKET_NAME", default="")
+R2_ENDPOINT_URL = config("R2_ENDPOINT_URL", default="")
+R2_CUSTOM_DOMAIN = config("R2_CUSTOM_DOMAIN", default="")
+
+if USE_R2 and R2_ACCESS_KEY_ID and R2_BUCKET_NAME:
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.s3.S3Storage",
+            "OPTIONS": {
+                "access_key": R2_ACCESS_KEY_ID,
+                "secret_key": R2_SECRET_ACCESS_KEY,
+                "bucket_name": R2_BUCKET_NAME,
+                "endpoint_url": R2_ENDPOINT_URL,
+                "custom_domain": R2_CUSTOM_DOMAIN or None,
+                "file_overwrite": False,
+                "default_acl": None,  # Cloudflare R2 does not support S3 ACLs
+                "signature_version": "s3v4",
+                "querystring_auth": False,
+            },
+        },
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage" if not DEBUG else "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
+    if R2_CUSTOM_DOMAIN:
+        MEDIA_URL = f"https://{R2_CUSTOM_DOMAIN}/"
+    elif R2_ENDPOINT_URL:
+        MEDIA_URL = f"{R2_ENDPOINT_URL.rstrip('/')}/{R2_BUCKET_NAME}/"
+else:
+    STORAGES = {
+        "default": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage" if not DEBUG else "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -167,7 +208,14 @@ BUNNY_STREAM_TOKEN_KEY = config("BUNNY_STREAM_TOKEN_KEY", default="")
 
 # Email Settings
 EMAIL_BACKEND = config("EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
+EMAIL_HOST = config("EMAIL_HOST", default="")
+EMAIL_PORT = config("EMAIL_PORT", default=587, cast=int)
+EMAIL_USE_TLS = config("EMAIL_USE_TLS", default=True, cast=bool)
+EMAIL_USE_SSL = config("EMAIL_USE_SSL", default=False, cast=bool)
+EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
 DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="MickaelCode <contact@mickaelcode.com>")
+CONTACT_EMAIL = config("CONTACT_EMAIL", default="mickaelbn@gmail.com")
 SITE_URL = config("SITE_URL", default="http://127.0.0.1:8000")
 
 # Security in Production

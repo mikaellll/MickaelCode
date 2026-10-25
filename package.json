@@ -1,0 +1,21 @@
+{
+  "name": "mickaelcode",
+  "version": "1.0.0",
+  "description": "Plateforme web full-stack professionnelle propulsée par **Python 3.12**, **Django 5.1**, **Django Templates**, **PostgreSQL** et **Stripe**. Ce projet remplace l'ancien site statique / frontend JS par une architecture serveur robuste, ultra-performante pour le SEO, sécurisée et taillée pour monétiser des formations e-learning.",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "tailwindcss -i ./static_src/tailwind_input.css -o ./static/css/tailwind.css --minify",
+    "watch:css": "tailwindcss -i ./static_src/tailwind_input.css -o ./static/css/tailwind.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.11",
+    "@tailwindcss/typography": "^0.5.20",
+    "autoprefixer": "^10.6.1",
+    "postcss": "^8.5.31",
+    "tailwindcss": "^3.4.19"
+  }
+}

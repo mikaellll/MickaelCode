@@ -1,16 +1,16 @@
 {% if messages %}
-<div class="alert-container" id="system-alerts" role="status" aria-live="polite">
+<div class="fixed top-16 right-5 z-50 flex flex-col space-y-3 max-w-md w-full px-4 pointer-events-none" id="system-alerts" role="status" aria-live="polite">
     {% for message in messages %}
-    <div class="alert-banner alert-{{ message.tags|default:'info' }}">
-        <div class="alert-content">
+    <div class="alert-banner pointer-events-auto flex items-center justify-between p-4 rounded-lg backdrop-blur-md shadow-lg transition-all duration-300 {% if message.tags == 'error' %}bg-[#ff6347]/15 border border-[#ff6347] text-[#ff8b77]{% elif message.tags == 'success' %}bg-[#00FFFF]/10 border border-[#00FFFF]/40 text-[#00FFFF]{% else %}bg-[#181818]/90 border border-white/20 text-white{% endif %}">
+        <div class="flex items-center space-x-2 text-sm font-lato">
             {% if message.tags == 'error' %}
-                <i class="fa fa-exclamation-circle" aria-hidden="true" style="color: var(--accent-coral); margin-right: 8px;"></i>
+                <i class="fa fa-exclamation-circle text-tomato text-base" aria-hidden="true"></i>
             {% else %}
-                <i class="fa fa-check-circle" aria-hidden="true" style="color: var(--accent-cyan); margin-right: 8px;"></i>
+                <i class="fa fa-check-circle text-cyan text-base" aria-hidden="true"></i>
             {% endif %}
             <span>{{ message }}</span>
         </div>
-        <button type="button" onclick="this.parentElement.remove()" style="background:none; border:none; color:#a0a0a0; cursor:pointer; font-size:16px; margin-left:12px;">&times;</button>
+        <button type="button" onclick="this.parentElement.remove()" class="text-[#a0a0a0] hover:text-white cursor-pointer text-lg leading-none ml-3" aria-label="Fermer">&times;</button>
     </div>
     {% endfor %}
 </div>

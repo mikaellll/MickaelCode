@@ -1,62 +1,25 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="dark">
 <head>
     <meta charset="UTF-8">
     <title>Erreur Serveur (500) | MickaelCode</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Lato&display=swap" rel="stylesheet">
-    <style>
-        body {
-            background-color: #000000;
-            color: #ffffff;
-            font-family: 'Lato', sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .card {
-            background: rgba(16, 22, 30, 0.9);
-            border: 1px solid rgba(255, 99, 71, 0.4);
-            border-radius: 16px;
-            padding: 50px 30px;
-            text-align: center;
-            max-width: 550px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-        }
-        h1 {
-            font-family: 'Righteous', cursive;
-            font-size: 72px;
-            color: #ff6347;
-            margin: 0 0 16px;
-        }
-        p {
-            color: #a0a0a0;
-            font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 28px;
-        }
-        a {
-            background-color: #00FFFF;
-            color: #000000;
-            text-decoration: none;
-            padding: 12px 28px;
-            border-radius: 50px;
-            font-family: 'Righteous', cursive;
-            font-size: 15px;
-            display: inline-block;
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700&family=Righteous&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">
 </head>
-<body>
-    <div class="card">
-        <h1>500</h1>
-        <h2>Une erreur inattendue est survenue</h2>
-        <p>Notre équipe a été notifiée et travaille activement à sa résolution. Merci de patienter quelques instants.</p>
-        <a href="/">Retour à l'accueil</a>
+<body class="bg-black text-white font-lato min-h-screen flex items-center justify-center p-5">
+    <div class="glass-card max-w-lg w-full p-8 md:p-12 text-center border border-tomato/40 rounded-2xl bg-neutral-900/80 backdrop-blur-md shadow-2xl">
+        <h1 class="font-righteous text-6xl md:text-8xl text-tomato mb-4 leading-none">500</h1>
+        <h2 class="font-righteous text-xl md:text-2xl text-white mb-3">Une erreur inattendue est survenue</h2>
+        <p class="text-neutral-400 text-sm md:text-base leading-relaxed mb-8">
+            Notre équipe a été notifiée et travaille activement à sa résolution. Merci de patienter quelques instants.
+        </p>
+        <a href="/" class="inline-block px-7 py-3 rounded-full font-righteous text-sm text-black bg-cyan hover:bg-tomato hover:text-white transition-all">
+            Retour à l'accueil
+        </a>
     </div>
 </body>
 </html>

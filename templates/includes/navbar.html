@@ -1,26 +1,285 @@
 {% load static %}
-<div class="navbar" id="site-navbar">
-    <div id="nav">
-        <ul class="links">
-            <li><a href="{% url 'core:home' %}" class="{% if request.resolver_match.url_name == 'home' %}nvg{% endif %}">HOME</a></li>
-            <li><a href="{% url 'core:about' %}" class="{% if request.resolver_match.url_name == 'about' %}nvg{% endif %}">ABOUT</a></li>
-            <li><a href="{% url 'core:work' %}" class="{% if request.resolver_match.url_name == 'work' or request.resolver_match.url_name == 'project_detail' %}nvg{% endif %}">WORK</a></li>
-            <li><a href="{% url 'core:skills' %}" class="{% if request.resolver_match.url_name == 'skills' %}nvg{% endif %}">SKILL</a></li>
-            <li><a href="{% url 'blog:post_list' %}" class="{% if 'blog' in request.resolver_match.namespaces %}nvg{% endif %}">BLOG</a></li>
-            <li><a href="{% url 'courses:course_list' %}" class="{% if 'courses' in request.resolver_match.namespaces %}nvg{% endif %}">FORMATIONS</a></li>
-            <li><a href="{% url 'core:contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}nvg{% endif %}">CONTACT</a></li>
-            {% if user.is_authenticated %}
-            <li><a href="{% url 'dashboard:overview' %}" class="{% if 'dashboard' in request.resolver_match.namespaces %}nvg{% endif %}">DASHBOARD</a></li>
-            <li><a href="{% url 'accounts:logout' %}">LOGOUT</a></li>
-            {% else %}
-            <li><a href="{% url 'accounts:login' %}" class="signin-btn">SIGN IN</a></li>
-            {% endif %}
-        </ul>
-    </div>
-</div>
+<!-- Skip link for keyboard and screen reader accessibility -->
+<a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2 focus:bg-cyan focus:text-black focus:font-righteous focus:text-xs focus:uppercase focus:tracking-wider focus:rounded-md focus:shadow-[0_0_15px_#00FFFF] focus:outline-none">
+    Passer au contenu principal
+</a>
 
-<div class="burger" id="burger-menu-btn" aria-label="Menu">
-    <div class="line1"></div>
-    <div class="line2"></div>
-    <div class="line3"></div>
-</div>
+<!-- Main Header & Desktop Navigation Bar -->
+<header id="site-header" class="fixed top-0 left-0 w-full h-[58px] md:h-16 bg-black/90 backdrop-blur-md border-b border-white/10 z-40 transition-colors duration-300">
+    <div class="relative w-full h-full px-4 sm:px-6 lg:px-8 xl:px-12 flex items-center justify-between">
+
+
+        <!-- Desktop Navigation Links (Center) -->
+        <nav class="hidden lg:flex items-center space-x-0.5 xl:space-x-1.5 2xl:space-x-2.5 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto" aria-label="Navigation principale">
+            <a href="{% url 'core:home' %}" class="nav-link font-lato text-[11.5px] xl:text-[13px] 2xl:text-[14px] uppercase tracking-wider font-medium text-neutral-400 hover:text-white py-2 px-1.5 xl:px-2.5 2xl:px-3 relative rounded-md transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan {% if request.resolver_match.url_name == 'home' %}nav-link-active text-white font-semibold{% endif %}">
+                ACCUEIL
+            </a>
+            <a href="{% url 'core:about' %}" class="nav-link font-lato text-[11.5px] xl:text-[13px] 2xl:text-[14px] uppercase tracking-wider font-medium text-neutral-400 hover:text-white py-2 px-1.5 xl:px-2.5 2xl:px-3 relative rounded-md transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan {% if request.resolver_match.url_name == 'about' %}nav-link-active text-white font-semibold{% endif %}">
+                À PROPOS
+            </a>
+            <a href="{% url 'core:work' %}" class="nav-link font-lato text-[11.5px] xl:text-[13px] 2xl:text-[14px] uppercase tracking-wider font-medium text-neutral-400 hover:text-white py-2 px-1.5 xl:px-2.5 2xl:px-3 relative rounded-md transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan {% if request.resolver_match.url_name == 'work' or request.resolver_match.url_name == 'project_detail' %}nav-link-active text-white font-semibold{% endif %}">
+                PROJETS
+            </a>
+            <a href="{% url 'core:skills' %}" class="nav-link font-lato text-[11.5px] xl:text-[13px] 2xl:text-[14px] uppercase tracking-wider font-medium text-neutral-400 hover:text-white py-2 px-1.5 xl:px-2.5 2xl:px-3 relative rounded-md transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan {% if request.resolver_match.url_name == 'skills' %}nav-link-active text-white font-semibold{% endif %}">
+                COMPÉTENCES
+            </a>
+            <a href="{% url 'blog:post_list' %}" class="nav-link font-lato text-[11.5px] xl:text-[13px] 2xl:text-[14px] uppercase tracking-wider font-medium text-neutral-400 hover:text-white py-2 px-1.5 xl:px-2.5 2xl:px-3 relative rounded-md transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan {% if 'blog' in request.resolver_match.namespaces %}nav-link-active text-white font-semibold{% endif %}">
+                BLOG
+            </a>
+            <a href="{% url 'courses:course_list' %}" class="nav-link font-lato text-[11.5px] xl:text-[13px] 2xl:text-[14px] uppercase tracking-wider font-medium text-neutral-400 hover:text-white py-2 px-1.5 xl:px-2.5 2xl:px-3 relative rounded-md transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan {% if 'courses' in request.resolver_match.namespaces %}nav-link-active text-white font-semibold{% endif %}">
+                FORMATIONS
+            </a>
+            <a href="{% url 'core:contact' %}" class="nav-link font-lato text-[11.5px] xl:text-[13px] 2xl:text-[14px] uppercase tracking-wider font-medium text-neutral-400 hover:text-white py-2 px-1.5 xl:px-2.5 2xl:px-3 relative rounded-md transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan {% if request.resolver_match.url_name == 'contact' %}nav-link-active text-white font-semibold{% endif %}">
+                CONTACT
+            </a>
+        </nav>
+
+        <!-- Desktop User Actions (Right) -->
+        <div class="hidden lg:flex items-center space-x-2 xl:space-x-3 ml-auto">
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard:overview' %}" class="inline-flex items-center gap-1.5 px-2.5 xl:px-3 py-1.5 rounded-full text-xs font-righteous tracking-wider uppercase border border-white/20 text-white hover:text-cyan hover:border-cyan hover:shadow-[0_0_12px_rgba(0,255,255,0.25)] transition-all whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan {% if 'dashboard' in request.resolver_match.namespaces %}border-cyan text-cyan bg-cyan/10 shadow-[0_0_10px_rgba(0,255,255,0.2)]{% endif %}" title="Tableau de bord">
+                    <i class="fa fa-th-large text-[11px]" aria-hidden="true"></i>
+                    <span class="hidden xl:inline">TABLEAU DE BORD</span>
+                </a>
+                <form method="post" action="{% url 'accounts:logout' %}" class="inline m-0 p-0">
+                    {% csrf_token %}
+                    <button type="submit" class="inline-flex items-center gap-1 text-xs font-righteous uppercase tracking-wider text-neutral-400 hover:text-tomato px-2 xl:px-2.5 py-1.5 rounded transition-colors cursor-pointer whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tomato" title="Se déconnecter" aria-label="Se déconnecter">
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                        <span class="hidden xl:inline">DÉCONNEXION</span>
+                    </button>
+                </form>
+            {% else %}
+                <a href="{% url 'accounts:login' %}" class="signin-btn focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan" aria-label="Se connecter à votre espace apprenant">
+                    CONNEXION
+                </a>
+            {% endif %}
+        </div>
+
+        <!-- Mobile Burger Trigger Button (Right) -->
+        <div class="flex lg:hidden items-center ml-auto">
+            <button type="button"
+                    id="burger-menu-btn"
+                    onclick="window.__toggleMobileMenu && window.__toggleMobileMenu();"
+                    class="burger relative flex flex-col justify-center items-center w-12 h-12 rounded-lg bg-neutral-900/80 border border-white/10 hover:border-cyan text-white cursor-pointer select-none transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan"
+                    aria-label="Ouvrir le menu de navigation"
+                    aria-expanded="false"
+                    aria-controls="mobile-nav-drawer">
+                <span class="sr-only">Menu de navigation</span>
+                <span class="burger-bar line1 block w-5 h-0.5 bg-white rounded-full transition-all duration-300 ease-in-out my-0.5 pointer-events-none"></span>
+                <span class="burger-bar line2 block w-5 h-0.5 bg-white rounded-full transition-all duration-300 ease-in-out my-0.5 pointer-events-none"></span>
+                <span class="burger-bar line3 block w-5 h-0.5 bg-white rounded-full transition-all duration-300 ease-in-out my-0.5 pointer-events-none"></span>
+            </button>
+        </div>
+
+    </div>
+</header>
+
+<!-- Mobile Drawer Backdrop Overlay -->
+<div id="mobile-nav-backdrop"
+     onclick="window.__toggleMobileMenu && window.__toggleMobileMenu(false);"
+     class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 lg:hidden opacity-0 pointer-events-none transition-opacity duration-300 ease-out"
+     aria-hidden="true"></div>
+
+<!-- Mobile Navigation Drawer Panel -->
+<aside id="mobile-nav-drawer"
+       class="fixed top-0 right-0 h-full w-[330px] max-w-[88vw] bg-neutral-950/98 border-l border-cyan/30 z-50 lg:hidden shadow-[-15px_0_40px_rgba(0,0,0,0.95)] flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-in-out"
+       role="dialog"
+       aria-modal="true"
+       aria-label="Menu principal"
+       aria-hidden="true">
+
+    <!-- Drawer Top: Dedicated Close Button -->
+    <div class="h-16 px-5 border-b border-white/10 flex items-center justify-end shrink-0">
+        <button type="button"
+                id="drawer-close-btn"
+                onclick="window.__toggleMobileMenu && window.__toggleMobileMenu(false);"
+                class="w-11 h-11 flex items-center justify-center rounded-lg text-neutral-400 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/20 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan cursor-pointer"
+                aria-label="Fermer le menu">
+            <span class="text-2xl leading-none">&times;</span>
+        </button>
+    </div>
+
+    <!-- Drawer Middle: Scrollable Links List with 48px touch targets -->
+    <nav class="flex-grow overflow-y-auto px-4 py-5 space-y-1.5" aria-label="Liens mobiles">
+        <div class="px-3 pb-2 text-[10px] font-righteous uppercase tracking-widest text-neutral-500">Navigation</div>
+
+        <a href="{% url 'core:home' %}" onclick="window.__toggleMobileMenu && window.__toggleMobileMenu(false);"
+           class="mobile-nav-link flex items-center gap-3.5 px-3.5 py-3 rounded-lg text-sm font-lato font-medium tracking-wide transition-all min-h-[48px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan {% if request.resolver_match.url_name == 'home' %}bg-cyan/15 text-cyan border-l-2 border-cyan shadow-[0_0_12px_rgba(0,255,255,0.15)] font-semibold{% else %}text-neutral-300 hover:text-white hover:bg-white/5{% endif %}">
+            <i class="fa fa-home w-5 text-center text-cyan/70" aria-hidden="true"></i>
+            <span>ACCUEIL</span>
+        </a>
+
+        <a href="{% url 'core:about' %}" onclick="window.__toggleMobileMenu && window.__toggleMobileMenu(false);"
+           class="mobile-nav-link flex items-center gap-3.5 px-3.5 py-3 rounded-lg text-sm font-lato font-medium tracking-wide transition-all min-h-[48px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan {% if request.resolver_match.url_name == 'about' %}bg-cyan/15 text-cyan border-l-2 border-cyan shadow-[0_0_12px_rgba(0,255,255,0.15)] font-semibold{% else %}text-neutral-300 hover:text-white hover:bg-white/5{% endif %}">
+            <i class="fa fa-user-o w-5 text-center text-cyan/70" aria-hidden="true"></i>
+            <span>À PROPOS</span>
+        </a>
+
+        <a href="{% url 'core:work' %}" onclick="window.__toggleMobileMenu && window.__toggleMobileMenu(false);"
+           class="mobile-nav-link flex items-center gap-3.5 px-3.5 py-3 rounded-lg text-sm font-lato font-medium tracking-wide transition-all min-h-[48px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan {% if request.resolver_match.url_name == 'work' or request.resolver_match.url_name == 'project_detail' %}bg-cyan/15 text-cyan border-l-2 border-cyan shadow-[0_0_12px_rgba(0,255,255,0.15)] font-semibold{% else %}text-neutral-300 hover:text-white hover:bg-white/5{% endif %}">
+            <i class="fa fa-code w-5 text-center text-cyan/70" aria-hidden="true"></i>
+            <span>PROJETS</span>
+        </a>
+
+        <a href="{% url 'core:skills' %}" onclick="window.__toggleMobileMenu && window.__toggleMobileMenu(false);"
+           class="mobile-nav-link flex items-center gap-3.5 px-3.5 py-3 rounded-lg text-sm font-lato font-medium tracking-wide transition-all min-h-[48px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan {% if request.resolver_match.url_name == 'skills' %}bg-cyan/15 text-cyan border-l-2 border-cyan shadow-[0_0_12px_rgba(0,255,255,0.15)] font-semibold{% else %}text-neutral-300 hover:text-white hover:bg-white/5{% endif %}">
+            <i class="fa fa-cogs w-5 text-center text-cyan/70" aria-hidden="true"></i>
+            <span>COMPÉTENCES</span>
+        </a>
+
+        <div class="pt-3 pb-2 px-3 text-[10px] font-righteous uppercase tracking-widest text-neutral-500 border-t border-neutral-900 mt-2">Contenus & Cursus</div>
+
+        <a href="{% url 'courses:course_list' %}" onclick="window.__toggleMobileMenu && window.__toggleMobileMenu(false);"
+           class="mobile-nav-link flex items-center justify-between px-3.5 py-3 rounded-lg text-sm font-lato font-medium tracking-wide transition-all min-h-[48px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan {% if 'courses' in request.resolver_match.namespaces %}bg-cyan/15 text-cyan border-l-2 border-cyan shadow-[0_0_12px_rgba(0,255,255,0.15)] font-semibold{% else %}text-neutral-300 hover:text-white hover:bg-white/5{% endif %}">
+            <div class="flex items-center gap-3.5">
+                <i class="fa fa-graduation-cap w-5 text-center text-cyan/70" aria-hidden="true"></i>
+                <span>FORMATIONS</span>
+            </div>
+            <span class="text-[10px] font-righteous px-2 py-0.5 rounded-full bg-tomato/20 text-tomato border border-tomato/40">DISPONIBLE</span>
+        </a>
+
+        <a href="{% url 'blog:post_list' %}" onclick="window.__toggleMobileMenu && window.__toggleMobileMenu(false);"
+           class="mobile-nav-link flex items-center gap-3.5 px-3.5 py-3 rounded-lg text-sm font-lato font-medium tracking-wide transition-all min-h-[48px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan {% if 'blog' in request.resolver_match.namespaces %}bg-cyan/15 text-cyan border-l-2 border-cyan shadow-[0_0_12px_rgba(0,255,255,0.15)] font-semibold{% else %}text-neutral-300 hover:text-white hover:bg-white/5{% endif %}">
+            <i class="fa fa-newspaper-o w-5 text-center text-cyan/70" aria-hidden="true"></i>
+            <span>BLOG</span>
+        </a>
+
+        <a href="{% url 'core:contact' %}" onclick="window.__toggleMobileMenu && window.__toggleMobileMenu(false);"
+           class="mobile-nav-link flex items-center gap-3.5 px-3.5 py-3 rounded-lg text-sm font-lato font-medium tracking-wide transition-all min-h-[48px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan {% if request.resolver_match.url_name == 'contact' %}bg-cyan/15 text-cyan border-l-2 border-cyan shadow-[0_0_12px_rgba(0,255,255,0.15)] font-semibold{% else %}text-neutral-300 hover:text-white hover:bg-white/5{% endif %}">
+            <i class="fa fa-envelope-o w-5 text-center text-cyan/70" aria-hidden="true"></i>
+            <span>CONTACT</span>
+        </a>
+    </nav>
+
+    <!-- Drawer Bottom: Account Actions & Social Media -->
+    <div class="p-5 border-t border-white/10 bg-black/60 shrink-0 space-y-4">
+        {% if user.is_authenticated %}
+            <div class="flex items-center gap-3 px-1 mb-1">
+                <div class="w-9 h-9 rounded-full bg-cyan/20 border border-cyan flex items-center justify-center text-cyan font-righteous text-sm">
+                    {{ user.display_name|slice:":1"|upper }}
+                </div>
+                <div class="truncate">
+                    <div class="text-xs font-righteous text-white truncate">{{ user.display_name }}</div>
+                    <div class="text-[11px] text-neutral-400 truncate">{{ user.email }}</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2 pt-1">
+                <a href="{% url 'dashboard:overview' %}" onclick="window.__toggleMobileMenu && window.__toggleMobileMenu(false);"
+                   class="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-lg text-xs font-righteous text-white bg-white/5 border border-white/15 hover:border-cyan hover:text-cyan transition-all text-center min-h-[44px]">
+                    <i class="fa fa-th-large" aria-hidden="true"></i> TABLEAU
+                </a>
+                <form method="post" action="{% url 'accounts:logout' %}" class="w-full m-0 p-0">
+                    {% csrf_token %}
+                    <button type="submit" class="w-full flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-lg text-xs font-righteous text-tomato bg-tomato/10 border border-tomato/30 hover:bg-tomato hover:text-white transition-all min-h-[44px] cursor-pointer">
+                        <i class="fa fa-sign-out" aria-hidden="true"></i> QUITTER
+                    </button>
+                </form>
+            </div>
+        {% else %}
+            <div class="space-y-2">
+                <a href="{% url 'accounts:login' %}" onclick="window.__toggleMobileMenu && window.__toggleMobileMenu(false);"
+                   class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-full font-righteous text-xs uppercase tracking-wider text-black bg-cyan hover:bg-tomato hover:text-white transition-all shadow-[0_0_12px_rgba(0,255,255,0.3)] min-h-[48px]">
+                    <i class="fa fa-sign-in" aria-hidden="true"></i> CONNEXION
+                </a>
+                <a href="{% url 'accounts:signup' %}" onclick="window.__toggleMobileMenu && window.__toggleMobileMenu(false);"
+                   class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-full font-righteous text-xs uppercase tracking-wider text-neutral-300 hover:text-white border border-white/15 hover:border-cyan transition-all min-h-[44px]">
+                    CRÉER UN COMPTE
+                </a>
+            </div>
+        {% endif %}
+
+        <!-- Social Media Links inside Drawer -->
+        <div class="flex items-center justify-center gap-6 pt-2 border-t border-neutral-900 text-neutral-400 text-lg">
+            <a href="{{ LINKEDIN_URL }}" target="_blank" rel="noopener noreferrer" class="hover:text-cyan transition-colors" aria-label="Profil LinkedIn"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+            <a href="{{ GITHUB_URL }}" target="_blank" rel="noopener noreferrer" class="hover:text-cyan transition-colors" aria-label="Profil GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>
+            <a href="{{ TWITTER_URL }}" target="_blank" rel="noopener noreferrer" class="hover:text-cyan transition-colors" aria-label="Profil Twitter / X"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+        </div>
+    </div>
+</aside>
+
+<script>
+(function () {
+    let previouslyFocusedElement = null;
+
+    window.__toggleMobileMenu = function (shouldOpen) {
+        const burger = document.getElementById('burger-menu-btn');
+        const drawer = document.getElementById('mobile-nav-drawer');
+        const backdrop = document.getElementById('mobile-nav-backdrop');
+
+        if (!burger || !drawer || !backdrop) return;
+
+        const isOpen = !drawer.classList.contains('translate-x-full');
+        const open = (shouldOpen !== undefined) ? shouldOpen : !isOpen;
+
+        if (open) {
+            previouslyFocusedElement = document.activeElement;
+            drawer.classList.remove('translate-x-full');
+            drawer.setAttribute('aria-hidden', 'false');
+            backdrop.classList.remove('opacity-0', 'pointer-events-none');
+            backdrop.classList.add('opacity-100', 'pointer-events-auto');
+            burger.setAttribute('aria-expanded', 'true');
+            burger.classList.add('burger-open', 'toggle');
+            burger.setAttribute('aria-label', 'Fermer le menu de navigation');
+            document.body.style.overflow = 'hidden';
+
+            // Focus first interactive element inside drawer
+            const focusable = drawer.querySelectorAll('a[href], button:not([disabled])');
+            if (focusable.length > 0) {
+                setTimeout(function () { focusable[0].focus(); }, 60);
+            }
+        } else {
+            drawer.classList.add('translate-x-full');
+            drawer.setAttribute('aria-hidden', 'true');
+            backdrop.classList.remove('opacity-100', 'pointer-events-auto');
+            backdrop.classList.add('opacity-0', 'pointer-events-none');
+            burger.setAttribute('aria-expanded', 'false');
+            burger.classList.remove('burger-open', 'toggle');
+            burger.setAttribute('aria-label', 'Ouvrir le menu de navigation');
+            document.body.style.overflow = '';
+
+            // Restore focus to trigger
+            if (previouslyFocusedElement && typeof previouslyFocusedElement.focus === 'function') {
+                previouslyFocusedElement.focus();
+            }
+        }
+    };
+
+    // Close on Escape key & Focus Trapping inside Drawer
+    document.addEventListener('keydown', function (e) {
+        const drawer = document.getElementById('mobile-nav-drawer');
+        if (!drawer || drawer.classList.contains('translate-x-full')) return;
+
+        if (e.key === 'Escape') {
+            e.preventDefault();
+            window.__toggleMobileMenu(false);
+            return;
+        }
+
+        if (e.key === 'Tab') {
+            const focusable = drawer.querySelectorAll('a[href], button:not([disabled]), input:not([type="hidden"])');
+            if (focusable.length === 0) return;
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+
+            if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
+        }
+    });
+
+    // Auto-close drawer when viewport resizes to desktop width (>= 1024px)
+    window.addEventListener('resize', function () {
+        if (window.innerWidth >= 1024) {
+            const drawer = document.getElementById('mobile-nav-drawer');
+            if (drawer && !drawer.classList.contains('translate-x-full')) {
+                window.__toggleMobileMenu(false);
+            }
+        }
+    });
+})();
+</script>

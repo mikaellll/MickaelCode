@@ -5,156 +5,156 @@
 {% block meta_description %}{{ course.meta_description|default:course.short_description|truncatewords:28 }}{% endblock %}
 
 {% block content %}
-<div class="content-container" style="padding-top:20px; padding-bottom:70px;">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
     <!-- Course Header Hero -->
-    <div class="glass-card" style="padding:44px 34px; margin-bottom:40px;">
-        <div class="grid-2" style="align-items:center;">
+    <div class="glass-card p-6 md:p-10 mb-10 border border-white/10 rounded-2xl bg-neutral-900/60 backdrop-blur-md">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             <div>
-                <div style="display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap;">
-                    <span class="badge badge-coral">{{ course.get_level_display }}</span>
-                    <span class="badge badge-cyan">{{ course.total_lessons_count }} leçons</span>
-                    <span class="badge" style="background:rgba(255,255,255,0.08); color:#cbd5e1; font-family:'Righteous', cursive;">~{{ course.total_duration_minutes }} minutes</span>
+                <div class="flex gap-2.5 mb-4 flex-wrap">
+                    <span class="inline-block px-3 py-1 rounded-full text-xs font-righteous bg-tomato/20 text-tomato border border-tomato/40">{{ course.get_level_display }}</span>
+                    <span class="inline-block px-3 py-1 rounded-full text-xs font-righteous bg-cyan/20 text-cyan border border-cyan/40">{{ course.total_lessons_count }} leçons</span>
+                    <span class="inline-block px-3 py-1 rounded-full text-xs font-righteous bg-white/10 text-slate-300">~{{ course.total_duration_minutes }} minutes</span>
                 </div>
 
-                <h1 style="font-size: clamp(28px, 4vw, 42px); line-height:1.2; margin-bottom:18px; font-family:'Righteous', cursive; color:#ffffff;">
+                <h1 class="text-3xl md:text-5xl font-righteous text-white leading-tight mb-4">
                     {{ course.title }}
                 </h1>
 
-                <p style="color:#cbd5e1; font-size:16px; line-height:1.7; margin-bottom:28px;">
+                <p class="text-slate-300 text-base md:text-lg leading-relaxed mb-8">
                     {{ course.short_description }}
                 </p>
 
-                <div style="display:flex; align-items:center; gap:24px; flex-wrap:wrap;">
+                <div class="flex items-center gap-6 flex-wrap">
                     <div>
-                        <span style="font-size:36px; font-weight:700; color:var(--accent-cyan); font-family:'Righteous', cursive;">{{ course.price }} {{ course.currency }}</span>
-                        <span style="display:block; font-size:12px; color:var(--text-dim);">Paiement unique &bull; Accès permanent</span>
+                        <span class="text-3xl md:text-4xl font-bold text-cyan font-righteous">{{ course.price }} {{ course.currency }}</span>
+                        <span class="block text-xs text-neutral-400">Paiement unique &bull; Accès permanent</span>
                     </div>
 
                     {% if is_enrolled %}
                         <div>
                             {% if first_lesson %}
-                                <a href="{% url 'courses:lesson_player' course.slug first_lesson.id %}" class="btn btn-cyan">
-                                    <i class="fa fa-play"></i> Continuer la formation ({{ user_progress }}%)
+                                <a href="{% url 'courses:lesson_player' course.slug first_lesson.id %}" class="inline-flex items-center gap-2 px-6 py-3 rounded-full font-righteous text-sm text-black bg-cyan hover:bg-tomato hover:text-white transition-all shadow-[0_0_15px_rgba(0,255,255,0.3)]">
+                                    <i class="fa fa-play" aria-hidden="true"></i> Continuer la formation ({{ user_progress }}%)
                                 </a>
                             {% else %}
-                                <span class="badge badge-cyan">Inscrit (cours en préparation)</span>
+                                <span class="inline-block px-4 py-2 rounded-full text-xs font-righteous bg-cyan/20 text-cyan border border-cyan/40">Inscrit (cours en préparation)</span>
                             {% endif %}
                         </div>
                     {% else %}
                         <form method="post" action="{% url 'billing:create_checkout_session' course.slug %}">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-coral" id="btn-buy-course">
-                                <i class="fa fa-shopping-cart"></i> Acheter la formation
+                            <button type="submit" class="inline-flex items-center gap-2 px-7 py-3 rounded-full font-righteous text-sm uppercase tracking-wider text-white bg-tomato hover:bg-cyan hover:text-black transition-all shadow-[0_0_15px_rgba(255,99,71,0.4)] cursor-pointer" id="btn-buy-course">
+                                <i class="fa fa-shopping-cart" aria-hidden="true"></i> Acheter la formation
                             </button>
                         </form>
                     {% endif %}
                 </div>
             </div>
 
-            <div class="card-media" style="margin-bottom:0; max-height:360px; border-radius:4px; overflow:hidden; border:1px solid var(--border-color);">
+            <div class="rounded-xl overflow-hidden max-h-[360px] border border-white/10 bg-black">
                 {% if course.cover_image %}
-                    <img src="{{ course.cover_image.url }}" alt="{{ course.title }}">
+                    <img src="{{ course.cover_image.url }}" alt="{{ course.title }}" class="w-full h-full object-cover">
                 {% else %}
-                    <img src="{% static 'img/projects/magenta.png' %}" alt="{{ course.title }}">
+                    <img src="{% static 'img/projects/magenta.png' %}" alt="{{ course.title }}" class="w-full h-full object-cover">
                 {% endif %}
             </div>
         </div>
     </div>
 
     <!-- Objectives & Description -->
-    <div class="grid-2" style="margin-bottom:40px; align-items:start;">
-        <div class="glass-card" style="padding:32px;">
-            <h3 style="color:var(--accent-cyan); margin-bottom:20px; font-size:20px; font-family:'Righteous', cursive;">
-                <i class="fa fa-check-square-o"></i> Ce que vous allez maîtriser
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10 items-start">
+        <div class="glass-card p-6 md:p-8 border border-white/10 rounded-2xl bg-neutral-900/60 backdrop-blur-md">
+            <h3 class="text-cyan mb-5 text-xl font-righteous flex items-center gap-2">
+                <i class="fa fa-check-square-o" aria-hidden="true"></i> Ce que vous allez maîtriser
             </h3>
-            <ul style="list-style:none; padding-left:0;">
+            <ul class="space-y-3.5">
                 {% for obj in course.objectives_list %}
-                <li style="display:flex; gap:12px; align-items:flex-start; margin-bottom:14px; font-size:14px; color:#e2e8f0; line-height:1.6;">
-                    <i class="fa fa-check" style="color:var(--accent-cyan); margin-top:4px;"></i>
+                <li class="flex gap-3 items-start text-sm md:text-base text-slate-200 leading-relaxed">
+                    <i class="fa fa-check text-cyan mt-1 flex-shrink-0" aria-hidden="true"></i>
                     <span>{{ obj }}</span>
                 </li>
                 {% empty %}
-                <li style="color:var(--text-muted);">Compréhension approfondie de l'écosystème Django et mise en production.</li>
+                <li class="text-neutral-400">Compréhension approfondie de l'écosystème Django et mise en production.</li>
                 {% endfor %}
             </ul>
 
             {% if course.prerequisites %}
-            <div style="margin-top:24px; border-top:1px solid rgba(255,255,255,0.08); padding-top:16px;">
-                <h4 style="color:#ffffff; font-size:15px; margin-bottom:8px; font-family:'Righteous', cursive;"><i class="fa fa-info-circle"></i> Prérequis</h4>
-                <p style="color:var(--text-muted); font-size:13px; margin-bottom:0; line-height:1.6;">{{ course.prerequisites }}</p>
+            <div class="mt-6 pt-5 border-t border-white/10">
+                <h4 class="text-white text-sm mb-2 font-righteous flex items-center gap-2"><i class="fa fa-info-circle text-cyan" aria-hidden="true"></i> Prérequis</h4>
+                <p class="text-neutral-400 text-xs md:text-sm leading-relaxed">{{ course.prerequisites }}</p>
             </div>
             {% endif %}
         </div>
 
-        <div class="glass-card" style="padding:32px;">
-            <h3 style="color:#ffffff; margin-bottom:16px; font-size:20px; font-family:'Righteous', cursive;">Description détaillée</h3>
-            <div class="markdown-body" style="font-size:15px;">
+        <div class="glass-card p-6 md:p-8 border border-white/10 rounded-2xl bg-neutral-900/60 backdrop-blur-md">
+            <h3 class="text-white mb-4 text-xl font-righteous">Description détaillée</h3>
+            <div class="prose prose-invert prose-cyan max-w-none text-slate-300 text-sm md:text-base leading-relaxed">
                 {{ course.render_description|safe }}
             </div>
         </div>
     </div>
 
     <!-- Syllabus / Curriculum -->
-    <div class="glass-card" style="padding:36px;">
-        <div style="margin-bottom:28px;">
-            <div class="section-subtitle">Programme pédagogique</div>
-            <h2 style="font-size:26px; margin-bottom:6px; font-family:'Righteous', cursive; color:#ffffff;">Syllabus complet du cursus</h2>
-            <p style="color:var(--text-muted); font-size:14px;">Parcourez les modules et testez les leçons gratuites en libre accès.</p>
+    <div class="glass-card p-6 md:p-10 border border-white/10 rounded-2xl bg-neutral-900/60 backdrop-blur-md">
+        <div class="mb-8">
+            <div class="text-xs uppercase tracking-widest text-cyan font-righteous mb-1.5">Programme pédagogique</div>
+            <h2 class="text-2xl md:text-3xl font-righteous text-white mb-2">Syllabus complet du cursus</h2>
+            <p class="text-neutral-400 text-sm">Parcourez les modules et testez les leçons gratuites en libre accès.</p>
         </div>
 
-        <div style="display:flex; flex-direction:column; gap:20px;">
+        <div class="space-y-5">
             {% for module in modules %}
-            <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(0,255,255,0.12); border-radius:4px; padding:22px;">
-                <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:12px; flex-wrap:wrap;">
-                    <h3 style="font-size:17px; color:var(--accent-cyan); font-family:'Righteous', cursive;">
+            <div class="bg-white/[0.02] border border-cyan/20 rounded-xl p-5 md:p-6">
+                <div class="flex justify-between items-baseline mb-3 flex-wrap gap-2">
+                    <h3 class="text-lg font-righteous text-cyan">
                         Module {{ module.order }} : {{ module.title }}
                     </h3>
-                    <span style="font-size:12px; color:var(--text-dim);">{{ module.published_lessons.count }} leçons</span>
+                    <span class="text-xs text-neutral-400">{{ module.published_lessons.count }} leçons</span>
                 </div>
 
                 {% if module.description %}
-                    <p style="color:var(--text-muted); font-size:13px; margin-bottom:14px; line-height:1.6;">{{ module.description }}</p>
+                    <p class="text-neutral-400 text-xs md:text-sm mb-4 leading-relaxed">{{ module.description }}</p>
                 {% endif %}
 
-                <div style="display:flex; flex-direction:column; gap:8px;">
+                <div class="space-y-2.5">
                     {% for lesson in module.published_lessons %}
-                    <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:rgba(0,0,0,0.5); border-radius:4px; border:1px solid rgba(255,255,255,0.04);">
-                        <div style="display:flex; align-items:center; gap:12px;">
+                    <div class="flex justify-between items-center p-3 rounded-lg bg-black/60 border border-white/5 hover:border-cyan/30 transition-all">
+                        <div class="flex items-center gap-3">
                             {% if lesson.is_free_preview %}
-                                <i class="fa fa-play-circle" style="color:var(--accent-cyan);"></i>
+                                <i class="fa fa-play-circle text-cyan" aria-hidden="true"></i>
                             {% elif is_enrolled %}
-                                <i class="fa fa-unlock-alt" style="color:#00FFFF;"></i>
+                                <i class="fa fa-unlock-alt text-cyan" aria-hidden="true"></i>
                             {% else %}
-                                <i class="fa fa-lock" style="color:var(--text-dim);"></i>
+                                <i class="fa fa-lock text-neutral-500" aria-hidden="true"></i>
                             {% endif %}
 
-                            <span style="font-size:14px; color:#ffffff;">{{ lesson.title }}</span>
+                            <span class="text-sm text-white">{{ lesson.title }}</span>
                         </div>
 
-                        <div style="display:flex; align-items:center; gap:14px;">
-                            <span style="font-size:12px; color:var(--text-dim);"><i class="fa fa-clock-o"></i> {{ lesson.duration_minutes }} min</span>
+                        <div class="flex items-center gap-3.5">
+                            <span class="text-xs text-neutral-400"><i class="fa fa-clock-o mr-1" aria-hidden="true"></i> {{ lesson.duration_minutes }} min</span>
 
                             {% if lesson.is_free_preview %}
-                                <a href="{% url 'courses:lesson_player' course.slug lesson.id %}" class="btn btn-cyan btn-sm" style="padding:4px 10px; font-size:11px;">
+                                <a href="{% url 'courses:lesson_player' course.slug lesson.id %}" class="inline-block px-3 py-1 rounded-full text-[11px] font-righteous text-black bg-cyan hover:bg-tomato hover:text-white transition-all">
                                     Aperçu gratuit
                                 </a>
                             {% elif is_enrolled %}
-                                <a href="{% url 'courses:lesson_player' course.slug lesson.id %}" class="btn btn-outline btn-sm" style="padding:4px 10px; font-size:11px;">
+                                <a href="{% url 'courses:lesson_player' course.slug lesson.id %}" class="inline-block px-3 py-1 rounded-full text-[11px] font-righteous text-white border border-white/20 hover:border-cyan hover:text-cyan transition-all">
                                     Regarder
                                 </a>
                             {% else %}
-                                <span class="badge" style="background:rgba(255,255,255,0.06); color:var(--text-dim); font-size:11px;">Verrouillé</span>
+                                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-white/5 text-neutral-500">Verrouillé</span>
                             {% endif %}
                         </div>
                     </div>
                     {% empty %}
-                    <div style="color:var(--text-dim); font-size:13px;">Leçons en cours de montage.</div>
+                    <div class="text-neutral-500 text-xs">Leçons en cours de montage.</div>
                     {% endfor %}
                 </div>
             </div>
             {% empty %}
-            <p style="color:var(--text-muted);">Le programme détaillé est en cours de finalisation.</p>
+            <p class="text-neutral-400 text-sm">Le programme détaillé est en cours de finalisation.</p>
             {% endfor %}
         </div>
     </div>

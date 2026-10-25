@@ -79,8 +79,8 @@ def lesson_player_view(request, course_slug, lesson_id):
         progress.last_accessed_at = timezone.now()
         progress.save(update_fields=["last_accessed_at"])
 
-    # Render video player safely via abstraction
-    player_html = VideoPlayerService.render_player(lesson)
+    # Render video player safely via abstraction with server-side access check
+    player_html = VideoPlayerService.render_player(lesson, user=request.user)
 
     # Syllabus for sidebar navigation
     modules = course.modules.prefetch_related("lessons").order_by("order")
@@ -158,6 +158,13 @@ def save_video_position_view(request, lesson_id):
         seconds = int(data.get("seconds", 0))
     except Exception:
         seconds = 0
+
+    # Bounds validation: non-negative and capped at lesson duration + buffer
+    max_seconds = (lesson.duration_minutes * 60) + 3600
+    if seconds < 0:
+        seconds = 0
+    elif seconds > max_seconds:
+        seconds = max_seconds
 
     progress, _ = LessonProgress.objects.get_or_create(user=request.user, lesson=lesson)
     progress.last_position_seconds = seconds

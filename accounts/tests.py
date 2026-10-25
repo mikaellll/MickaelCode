@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.core.cache import cache
 from django.test import TestCase
 from django.urls import reverse
 
@@ -7,12 +8,17 @@ User = get_user_model()
 
 class AccountsTests(TestCase):
     def setUp(self):
+        cache.clear()
         self.user = User.objects.create_user(
             username="testuser",
             email="test@example.com",
             password="StrongPassword123!",
             terms_accepted=True,
         )
+
+    def tearDown(self):
+        cache.clear()
+        super().tearDown()
 
     def test_user_signup_success(self):
         url = reverse("accounts:signup")
@@ -70,3 +76,14 @@ class AccountsTests(TestCase):
         url = reverse("accounts:password_reset")
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
+
+    def test_login_rate_limiting_triggers_429(self):
+        url = reverse("accounts:login")
+        # Perform 10 failed login attempts
+        for _ in range(10):
+            self.client.post(url, {"login": "attacker", "password": "wrongpassword"})
+
+        # The 11th attempt should trigger HTTP 429 Too Many Requests
+        response = self.client.post(url, {"login": "attacker", "password": "wrongpassword"})
+        self.assertEqual(response.status_code, 429)
+        self.assertContains(response, "Trop de tentatives de connexion", status_code=429)
